@@ -1,0 +1,976 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Code Cabin]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://an-dong.info/"/>
+  <updated>2014-08-12T03:10:43.956Z</updated>
+  <id>http://an-dong.info/</id>
+  
+  <author>
+    <name><![CDATA[andong777]]></name>
+    <email><![CDATA[andong777@163.com]]></email>
+  </author>
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[在Unity项目中使用Git]]></title>
+    <link href="http://an-dong.info/2014/08/10/%E5%9C%A8Unity%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8Git/"/>
+    <id>http://an-dong.info/2014/08/10/在Unity项目中使用Git/</id>
+    <published>2014-08-10T12:53:30.000Z</published>
+    <updated>2014-08-11T14:07:19.000Z</updated>
+    <content type="html"><![CDATA[<p>本文参考了Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/architecture/folders-in-version-control" target="_blank" rel="external">Mastering Unity Project Folder Structure - Version Control Systems</a>和<a href="http://docs.unity3d.com/Manual/ExternalVersionControlSystemSupport.html" target="_blank" rel="external">Using External Version Control Systems with Unity</a>。</p>
+<a id="more"></a>
+
+<p>首先需要了解一下Unity的目录结构。假设有一个叫做<code>testproject</code>的项目，那么它的结构应该如下图所示。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/folderstructure.png" alt=""></p>
+<blockquote>
+<p>Assembly-CSharp-vs.csproj and Assembly-CSharp.csproj – Visual Studio (with -vs suffix) and MonoDevelop project files generated for your C# scripts.</p>
+</blockquote>
+<p>Assembly-CSharp-vs.csproj 和 Assembly-CSharp.csproj ：Visual Studio（带有-vs后缀）和MonoDevelop为C#脚本生成的项目文件。</p>
+<blockquote>
+<p>Assembly-UnityScript-vs.unityproj and Assembly-UnityScript.unityproj – the same project files but for JavaScript scripts.</p>
+</blockquote>
+<p>Assembly-UnityScript-vs.unityproj 和 Assembly-UnityScript.unityproj：相同的项目文件，只不过是为JavaScript脚本。</p>
+<blockquote>
+<p>testproject.sln and testproject-csharp.sln – solution files for IDEs, first one includes all C#, JavaScript and Boo projects, while the second one – only C# projects and is designed to be opened in Visual Studio, because VS doesn’t know to handle JavaScript and Boo projects.</p>
+</blockquote>
+<p>testproject.sln 和 testproject-csharp.sln：IDE的解决方案文件，第一个包括所有的C#、JavaScript和Boo脚本；而第二个只包括C#脚本，被设计用来在Visual Studio中打开，因为VS不知道如何处理JavaScript和Boo项目。</p>
+<blockquote>
+<p>testproject.userprefs and testproject-csharp.userprefs – configuration files where MonoDevelop stores current opened files, breakpoints, watches etc.</p>
+</blockquote>
+<p>testproject.userprefs 和 testproject-csharp.userprefs：MonoDevelop用来存储当前打开文件、断点、观测等的配置文件。</p>
+<blockquote>
+<p>Assets – folder where all game resources are stored, including scripts, textures, sound, custom editors etc. Definitely the most important folder in your project.</p>
+</blockquote>
+<p>Assets：存储所有游戏资源的文件夹，包括脚本、纹理、声音、编辑器定制等。当然是项目中最重要的文件夹。</p>
+<blockquote>
+<p>ProjectSettings – in this folder Unity stores all project settings like Physics, Tags, Player settings etc. In other words everything you setup from Edit → Project Settings set of menus goes into this folder.</p>
+</blockquote>
+<p>ProjectSettings：在这个文件夹中Unity存储所有的项目设置，如物理、标签、角色设置等。或者说，所有你从 Edit → Project 的菜单中设置的都在这个文件夹中。</p>
+<blockquote>
+<p>Library – local cache for imported assets, when using external version control system should be completely ignored.</p>
+</blockquote>
+<p>Library：被导入资源的本地缓存，当使用外部版本控制系统时应当被完全忽略。</p>
+<blockquote>
+<p>obj and Temp – folders for temporary files generated during build, first one used by MonoDevelop, second – by Unity.</p>
+</blockquote>
+<p>obj 和 Temp：存储构建时产生的临时文件的文件夹，第一个用于MonoDevelop，第二个用于Unity。</p>
+<p>看完了以上的内容就可以知道，我们只需要将<code>Assets</code>和<code>ProjectSettings</code>两个文件夹纳入版本控制即可。但在编写<code>.gitignore</code>文件前，还需要以下几个步骤，将设置以文本形式存储以利于版本控制：</p>
+<ol>
+<li>在 Edit-&gt;Project Settings-&gt;Editor-&gt;Version Control Mode 中选择 <code>Visible Meta files</code>。</li>
+<li>在 Edit-&gt;Project Settings-&gt;Editor-&gt;Asset Serialization Mode 中选择 <code>Force Text</code>。</li>
+<li>保存场景和项目。</li>
+</ol>
+<p>下面是一份参考的<code>.gitignore</code>文件：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">=============== </div><div class="line"><span class="header">Unity generated</span></div><div class="line">===============</div><div class="line">Temp/</div><div class="line">Library/</div><div class="line"></div><div class="line">=====================================</div><div class="line">Visual Studio / MonoDevelop generated</div><div class="line">=====================================</div><div class="line">ExportedObj/</div><div class="line">obj/</div><div class="line"><span class="strong">*.svd</span></div><div class="line">*.userprefs</div><div class="line">/<span class="strong">*.csproj</span></div><div class="line">*.pidb</div><div class="line"><span class="strong">*.suo</span></div><div class="line">/*.sln</div><div class="line"><span class="strong">*.user</span></div><div class="line">*.unityproj</div><div class="line"><span class="strong">*.booproj</span></div><div class="line"></div><div class="line">============</div><div class="line">OS generated</div><div class="line">============</div><div class="line"><span class="title">.DS_Store</span></div><div class="line"><span class="title">.DS_Store?</span></div><div class="line"><span class="title">._*</span></div><div class="line"><span class="title">.Spotlight-V100</span></div><div class="line"><span class="title">.Trashes</span></div><div class="line">ehthumbs.db</div><div class="line">Thumbs.db</div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html"><![CDATA[<p>本文参考了Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/architecture/folders-in-version-control" target="_blank" rel="external">Mastering Unity Project Folder Structure - Version Control Systems</a>和<a href="http://docs.unity3d.com/Manual/ExternalVersionControlSystemSupport.html" target="_blank" rel="external">Using External Version Control Systems with Unity</a>。</p>
+]]></summary>
+    
+      <category term="Unity3D" scheme="http://an-dong.info/tags/Unity3D/"/>
+    
+      <category term="Git" scheme="http://an-dong.info/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Unity Scripting Tutorials 要点记录]]></title>
+    <link href="http://an-dong.info/2014/08/07/Unity-Scripting-Tutorials-%E8%A6%81%E7%82%B9%E8%AE%B0%E5%BD%95/"/>
+    <id>http://an-dong.info/2014/08/07/Unity-Scripting-Tutorials-要点记录/</id>
+    <published>2014-08-07T12:52:16.000Z</published>
+    <updated>2014-08-11T14:06:48.000Z</updated>
+    <content type="html"><![CDATA[<p>这几天通过Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/scripting" target="_blank" rel="external">Unity Scripting Tutorials</a>的视频学习Unity脚本，观看的过程中做了记录。现在，整理了一下笔记，供自己以后和其他初学者参考。</p>
+<a id="more"></a>
+
+<h2 id="Awake和Start">Awake和Start</h2>
+<ul>
+<li>Awake首先执行。通常用于建立组件间的引用，初始化。</li>
+<li>Start在Awake之后和第一次Update之前执行，并且要求脚本enabled。只执行一次。</li>
+</ul>
+<h2 id="Updte和FixedUpdate">Updte和FixedUpdate</h2>
+<ul>
+<li>Update每帧一次，间隔不固定（受帧的处理时间影响），用于处理：<ul>
+<li>非物理物体的运动</li>
+<li>获取输入</li>
+<li>定时器</li>
+</ul>
+</li>
+<li>FixedUpdate间隔固定，用于调整物理物体（刚体）。</li>
+</ul>
+<h2 id="enabled、setActive和Destroy">enabled、setActive和Destroy</h2>
+<ul>
+<li>enabled控制禁用和启用一个组件。禁用GameObject的renderer可以隐藏物体，但碰撞体仍然存在。</li>
+<li>setActive用于显示和隐藏一个物体。</li>
+<li>Destroy用于彻底销毁一个GameObject或组件。可以加一个数值表示delay。</li>
+</ul>
+<h2 id="Translate和Rotate">Translate和Rotate</h2>
+<p>使用这两个方法控制物体运动。<br>Translate对应position：</p>
+<pre><code>transform.Translate(Vector3);   // Amount in each axis <span class="keyword">to</span> <span class="keyword">move</span> by
+</code></pre><p>Rotate对应rotation:</p>
+<pre><code><span class="built_in">transform</span>.Rotate(Vector3,   <span class="comment">// Axis around which to rotate</span>
+                 <span class="keyword">float</span>)     <span class="comment">// amount to rotate by</span>
+</code></pre><h2 id="LookAt">LookAt</h2>
+<pre><code><span class="built_in">transform</span>.LookAt(target);    
+</code></pre><p>用于移动物体Z轴使之对准目标物体。<br>将其绑定到相机上可以实现运动物体的跟踪。</p>
+<h2 id="Lerp">Lerp</h2>
+<p>用于平滑某种转变。</p>
+<ul>
+<li>空间移动：</li>
+</ul>
+<pre><code>    Vector3.Lerp(Vector3 <span class="keyword">from</span>,  <span class="comment">// 起点。通常应设为当前坐标</span>
+                 Vector3 to,    <span class="comment">// 终点</span>
+                 <span class="keyword">float</span> t);      <span class="comment">// 0~1之间的值。值越大，返回值越接近终点，移动也越快。</span>
+</code></pre><ul>
+<li>数值变换：</li>
+</ul>
+<pre><code>    Mathf.Lerp(<span class="keyword">float</span> <span class="keyword">from</span>, <span class="keyword">float</span> to, <span class="keyword">float</span> t);
+</code></pre><ul>
+<li>颜色渐变：</li>
+</ul>
+<pre><code>    <span class="attribute">Color</span><span class="class">.Lerp</span>(<span class="attribute">Color</span> from, <span class="attribute">Color</span> to, <span class="attribute">float</span> t);
+</code></pre><h2 id="GetButton、GetKey和GetAxis">GetButton、GetKey和GetAxis</h2>
+<p>GetButton和GetKey的区别：</p>
+<ol>
+<li>前者参数为字符串，可以通过设置面板更改字符串和对应按键的映射。</li>
+<li>后者的参数为KeyCode对象。</li>
+</ol>
+<p>GetButton/Up/Down的区别：</p>
+<ol>
+<li>Up按键弹起时为true，其他时为false；</li>
+<li>长按时GetButton每帧都返回true，而Down只有第一帧。</li>
+</ol>
+<p>GetAxis(axisName)通过获取某个轴的值来了解用户的输入。</p>
+<ul>
+<li>axisName是字符串，可以是“Horizontal”、“Vertical”。</li>
+<li>返回值为0~1之间的值。</li>
+<li>在设置中可以调节轴的参数，gravity控制返回0的速度，sensitivity控制离开0的速度。</li>
+</ul>
+<h2 id="OnMouseDown">OnMouseDown</h2>
+<p>鼠标在Collider或GUI组件上按下时调用该方法。<br>同类方法：</p>
+<ul>
+<li>OnMouseDrag：按住不放</li>
+<li>OnMouseEnter：进入</li>
+<li>OnMouseExit：退出</li>
+<li>OnMouseOver：在上面</li>
+<li>OnMouseUp：释放</li>
+<li>OnMouseUpAsButton：按下和释放作用于同一个对象</li>
+</ul>
+<h2 id="Instantiate">Instantiate</h2>
+<p>创建prefab的副本，返回对象的引用。<br>使用时先用代码创建GameObject的变量，然后回到编辑器界面将prefab拖入变量中。</p>
+<h2 id="Invoke">Invoke</h2>
+<p>调用名叫method的方法：</p>
+<pre><code>Invoke(<span class="function"><span class="keyword">method</span>, <span class="title">delay</span>);</span>
+</code></pre><p>每隔time重复调用method方法：</p>
+<pre><code>InvokeRepeating(<span class="function"><span class="keyword">method</span>, <span class="title">delay</span>, <span class="title">time</span>);</span>
+</code></pre><p>取消Invoke：</p>
+<pre><code><span class="function">CancelInvoke</span>();
+</code></pre><p>取消名叫method的Invoke：</p>
+<pre><code>CancelInvoke(<span class="function"><span class="keyword">method</span>);</span>
+</code></pre><h2 id="Coroutine">Coroutine</h2>
+<p>利用了C#的<code>yield</code>，来实现在多次Update中执行一个行为。<br>开始一个Coroutine：</p>
+<pre><code><span class="function">StartCoroutine</span>(IEnumerator routine);
+</code></pre><p>或者接受一个string参数表示方法的返回IEnumerator的方法的名字，后面跟着参数。<br>例：</p>
+<pre><code><span class="function">StartCoroutine</span>(<span class="function">Func</span>(<span class="tag">param</span>));
+<span class="function">StartCoroutine</span>("Func", <span class="tag">param</span>);
+</code></pre><p>停止一个Coroutine，用StopCoroutine。同样有两种形式。</p>
+<h2 id="Quaternion">Quaternion</h2>
+<p>用来表示旋转的类。讲了三个内容：</p>
+<h3 id="1)">1)</h3>
+<pre><code>LookRotation(Vector3 <span class="keyword">forward</span>);
+</code></pre><p>返回使物体转向forward方向的Quaternion。</p>
+<h3 id="2)">2)</h3>
+<pre><code>Slerp(Quaternion <span class="keyword">from</span>, Quaternion to, <span class="keyword">float</span> t);
+</code></pre><p>旋转角度。相比Lerp，在中间时快，两头时慢。</p>
+<h3 id="3)">3)</h3>
+<p><code>Quaternion.identity</code>是一个静态变量，表示没有旋转。</p>
+]]></content>
+    <summary type="html"><![CDATA[<p>这几天通过Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/scripting" target="_blank" rel="external">Unity Scripting Tutorials</a>的视频学习Unity脚本，观看的过程中做了记录。现在，整理了一下笔记，供自己以后和其他初学者参考。</p>
+]]></summary>
+    
+      <category term="Unity3D" scheme="http://an-dong.info/tags/Unity3D/"/>
+    
+      <category term="学习笔记" scheme="http://an-dong.info/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="C#" scheme="http://an-dong.info/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[C#学习笔记（补充）——扩展方法、事件]]></title>
+    <link href="http://an-dong.info/2014/08/06/C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E8%A1%A5%E5%85%85%EF%BC%89%E2%80%94%E2%80%94%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E3%80%81%E4%BA%8B%E4%BB%B6/"/>
+    <id>http://an-dong.info/2014/08/06/C学习笔记（补充）——扩展方法、事件/</id>
+    <published>2014-08-06T12:50:51.000Z</published>
+    <updated>2014-08-11T14:06:33.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="一、扩展方法">一、扩展方法</h2>
+<p>扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 </p>
+<a id="more"></a>
+
+<h3 id="注意事项：">注意事项：</h3>
+<ul>
+<li>扩展方法需要是静态方法。</li>
+<li>第一个参数指明作用的类型，并且用<code>this</code>关键字修饰。</li>
+<li>其他参数跟在第一个参数的后面。</li>
+<li>需要使用<code>using</code>指令将扩展方法所在的命名空间导入到源代码中。</li>
+<li>该类型以实例方法的形式调用该方法。</li>
+<li>编译器生成的中间语言 (IL) 会将代码转换为对静态方法的调用。</li>
+<li>扩展方法无法访问它们所扩展的类型中的私有变量。</li>
+</ul>
+<p>注意到C#中的<code>StringBuilder</code>类没有实现Java中的<code>Reverse()</code>方法，可以通过扩展方法实现：</p>
+<pre><code>namespace <span class="type">ExtensionMethod</span>
+{
+    public <span class="keyword">static</span> class <span class="type">StringBuilderExtension</span>
+    {
+        public <span class="keyword">static</span> <span class="type">StringBuilder</span> <span class="type">Reverse</span>(this <span class="type">StringBuilder</span> builder)
+        {
+            <span class="type">StringBuilder</span> <span class="literal">result</span> = new <span class="type">StringBuilder</span>();
+            <span class="keyword">for</span>(<span class="type">int</span> i=builder.<span class="type">Length</span>-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)
+            {
+                <span class="literal">result</span>.<span class="type">Append</span>(builder[i]); 
+            }
+            <span class="keyword">return</span> <span class="literal">result</span>;
+        }
+    }
+}
+</code></pre><p>新建一个测试类进行测试：</p>
+<pre><code>using ExtensionMethod;
+<span class="keyword">static</span> <span class="keyword">class</span> TestStringBuilderExtension
+{
+    <span class="keyword">static</span> <span class="keyword">void</span> Main()
+    {
+        StringBuilder builder = <span class="keyword">new</span> StringBuilder(<span class="string">"ABC"</span>);
+        StringBuilder newBuilder = builder.<span class="keyword">Reverse</span>();
+        Console.<span class="keyword">WriteLine</span>(newBuilder);
+        Console.<span class="keyword">Read</span>();
+    }
+}
+</code></pre><p>成功为<code>StringBuilder</code>添加了翻转的方法。</p>
+<h2 id="事件">事件</h2>
+<p>C#中使用委托来实现事件。使用了观察者模式，即有一个事件的发布者Publisher，和事件的订阅者Subscriber。</p>
+<p>委托需要有两个参数，第一个参数为<code>object</code>类型，表示事件的发送者，第二个参数为<code>EventArgs</code>类型或继承自它。<br>但通常建议使用.Net Framework定义的事件模式，使用<code>EventHandler</code>类。<code>EventHandler</code>又分为使用泛型和不使用泛型两种情况。</p>
+<ol>
+<li><p>使用自定义的委托类型：</p>
+<pre><code> <span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">void</span> <span class="title">CustomEventHandler</span>(<span class="keyword">object</span> sender, CustomEventArgs a);
+</code></pre></li>
+<li><p>非泛型的EventHandler:</p>
+<pre><code> <span class="keyword">public</span> <span class="keyword">event</span> EventHandler RaiseCustomEvent;
+</code></pre></li>
+<li><p>泛型的EventHandler：</p>
+<pre><code> <span class="keyword">public</span> <span class="keyword">event</span> EventHandler&lt;CustomEventArgs&gt; RaiseCustomEvent;
+</code></pre></li>
+</ol>
+<p>处理事件的方法应该是声明的委托的类型。</p>
+<pre><code><span class="keyword">void</span> HandleCustomEvent(<span class="keyword">object</span> sender, CustomEventArgs a){ <span class="comment">/* do something here */</span> }
+</code></pre><p>订阅事件使用<code>+=</code>，取消订阅使用<code>-=</code>：</p>
+<pre><code><span class="attribute">publisher.RaiseCustomEvent +</span>=<span class="string"> HandleCustomEvent;</span>
+</code></pre><p>以使用泛型的情况为例，假设事件发生调用<code>OnRaiseCustomEvent</code>方法。</p>
+<pre><code>class Publisher
+    {
+        <span class="keyword">public</span> <span class="keyword">event</span> EventHandler&lt;CustomEventArgs&gt; RaiseCustomEvent;
+        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DoSomething</span>()
+        {
+            OnRaiseCustomEvent(<span class="keyword">new</span> CustomEventArgs(<span class="string">"Did something"</span>));
+        }
+        <span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OnRaiseCustomEvent</span>(CustomEventArgs e)
+        {
+            <span class="keyword">if</span> (RaiseCustomEvent != <span class="keyword">null</span>)
+            {
+                RaiseCustomEvent(<span class="keyword">this</span>, e);
+            }
+        }
+    }
+</code></pre><p>订阅者在其构造函数添加订阅：</p>
+<pre><code>class Subscriber
+{
+    <span class="keyword">public</span> <span class="title">Subscriber</span>(Publisher pub)
+    {
+        pub.RaiseCustomEvent += HandleCustomEvent;
+    }
+    <span class="keyword">void</span> HandleCustomEvent(<span class="keyword">object</span> sender, CustomEventArgs e){ <span class="comment">/* some implementation */</span> }
+}
+</code></pre><h2 id="参考资料">参考资料</h2>
+<p>[1] <a href="http://technet.microsoft.com/zh-cn/bb383977" target="_blank" rel="external">http://technet.microsoft.com/zh-cn/bb383977</a></p>
+<p>[2] <a href="http://msdn.microsoft.com/zh-cn/library/8627sbea.aspx" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/8627sbea.aspx</a></p>
+<p>[3] <a href="http://msdn.microsoft.com/zh-cn/library/ms366768.aspx" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/ms366768.aspx</a></p>
+<p>[4] <a href="http://msdn.microsoft.com/zh-cn/library/w369ty8x.aspx" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/w369ty8x.aspx</a></p>
+<p>[5] <a href="http://www.tracefact.net/CSharp-Programming/Delegates-and-Events-in-CSharp.aspx" target="_blank" rel="external">http://www.tracefact.net/CSharp-Programming/Delegates-and-Events-in-CSharp.aspx</a></p>
+]]></content>
+    <summary type="html"><![CDATA[<h2 id="一、扩展方法">一、扩展方法</h2>
+<p>扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 </p>
+]]></summary>
+    
+      <category term="C#" scheme="http://an-dong.info/tags/C/"/>
+    
+      <category term="学习笔记" scheme="http://an-dong.info/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[谈谈“编程游戏”]]></title>
+    <link href="http://an-dong.info/2014/08/03/%E8%B0%88%E8%B0%88%E2%80%9C%E7%BC%96%E7%A8%8B%E6%B8%B8%E6%88%8F%E2%80%9D/"/>
+    <id>http://an-dong.info/2014/08/03/谈谈“编程游戏”/</id>
+    <published>2014-08-03T12:49:41.000Z</published>
+    <updated>2014-08-11T14:05:55.000Z</updated>
+    <content type="html"><![CDATA[<p>编程游戏（不是游戏编程，也不是编游戏……），也叫代码游戏，代表着市面上一类特别的游戏。它在游戏中加入了编程的特性（或许反过来说也对）。本文意在梳理市面上的一些编程游戏，并对其玩法进行介绍和评价。</p>
+<a id="more"></a>
+
+<p>转载请注明：<br>作者：andong777<br>原帖地址：<a href="http://blog.segmentfault.com/codecabin/1190000000626728" target="_blank" rel="external">Code Cabin</a></p>
+<h3 id="选择标准">选择标准</h3>
+<ul>
+<li>项目必须是在时间上是较新的，或者有一定的知名度。不包括年代久远且不活跃的、知名度过低的。</li>
+<li>是电子游戏而不是实体游戏（如桌游）。</li>
+<li>能在线游戏，或者可以获得可运行的程序。</li>
+</ul>
+<p>经过这样一个简单的筛选，我得到了一个长长的项目列表。这里面有知名度较高的CodeCombat和腾讯的Code Tank，也有比较新的创业公司的游戏如Glitchspace和Hakitzu。<br>以下是本文中涉及到的游戏列表：</p>
+<ul>
+<li>Github的热门项目 <a href="codecombat.com">CodeCombat</a></li>
+<li>代码坦克 <a href="http://codetank.alloyteam.com/" target="_blank" rel="external">Code Tank</a></li>
+<li>第一人称编程解谜游戏 <a href="http://store.steampowered.com/app/290060/" target="_blank" rel="external">Glitchspace</a></li>
+<li>机器人格斗 <a href="http://www.kuatostudios.com/games/hakitzu/" target="_blank" rel="external">Hakitzu</a></li>
+<li>代码龟 <a href="http://www.algoid.net/" target="_blank" rel="external">Algoid</a></li>
+<li>用Java学习魔法 <a href="https://sites.google.com/a/eng.ucsd.edu/codespells/home" target="_blank" rel="external">CodeSpells</a></li>
+<li>微软的在线编程游戏 <a href="https://www.codehunt.com/" target="_blank" rel="external">Code Hunt</a></li>
+<li>机器人大战 <a href="http://robocode.sourceforge.net/" target="_blank" rel="external">Robocode</a></li>
+<li>解谜闯关游戏 <a href="http://www.pythonchallenge.com/" target="_blank" rel="external">Python Challenge</a></li>
+<li>自动机编程 <a href="http://jayisgames.com/games/manufactoria/" target="_blank" rel="external">Manufactoria</a></li>
+</ul>
+<p>首先我按照游戏的不同特征进行了分类。</p>
+<h3 id="玩法">玩法</h3>
+<p>游戏的玩法大致是通过编程控制游戏中的人物或道具，本文选择的大部分的游戏都属于此类。不过也有一类具有特殊的玩法，通常也被认为是编程游戏，本文称之为谜题游戏。<br>前者中，游戏的主角通常是魔法师、机器人、坦克等。后者的代表有Python Challenge、Code Hunt和Manufactoria。</p>
+<h3 id="编程语言">编程语言</h3>
+<p>游戏中的编程语言一般是已有的语言，或者是游戏自创的某种语言，或者没有直接使用编程语言。</p>
+<ul>
+<li>CodeCombat支持语言最多。从最初只支持JavaScript到现在的JavaScript、Python、CoffeeScript、Clojure、Lua、IO。</li>
+<li>Code Tank和Hakitzu使用JavaScript。</li>
+<li>CodeSpells、Code Hunt和Robocode使用Java。此外，Code Hunt还支持微软自家的C#。</li>
+<li>Algoid使用自己的类Logo语言。</li>
+<li>其他的游戏中没有直接使用编程语言。</li>
+</ul>
+<h3 id="游戏目标">游戏目标</h3>
+<p>游戏的目标通常有：</p>
+<ul>
+<li>通过游戏使玩家学习某种语言。如Hakitzu和Code Hunt。</li>
+<li>帮助孩子或初学者了解编程。如CodeCombat、Algoid和CodeSpells。</li>
+<li>为熟悉编程的人提供编程对战的平台。如Code Tank和Robocode。</li>
+<li>不知道要干什么（益智）。如Manufactoria。</li>
+</ul>
+<p>有了以上的了解，下面对几个典型的游戏进行简单介绍。</p>
+<h3 id="CodeCombat">CodeCombat</h3>
+<blockquote>
+<p>CodeCombat是一个通过玩游戏来学习编程的网站，也是GitHub上最大的开源CoffeeScript项目，有上千程序员和玩家为其编写程序、测试游戏。到目前为止，已经翻译成17种国外语言。官方称，他们网站的任务就是教会人们如何编程，游戏覆盖编程菜鸟到大神各个阶段，总共超过9千关。人们不需要任何编程知识即可了解程序的运行逻辑，并编出实用的代码。（以下两张图片来自驱动之家）</p>
+</blockquote>
+<p><img src="http://andong777-sfault.qiniudn.com/cc1.jpg" alt="请输入图片描述"></p>
+<p>在游戏中，通过代码实现角色的移动、对话、攻击、拾取和使用道具。在一开始的关卡中，玩家只要输入顺序执行的指令即可完成任务。随着游戏的进行，玩家要完成的任务也更加复杂，玩家需要学习使用判断、循环等语句，在这个过程中玩家不知不觉中就了解了编程。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/cc2.jpg" alt="请输入图片描述"></p>
+<p>想要深入了解可以看这篇<a href="http://news.mydrivers.com/1/289/289057.htm" target="_blank" rel="external">评测</a>。<br>和王国守卫战类似的画风再加上游戏有趣的剧情设定和众包得到的丰富关卡，说他是当下编程游戏的佼佼者应该没有什么异议吧。</p>
+<h3 id="Code_Tank">Code Tank</h3>
+<p>Code Tank是由腾讯AlloyTeam开发的一款编程游戏。据说灵感来自上面提到的Robocode。引用一段自家的介绍：</p>
+<blockquote>
+<p>CodeTank是一个非常有趣的竞赛性编程游戏平台，通过几行简单的Javascript代码和CodeTank API，每个人都可以方便的构建属于自己富有智能和个性的坦克（Tank）机器人，并通过互联网进行在线互动和竞赛！CodeTank是 Code Game（代码游戏，也叫编程游戏）的一种，可以让你在娱乐的同时学习和提高Javascript编程水平以及进行人工智能的研究。它使用HTML5、CSS3等Web新技术构建的在线平台，天然的基于互联网，Tank机器人的代码不需要人工上传下载，可以直接在线运行与其他选手进行战斗。</p>
+</blockquote>
+<p><img src="http://andong777-sfault.qiniudn.com/ct1.jpg" alt="请输入图片描述"></p>
+<p>这个游戏和上一个不同，并不是给初学者学习用的。我没有太多JavaScript编程经验，进入到游戏中不知道该干什么。进入游戏后首先要创建自己的坦克，之后就是编写自己的代码，实现AI控制坦克运动。最终目的是打败其他玩家的坦克，和那些机器人比赛差不多。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/ct2.jpg" alt="请输入图片描述"></p>
+<h3 id="CodeSpells">CodeSpells</h3>
+<p>这是我本人比较喜欢的一款编程游戏，尽管它本身并不火，而且需要下载Java客户端。下面这段话是它唯一的一段中文介绍：</p>
+<blockquote>
+<p>这款游戏是由计算机学家 William Griswold 带领的大四学生团队开发的，游戏的主要受众为高中生。研发团队希望由此来开发学生们的创新力和想象力，让他们主动地去学习知识。该作是一款第一人称游戏。玩家将扮演一名和矮人们生活在荒岛上的魔法师。因为矮人们失去了使用魔法的能力，所以作为魔法师的玩家将帮助矮人们完成魔法。这些咒语是以 Java 语言的形式呈现在玩家面前。玩家需要通过编写这些语句来完成魔法。在帮助矮人们的同时，玩家还能通过一些解密游戏来获得相应的成就，当然，同样是通过 Java 语言的编写。</p>
+</blockquote>
+<p><img src="http://andong777-sfault.qiniudn.com/cs1.jpg" alt="请输入图片描述"></p>
+<p>通过这段<a href="https://www.youtube.com/watch?v=LFnOXLujUZo" target="_blank" rel="external">视频</a>可以看到，该游戏所表现的内容较好地体现了面向对象的编程思想，玩家通过代码可以支配游戏中的物品，进而改造游戏中的世界。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/cs2.jpg" alt="请输入图片描述"></p>
+<h3 id="其他">其他</h3>
+<p>剩下的那几个我就简单来个一句话介绍吧。</p>
+<ul>
+<li>Algoid：使用给定的语言和API控制小乌龟运动来画画。可以画很复杂的画哦。不过画了几个没什么动力就不玩了……</li>
+<li>Code Hunt：学习C#和Java不错，确实是从头一点点学习。但感觉只是披着游戏的外衣的编程题目。Python Challenge和Manufactoria这俩也一样。</li>
+<li>Python Challenge：每一关卡一个解谜题目。其实和Python没什么关系，什么语言都可以；感觉和编程关系也不大……</li>
+<li>Manufactoria：自动机编程。Matrix67在他博客上推荐的。</li>
+<li>Glitchspace和Hakitzu：没有相应的设备，所以没玩。</li>
+<li>Robocode：和Code Tank一样。要下载Java代码到本地，或许还要Eclipse……</li>
+</ul>
+<h3 id="小结">小结</h3>
+<p>本人认为真正好的教育类编程游戏应体现编程思想，而不应局限于某种编程语言或技巧。我所设想的编程游戏应当体现一个开放式的世界，玩家可以对其中的对象编程，玩家可以编程创造或改造物品。这里的编程不一定要通过代码，如果能通过可视化的方式，玩家或许能更容易理解。或许以后有空我会尝试一下。</p>
+]]></content>
+    <summary type="html"><![CDATA[<p>编程游戏（不是游戏编程，也不是编游戏……），也叫代码游戏，代表着市面上一类特别的游戏。它在游戏中加入了编程的特性（或许反过来说也对）。本文意在梳理市面上的一些编程游戏，并对其玩法进行介绍和评价。</p>
+]]></summary>
+    
+      <category term="游戏" scheme="http://an-dong.info/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="编程游戏" scheme="http://an-dong.info/tags/%E7%BC%96%E7%A8%8B%E6%B8%B8%E6%88%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[推荐一个好用的VPN]]></title>
+    <link href="http://an-dong.info/2014/08/03/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84VPN/"/>
+    <id>http://an-dong.info/2014/08/03/推荐一个好用的VPN/</id>
+    <published>2014-08-03T12:48:40.000Z</published>
+    <updated>2014-08-11T12:49:23.000Z</updated>
+    <content type="html"><![CDATA[<p>旗舰VPN是我对比多个市面上常见的VPN后，感觉性价比较高的一款。<br>包月仅需10+元，即可<strong>不限流量</strong>使用，享受千兆或光纤线路。此外，还不限制终端数量。<br>即使免费使用，也可以<strong>每天</strong>使用1G流量，使用免费线路，速度稍慢。</p>
+<p>对比其他的产品：</p>
+<ul>
+<li>green VPN 免费每月才200M，有点抠。</li>
+<li>Nydus VPN 确实不错，但太贵，每月20+元。</li>
+<li>云梯VPN最便宜的套餐不算贵，10元每月，但限流量，每月1G，实在不够用。</li>
+<li>VPN tech runo 算是性价比高的了，每月6元，不过据说网速看不了youtube……</li>
+<li>还有红杏，虽然不是VPN但用的人也挺多。10元每月其实还可以，但不能再移动端用就有点不值了。</li>
+</ul>
+<p>如果你有兴趣，可以点我的推广链接，谢谢！</p>
+<p><a href="http://www.qjvpn.com?rec=182077" target="_blank" rel="external">旗舰VPN</a></p>
+]]></content>
+    
+    
+      <category term="VPN" scheme="http://an-dong.info/tags/VPN/"/>
+    
+      <category term="推荐" scheme="http://an-dong.info/tags/%E6%8E%A8%E8%8D%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[C#学习笔记（与Java、C、C++和Python对比）]]></title>
+    <link href="http://an-dong.info/2014/07/27/C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%8EJava%E3%80%81C%E3%80%81C++%E5%92%8CPython%E5%AF%B9%E6%AF%94%EF%BC%89/"/>
+    <id>http://an-dong.info/2014/07/27/C学习笔记（与Java、C、C++和Python对比）/</id>
+    <published>2014-07-27T12:46:53.000Z</published>
+    <updated>2014-08-11T14:06:38.000Z</updated>
+    <content type="html"><![CDATA[<p>最近准备学习一下Unity3D，在C#和JavaScript中选择了C#。所以，作为学习Unity3D的准备工作，首先需要学习一下C#。用了一两天的时间学了一下C#，感觉是处在C++和Java之间的一门语言。比Java更灵活，比C++更简单，确实是一门设计很优秀的语言。</p>
+<a id="more"></a>
+
+<h3 id="基础概念和语法">基础概念和语法</h3>
+<h4 id="基本数据类型">基本数据类型</h4>
+<ul>
+<li>C#中的基本数据类型分为值类型和引用类型。相比Java而言，增加了无符号数，多了C中的<code>struct</code>，字符串也成了基本类型。数值类型、枚举类型、<strong>结构体</strong>等是值类型。<strong>字符串</strong>、对象、数组、委托等是引用类型。</li>
+<li>C#中的基本数据类型都有对应的包装类。编译时编译器会将基本类型转换成对应的类，如<code>int</code>对应<code>Int32</code>，<code>string</code>对应<code>String</code>。和Java中不同，基本类型的关键字只是对应类的<em>别名</em>，所以基本类型的变量也有自己的方法。</li>
+<li>C#可以对数值类型进行类型转换。转换规则和Java和C/C++类似，注意C#中<code>bool</code>和<code>int</code>之间不能转换。基本类型中有转换成自身的静态方法<code>Parse</code>。此外，C#中还有专门的<code>Convert</code>类可以进行类型转换。</li>
+<li>C#中的常量关键字是<code>const</code>和<code>readonly</code>。前者在编译时确定，需要在声明时赋值。后者在运行时确定，可以在声明之后赋值一次。</li>
+</ul>
+<h4 id="命名规范">命名规范</h4>
+<p>函数的命名为首字母大写的驼峰命名法；变量首字母小写。<br>C#中入口方法为首字母大写的Main方法。</p>
+<h4 id="预编译指令">预编译指令</h4>
+<p>C#中可以使用预编译指令。如<code>#define</code>，<code>#if</code>，<code>pragma</code>等。但<code>#define</code>不能用于定义常量，只能定义符号。</p>
+<h4 id="命名空间">命名空间</h4>
+<p>C#的命名空间和C++的命令空间没有太多区别。如果学过Java或者Python，那么和这二者中<code>包</code>的概念也类似。</p>
+<h4 id="类型推断">类型推断</h4>
+<p>使用<code>var</code>关键字，类似于C++中的<code>auto</code>。在编译时确定，不会影响程序性能。</p>
+<h4 id="基本输入输出">基本输入输出</h4>
+<p>输入输出这一部分粗看比Java要简明一些：</p>
+<pre><code>using System;
+// <span class="keyword">...</span>
+Console.Read();    // 读一个字符
+Console.ReadLine(); // 读一行
+Console.Write(); // 不换行写
+Console.WriteLine(); // 写并换行
+</code></pre><p>实现Java中的<code>nextXXX</code>：读一行然后用<code>string</code>的<code>split</code>方法切割，再转换成相应类型。</p>
+<h4 id="基本语句">基本语句</h4>
+<ul>
+<li><code>switch</code>语句每一个<code>case</code>都要有<code>break</code>，除非该<code>case</code>为空。C#允许在<code>switch</code>中使用<code>goto</code>关键字。</li>
+<li><p>增加<code>foreach</code>关键字。要求对象实现<code>IEnumerable</code>接口。使用方法同Python中的<code>for</code>：</p>
+<pre><code>  <span class="keyword">foreach</span>(<span class="keyword">var</span> v <span class="keyword">in</span> list){ <span class="comment">// do something. }</span>
+</code></pre></li>
+</ul>
+<h4 id="字符串">字符串</h4>
+<ul>
+<li>特殊符号<code>\</code>和<code>@</code>：<code>@</code>可以取消字符串内的转义，类似与Python中字符串前的<code>r</code>。</li>
+<li>C#中不使用<code>%</code>语法表示输出中的变量，而是使用占位符<code>{x}</code>，x从0开始。</li>
+<li><code>string</code>中自带的方法：<ul>
+<li>Substring(int startindex,int len)</li>
+<li>Replace(string oldValue,string newValue)</li>
+<li>Split()</li>
+<li>ToCharArray(int startindex，int len)</li>
+<li>ToUpper()和ToLower()</li>
+<li>== 和 !=</li>
+</ul>
+</li>
+<li>C#中也有<code>StringBuilder</code>类，用法与Java中的类似。</li>
+</ul>
+<h4 id="数组">数组</h4>
+<ul>
+<li>和Java中的数组一样，C#中的数组也是对象，有自己的属性和方法。</li>
+<li><p>C#支持声明普通的多维数组和交错数组（数组的数组）。注意声明的方式如下：</p>
+<pre><code>  <span class="keyword">int</span>[,] arr1 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>, <span class="number">5</span>];
+  <span class="keyword">int</span>[][] arr2 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][];
+  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;arr2.Length;i++){
+      arr2[i] = <span class="keyword">new</span> <span class="keyword">int</span>[i+<span class="number">1</span>];
+  }
+</code></pre></li>
+<li><p>C#中也有与Java中<code>Arrays</code>类相似功能和用法的类<code>Array</code>。</p>
+</li>
+</ul>
+<h4 id="unsafe、fixed、checked和unchecked"><code>unsafe</code>、<code>fixed</code>、<code>checked</code>和<code>unchecked</code></h4>
+<ul>
+<li>可以通过<code>unsafe</code>插入不安全的代码，代码中可以使用C/C++的指针。可以用在一个方法或一个代码块中。</li>
+<li><code>fixed</code>指示垃圾回收器不要移动代码内的对象，以免发生错误。一般用于不安全代码中。</li>
+<li><code>checked</code>和<code>unchecked</code>：在已检查的上下文中，算法溢出引发异常。 在未检查的上下文中，算法溢出被忽略并且结果被截断。</li>
+</ul>
+<h3 id="函数">函数</h3>
+<h4 id="可见性">可见性</h4>
+<ul>
+<li>默认可见性为<code>private</code>。</li>
+<li>增加了<code>internal</code>，为命名空间内可见。</li>
+</ul>
+<h4 id="参数和返回值">参数和返回值</h4>
+<ul>
+<li>数值类型和<code>struct</code>等采用值传递。</li>
+<li>其他类型如对象、数组等拷贝自身引用的副本。以上和Java中的参数传递相同。</li>
+<li><p>C#中增加了<code>ref</code>关键字，提供了在方法内修改实参的方法，类似于C/C++中的引用。写一个Swap方法如下：</p>
+<pre><code>  <span class="keyword">static</span> <span class="type">void</span> <span class="type">Swap</span>(<span class="keyword">ref</span> <span class="type">int</span> x, <span class="keyword">ref</span> <span class="type">int</span> y)
+  {
+      <span class="type">int</span> t = x; x = y; y = t;
+  }
+  // 调用<span class="type">Swap</span>方法
+  <span class="type">Swap</span>(<span class="keyword">ref</span> num1, <span class="keyword">ref</span> num2);
+</code></pre></li>
+<li><p>使用<code>params</code>关键字实现可变长参数传递，该参数需放在参数列表的最后，并且类型为数组。一个可变长参数的加法示例：</p>
+<pre><code>  <span class="keyword">static</span> <span class="keyword">int</span> Sum(params <span class="keyword">int</span>[] arr)
+  {
+      <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;
+      foreach (<span class="keyword">int</span> i in arr)
+          <span class="keyword">sum</span> += i;
+      <span class="keyword">return</span> <span class="keyword">sum</span>;
+  }
+  <span class="comment">// 调用Sum方法</span>
+  <span class="keyword">int</span> <span class="keyword">sum</span> = Sum(<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>);
+</code></pre></li>
+<li><p>C#还支持输出参数，用<code>out</code>表示。这样，可以实现返回多个参数，比Java更优雅，比C/C++更安全。计算除法得到商和余数的例子：</p>
+<pre><code>  <span class="keyword">static</span> <span class="keyword">void</span> Divide(<span class="keyword">int</span> n, <span class="keyword">int</span> d, <span class="keyword">out</span> <span class="keyword">int</span> q, <span class="keyword">out</span> <span class="keyword">int</span> r)
+  {
+      q = n / d;
+      r = n % d;
+  }
+  <span class="comment">// 调用Divide方法</span>
+  Divide(n, d, <span class="keyword">out</span> q, <span class="keyword">out</span> r);
+</code></pre></li>
+</ul>
+<h4 id="运算符重载">运算符重载</h4>
+<p>C#支持运算符重载，使用方法同C/C++。<br>如C#中的<code>string</code>就实现了<code>==</code>的重载，所以用<code>==</code>就可以直接比较两个字符串的内容。</p>
+<h4 id="委托">委托</h4>
+<p>类似于C/C++的函数指针。通过委托可以封装已有的方法。<br>使用委托的步骤如下：</p>
+<ol>
+<li><p>定义函数类型：</p>
+<pre><code> <span class="keyword">delegate</span> <span class="keyword">int</span> Operation(<span class="keyword">int</span> val1, <span class="keyword">int</span> val2);
+</code></pre></li>
+<li><p>声明该类型的变量：</p>
+<pre><code> <span class="title">Operation</span> Oper;
+</code></pre></li>
+<li><p>实例化变量：</p>
+<pre><code> <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Add</span>(<span class="keyword">int</span> val1, <span class="keyword">int</span> val2){<span class="keyword">return</span> val1+val2; }
+ <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Subtract</span>(<span class="keyword">int</span> val1, <span class="keyword">int</span> val2){<span class="keyword">return</span> val1-val2; }
+ <span class="keyword">if</span>(<span class="keyword">operator</span> == <span class="string">'+'</span>)
+     Oper = <span class="keyword">new</span> Operation(Add);
+ <span class="keyword">else</span>
+     Oper = <span class="keyword">new</span> Operation(Subtract);
+</code></pre></li>
+<li><p>调用</p>
+<pre><code> <span class="keyword">int</span> <span class="keyword">res</span> = Oper(val1, val2);
+</code></pre></li>
+</ol>
+<h4 id="lambda表达式">lambda表达式</h4>
+<p>由<code>delegate</code>可以得到匿名方法。但更简单的办法是使用lambda表达式。lambda表达式的格式是：</p>
+<pre><code>x<span class="function"> =&gt;</span> {<span class="regexp">//</span> <span class="keyword">do</span> something <span class="reserved">with</span> x}
+</code></pre><p>x是输入参数，编译器可以自动推断出它是什么类型的，如果没有输入参数，用<code>()</code>来代替。</p>
+<h3 id="类与对象">类与对象</h3>
+<h4 id="与struct的比较">与<code>struct</code>的比较</h4>
+<ul>
+<li><code>struct</code>有自己的属性和方法，可以看作轻量的类。</li>
+<li><code>struct</code>继承自<code>System.ValueType</code>，类继承自<code>System.Object</code>。</li>
+<li><code>struct</code>不能实现抽象和继承，不能声明无参构造函数或析构函数，可以用<code>new</code>创建也可以不使用。</li>
+</ul>
+<h4 id="getter/setter">getter/setter</h4>
+<p>C#提供比Java更简单的getter、setter。例子：</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">string</span> name; <span class="comment">// 内部变量</span>
+<span class="keyword">public</span> <span class="keyword">string</span> Name
+{
+    <span class="keyword">get</span> { <span class="keyword">return</span> name; }
+    <span class="keyword">set</span> { name = <span class="keyword">value</span>; }
+}
+</code></pre><p>在<code>get</code>和<code>set</code>中就可以写对应的getter/setter。其中<code>value</code>为关键字，指代用户传入的参数。<br>更简单地，可以不指定内部变量：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">int</span> Age { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+<span class="keyword">public</span> <span class="keyword">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+</code></pre><h4 id="继承与多态">继承与多态</h4>
+<ul>
+<li>C#只支持单继承。继承和实现都用<code>：</code>表示。</li>
+<li>C#中与Java中<code>super</code>用法相同的是<code>base</code>关键字。可以使用<code>base()</code>调用父类相应的构造方法。使用<code>base.XXX()</code>调用父类的XXX方法。</li>
+<li>禁止类被继承，Java使用<code>final</code>关键字，C#中则用<code>sealed</code>。</li>
+<li>C#实现多态也需要父类方法声明为<code>virtual</code>，同时还要在子类方法声明为<code>override</code>，这样才可以实现多态。</li>
+</ul>
+<h3 id="参考资料">参考资料</h3>
+<p>[1] <a href="http://blog.csdn.net/jukai7/article/category/1530997" target="_blank" rel="external">http://blog.csdn.net/jukai7/article/category/1530997</a></p>
+<p>[2] <a href="http://msdn.microsoft.com/zh-cn/library/aa287549" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/aa287549</a></p>
+<p>[3] <a href="http://technet.microsoft.com/zh-cn/library/ms228602(v=vs.90).aspx" target="_blank" rel="external">http://technet.microsoft.com/zh-cn/library/ms228602(v=vs.90).aspx</a></p>
+<p>[4] <a href="http://www.cnblogs.com/zhucai/archive/2011/02/16/csharp-compare-java.html" target="_blank" rel="external">http://www.cnblogs.com/zhucai/archive/2011/02/16/csharp-compare-java.html</a></p>
+<p>[5] <a href="http://www.cnblogs.com/liulun/archive/2013/02/26/2909985.html" target="_blank" rel="external">http://www.cnblogs.com/liulun/archive/2013/02/26/2909985.html</a></p>
+<p>[6] C#快速入门</p>
+]]></content>
+    <summary type="html"><![CDATA[<p>最近准备学习一下Unity3D，在C#和JavaScript中选择了C#。所以，作为学习Unity3D的准备工作，首先需要学习一下C#。用了一两天的时间学了一下C#，感觉是处在C++和Java之间的一门语言。比Java更灵活，比C++更简单，确实是一门设计很优秀的语言。</p>
+]]></summary>
+    
+      <category term="C#" scheme="http://an-dong.info/tags/C/"/>
+    
+      <category term="学习笔记" scheme="http://an-dong.info/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[关于Cygwin——包管理、替换默认终端、同MSYS的比较]]></title>
+    <link href="http://an-dong.info/2014/07/24/%E5%85%B3%E4%BA%8ECygwin%E2%80%94%E2%80%94%E5%8C%85%E7%AE%A1%E7%90%86%E3%80%81%E6%9B%BF%E6%8D%A2%E9%BB%98%E8%AE%A4%E7%BB%88%E7%AB%AF%E3%80%81%E5%90%8CMSYS%E7%9A%84%E6%AF%94%E8%BE%83/"/>
+    <id>http://an-dong.info/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/</id>
+    <published>2014-07-24T13:02:42.000Z</published>
+    <updated>2014-08-11T14:07:01.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未经修改的 UNIX 源代码编译的。它们合在一起提供大家熟悉的 UNIX 环境。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>与此同时，MinGW这个项目也在做类似的事情。MinGW是Minimalistic GNU for Windows的缩写。MinGW有一个叫MSYS（Minimal SYStem）的子项目，主要是提供了一个模拟Linux的Shell和一些基本的Linux工具。</p>
+<p><a href="http://www.cnblogs.com/fancybit/archive/2012/07/08/2581590.html" target="_blank" rel="external">这篇文章</a>指出了二者的区别，学习一下：</p>
+<blockquote>
+<p>首先MinGW和Cygwin都不能让Linux下的程序直接运行在Windows上，必需通过源代码重新编译。  </p>
+<p>现代操作系统包括Windows和Linux的基本设计概念像进程线程地址空间虚拟内存这些都是大同小异的，之所以二者上的程序不能兼容，主要是它们对这些功能具体实现上的差异，首先是可执行文件的格式，Window使用PE的格式，并且要求以.EXE为后缀名。Linux则使用Elf。其次操作系统的API也不一样，如Windows用CreateProcess()创建进程，而Linux使用fork()。  </p>
+<p>所以要移植程序必然要在这些地方进行改变，<strong>MinGW有专门的W32api头文件，来把代码中Linux方式的系统调用替换为对应的Windows方式。而Cygwin则通过cygwin1.dll这个文件来实现这种API的转换，并模拟一个Linux系统调用接口给程序，程序依然以Linux的方式调用系统API</strong>，只不过这个API在cygwin1.dll上，cygwin1.dll再调用Windows对应的实现，来把结果返回给程序。  </p>
+<p>可以用查看他们编译好的程序的导入表来验证这点。二者生成的程序都是能在Windows上运行的EXE文件，显然都是PE格式，用一个PE格式查看工具检查一下就能发现，Cygwin生成的程序依然有fork()这样的Linux系统调用，但目标库是cygwin1。而MingW生成的程序，则全部使用从KERNEL32导出的标准Windows系统API。  </p>
+</blockquote>
+<p>要在Cygwin环境中管理软件包，可以使用自带的setup.exe。此外，Cygwin中还有类似于apt-get的包管理器，叫做apt-cyg。<a href="http://zengrong.net/post/1792.htm" target="_blank" rel="external">这篇文章</a>介绍了apt-cyg的安装和使用。</p>
+<p>Cygwin默认的界面如下：<br><img src="http://segmentfault.com/img/bVcKCW" alt="请输入图片描述"></p>
+<p>很丑，默认不能复制粘贴，需要开启<code>快速编辑模式</code>或者点击左上角，选择<code>编辑</code>。Cygwin官网建议使用MinTTY作为终端工具。MinTTY已经自带，输入<code>mintty</code>进入。</p>
+<p><img src="http://segmentfault.com/img/bVcKCX" alt="请输入图片描述"></p>
+<p>可以看到，比<code>cmd</code>和<code>PowerShell</code>强多了。但怎样将其设置为Cygwin的默认终端？<br>参考了<a href="http://codespider.is-programmer.com/posts/26770.html" target="_blank" rel="external">这篇文章</a>。在Cygwin目录下打开<code>Cygwin.bat</code>，注释掉<code>bash --login -i</code>，加入下面这句：</p>
+<pre><code><span class="operator"><span class="keyword">start</span> mintty bash <span class="comment">--login -i</span></span>
+</code></pre><p>（如果你没有将Cygwin目录加到path中，这里要指明路径）如下图。<br><img src="http://segmentfault.com/img/bVcKCY" alt="请输入图片描述"></p>
+]]></content>
+    <summary type="html"><![CDATA[<blockquote>
+<p>Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未经修改的 UNIX 源代码编译的。它们合在一起提供大家熟悉的 UNIX 环境。</p>
+</blockquote>
+]]></summary>
+    
+      <category term="Cygwin" scheme="http://an-dong.info/tags/Cygwin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Cocos2d-x数据相关的类用法简介（附示例）]]></title>
+    <link href="http://an-dong.info/2014/07/17/Cocos2d-x%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E7%9A%84%E7%B1%BB%E7%94%A8%E6%B3%95%E7%AE%80%E4%BB%8B%EF%BC%88%E9%99%84%E7%A4%BA%E4%BE%8B%EF%BC%89/"/>
+    <id>http://an-dong.info/2014/07/17/Cocos2d-x数据相关的类用法简介（附示例）/</id>
+    <published>2014-07-17T13:47:20.000Z</published>
+    <updated>2014-08-11T14:06:25.000Z</updated>
+    <content type="html"><![CDATA[<p>在Cocos2d-x的学习和使用中，我遇到了很多关于数据的操作。在这个过程中，我学习了Cocos2d-x自带的很多功能。下面我把接触到的类罗列在下面，给出的都是基本的用法，多数没有深入了解。</p>
+<a id="more"></a>
+
+<h3 id="UserDefault">UserDefault</h3>
+<p>UserDefault类就像一个小型的数据库，它可以被用来存储一些键值对。而且由于是单例模式，你可以在程序的任何地方使用这些数据。<br>头文件：</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span> "base/CCUserDefault.h"</span>
+</code></pre><p>数据的存储：</p>
+<pre><code>UserDefault *ud = UserDefault::getInstance();
+<span class="comment">// 从输入框中读取出字符串并加入到UserDefault中</span>
+ud-&gt;setStringForKey(<span class="string">"username"</span>, username-&gt;getStringValue());
+ud-&gt;setStringForKey(<span class="string">"password"</span>, password-&gt;getStringValue());
+ud-&gt;flush();    <span class="comment">// 将UserDefault中的内容写入到文件中</span>
+</code></pre><p>数据的读取：</p>
+<pre><code><span class="regexp">//</span> 将存储的数据读入到文本框，如果数据已经存储到本地，可以直接读
+username-&gt;setText<span class="function"><span class="params">(UserDefault::getInstance()-&gt;getStringForKey(<span class="string">"username"</span>))</span>;
+<span class="title">password</span>-&gt;</span>setText<span class="function"><span class="params">(UserDefault::getInstance()-&gt;getStringForKey(<span class="string">"password"</span>))</span>;</span>
+</code></pre><h3 id="FileUtils">FileUtils</h3>
+<p>FileUtils类包括了对文件常用的操作，如获取路径、判断是否存在等，有点类似于Java中的File类，但除此之外，它还可以从文件中读内容。用的比较多还是读取文件内容到字符串：</p>
+<pre><code><span class="comment">#include "platform/CCFileUtils.h"</span>
+
+<span class="keyword">if</span><span class="function"><span class="params">(FileUtils::getInstance()-&gt;isFileExist(filename))</span>  
+{  
+    <span class="title">std</span>::<span class="title">string</span> <span class="title">data</span>=<span class="title">FileUtils</span>::<span class="title">getInstance</span><span class="params">()</span>-&gt;</span>getStringFromFile(filename);  
+}  
+</code></pre><p>更多FileUtils的用法可以看<a href="http://blog.csdn.net/oowoodone/article/details/20730307" target="_blank" rel="external">这篇文章</a>。</p>
+<h3 id="rapidjson">rapidjson</h3>
+<p>从Cocos2d-x 3.0开始开始自带rapidjson这个类，解析json文件变得方便了。下面的示例从json中读取带有玩家名字和得分的排行榜信息。</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span> "json/rapidjson.h"  </span>
+<span class="preprocessor">#<span class="keyword">include</span> "json/document.h"  </span>
+
+rapidjson::Document doc;  <span class="comment">// 创建一个解析JSON的Document对象</span>
+doc.Parse&lt;rapidjson::kParseDefaultFlags&gt;(data.c_str());  <span class="comment">// 假设数据存储在字符串data中</span>
+<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;doc.Size();i++)  
+{   
+    rapidjson::Value &amp;v=doc[i];       
+    std::<span class="built_in">string</span> username;
+    <span class="keyword">int</span> score; 
+    <span class="keyword">if</span>(v.HasMember(<span class="string">"username"</span>) &amp;&amp; v.HasMember(<span class="string">"score"</span>))  
+    {   
+        username = v[<span class="string">"username"</span>].GetString();  <span class="comment">// 获取一个String属性</span>
+        score = v[<span class="string">"score"</span>].GetInt();    <span class="comment">// 获取一个int属性</span>
+        texts[i]-&gt;setText(username + <span class="string">": "</span> + std::to_string(score);    <span class="comment">// 将int转成String，加到一个文本框中</span>
+    }  
+}  
+</code></pre><h3 id="NotificationCenter">NotificationCenter</h3>
+<p>同大多数学习者一样，我们一开始在层与层、场景与场景之间传递数据上面也很头疼，然后就在网上查到了这个类。他使用了观察者模式，只需要让一个类订阅另一个类的消息，就可以实现数据的传递。<br>在下面这个示例中，希望将CharacterLayer中的血量、生命数等传递到HUDLayer中显示。<br>CharacterLayer：</p>
+<pre><code>NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">postNotification</span>(<span class="string">"loseHeroLife"</span>,NULL);</span>    <span class="comment">// 传递生命数减少的消息，没有传递额外的对象</span>
+
+NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">postNotification</span>(<span class="string">"getHealth"</span>,heroHealth);</span>    <span class="comment">// 传递此时的血量，heroHealth对象中存储了血量的信息</span>
+</code></pre><p>HUDLayer：</p>
+<pre><code>NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">addObserver</span>(this,<span class="function">callfuncO_selector</span>(HUDLayer::loseHeroLife),<span class="string">"loseHeroLife"</span>,NULL);</span>    <span class="comment">// 在loseHeroLife中将显示的红心减一</span>
+
+NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">addObserver</span>(this,<span class="function">callfuncO_selector</span>(HUDLayer::getHealth),<span class="string">"getHealth"</span>,NULL);</span>    <span class="comment">// 从接收到的heroHealth更新血槽的显示</span>
+</code></pre><p>绑定的处理方法应该是这个样子的：</p>
+<pre><code><span class="keyword">void</span> HUDLayer::getHealth(<span class="built_in">Object</span>* pSender){
+    heroHealth = (Health*)pSender;
+}
+</code></pre><h3 id="HttpClient">HttpClient</h3>
+<p>下面就是数据通过网络传输的内容了。HttpClient及相关类可以实现发送Http请求及接收响应。以用户注册的代码为例：</p>
+<pre><code>HttpRequest<span class="subst">*</span> request <span class="subst">=</span> <span class="literal">new</span> HttpRequest();  
+std<span class="tag">::string</span> url <span class="subst">=</span> LOGIN_SERVER_URL <span class="subst">+</span> username_s <span class="subst">+</span> <span class="string">"/"</span> <span class="subst">+</span> password_s;
+request<span class="subst">-&gt;</span>setUrl(url<span class="built_in">.</span>c_str());  
+request<span class="subst">-&gt;</span>setRequestType(HttpRequest<span class="tag">::Type</span><span class="tag">::GET</span>);  
+<span class="comment">// 还可以使用request-&gt;setRequestData("a", 0)的方式设置参数，这里没有用到  </span>
+request<span class="subst">-&gt;</span>setResponseCallback(this, httpresponse_selector(LoginScene<span class="tag">::onHttpRequestCompleted</span>));    
+HttpClient<span class="tag">::getInstance</span>()<span class="subst">-&gt;</span>send(request);  
+request<span class="subst">-&gt;</span>release();
+</code></pre><p>onHttpRequestCompleted是一个回调方法，用于处理Http响应。它长这个样子：</p>
+<pre><code>void LoginScene::onHttpRequestCompleted(HttpClient *sender, HttpResponse *response) {  
+<span class="keyword">if</span>(!response || !response-&gt;isSucceed())
+    <span class="keyword">return</span>;
+<span class="comment">// 获取响应中的内容</span>
+std::vector&lt;<span class="keyword">char</span>&gt;* buffer = response-&gt;getResponseData();  
+std::stringstream ss;
+<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;buffer-&gt;size();i++){
+    ss &lt;&lt; (*buffer)[i];
+}
+<span class="comment">// 做相应处理</span>
+<span class="keyword">if</span>(ss.<span class="keyword">str</span>() == ”success“){
+    <span class="comment">// 登录成功</span>
+}<span class="keyword">else</span>{
+    <span class="comment">// 登录失败</span>
+}
+</code></pre><p>} </p>
+]]></content>
+    <summary type="html"><![CDATA[<p>在Cocos2d-x的学习和使用中，我遇到了很多关于数据的操作。在这个过程中，我学习了Cocos2d-x自带的很多功能。下面我把接触到的类罗列在下面，给出的都是基本的用法，多数没有深入了解。</p>
+]]></summary>
+    
+      <category term="Cocos2d-x" scheme="http://an-dong.info/tags/Cocos2d-x/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[从PEP-8学习Python编码风格]]></title>
+    <link href="http://an-dong.info/2014/07/05/%E4%BB%8EPEP-8%E5%AD%A6%E4%B9%A0Python%E7%BC%96%E7%A0%81%E9%A3%8E%E6%A0%BC/"/>
+    <id>http://an-dong.info/2014/07/05/从PEP-8学习Python编码风格/</id>
+    <published>2014-07-05T08:32:00.000Z</published>
+    <updated>2014-08-11T14:06:55.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="关于空行">关于空行</h3>
+<ul>
+<li>类与顶级函数(top-level function)的定义之间应当空两行。</li>
+<li>类中的方法之间应当空一行。</li>
+<li>方法中的逻辑部分之间可以空一行。</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="关于原文件编码">关于原文件编码</h3>
+<p>Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。</p>
+<h3 id="关于命名风格">关于命名风格</h3>
+<ul>
+<li>模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。</li>
+<li>类名使用驼峰命名法。</li>
+<li>异常的命名以<code>Error</code>结尾。</li>
+<li>函数名和方法名使用小写，用下划线分割单词。<code>mixedCase</code>只有在考虑兼容性的时候才使用。</li>
+<li>类方法的第一个参数总是<code>cls</code>，实例方法的第一个参数总是<code>self</code>。</li>
+<li>变量命名同函数和方法。如果名字与保留字有冲突，在最后加<code>_</code>。</li>
+<li>私有变量和方法在最前加<code>_</code>，此时外部无法访问，但子类可以访问。</li>
+<li>如果也不希望子类访问，可以以<code>__</code>开头。此时无法用ClassName.__var访问 。(但仍然可以通过ClassName._ClassName_a访问到。)</li>
+</ul>
+<h3 id="关于公有和私有接口">关于公有和私有接口</h3>
+<ul>
+<li>默认情况下，以<code>_</code>开头的变量和方法被认为是私有的。</li>
+<li>可以使用<code>__all__</code>列表指定公开的接口。它会覆盖上一条规则。</li>
+</ul>
+<h3 id="关于Python中的下划线">关于Python中的下划线</h3>
+<p>Python中的下划线用法有这么几种：</p>
+<ul>
+<li><code>a_</code>：避免名字与保留字等的冲突。</li>
+<li><code>_a</code>：表示私有。只能在类内部和子类中访问。</li>
+<li><code>__a</code>：只能在类内部使用。</li>
+<li><code>__a__</code>：Python内<code>魔法</code>对象的命名。其他情况不要这样命名。</li>
+</ul>
+<h3 id="关于getter(accessor)和setter(mutator)">关于getter(accessor)和setter(mutator)</h3>
+<p>Python中不推荐使用类似于Java中的<code>getX</code>和<code>setX</code>。相反，应当直接对变量进行操作。<br>如果要操作的对象不能或不适合直接操作，可以使用内建的<code>property</code>方法自定义功能。<code>property</code>有两种用法：</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>
+        self._x = <span class="keyword">None</span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">getx</span><span class="params">(self)</span>:</span>
+        <span class="keyword">return</span> self._x
+    <span class="function"><span class="keyword">def</span> <span class="title">setx</span><span class="params">(self, value)</span>:</span>
+        self._x = value
+    <span class="function"><span class="keyword">def</span> <span class="title">delx</span><span class="params">(self)</span>:</span>
+        <span class="keyword">del</span> self._x
+    x = property(getx, setx, delx, <span class="string">"I'm the 'x' property."</span>)
+</code></pre><p>或者：</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>
+        self._x = <span class="keyword">None</span>
+
+    <span class="decorator">@property</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self)</span>:</span>
+        <span class="string">"""I'm the 'x' property."""</span>
+        <span class="keyword">return</span> self._x
+
+    <span class="decorator">@x.setter</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self, value)</span>:</span>
+        self._x = value
+
+    <span class="decorator">@x.deleter</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self)</span>:</span>
+        <span class="keyword">del</span> self._x
+</code></pre><p>这样，当执行<code>C.x</code>，<code>C.x = value</code>和<code>del C.x</code>时就会分别调用这三个方法。</p>
+]]></content>
+    <summary type="html"><![CDATA[<h3 id="关于空行">关于空行</h3>
+<ul>
+<li>类与顶级函数(top-level function)的定义之间应当空两行。</li>
+<li>类中的方法之间应当空一行。</li>
+<li>方法中的逻辑部分之间可以空一行。</li>
+</ul>
+]]></summary>
+    
+      <category term="Python" scheme="http://an-dong.info/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Cocos2d-x——导入Cocostudio资源]]></title>
+    <link href="http://an-dong.info/2014/07/05/Cocos2d-x%E2%80%94%E2%80%94%E5%AF%BC%E5%85%A5Cocostudio%E8%B5%84%E6%BA%90/"/>
+    <id>http://an-dong.info/2014/07/05/Cocos2d-x——导入Cocostudio资源/</id>
+    <published>2014-07-05T07:06:17.000Z</published>
+    <updated>2014-08-11T14:06:18.000Z</updated>
+    <content type="html"><![CDATA[<p>目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。</p>
+<a id="more"></a>
+
+<p>本人Cocos2d-x的版本是3.1，Cocostudio的版本是1.5.<br>Cocostudio目前的功能包括UI编辑器、动画编辑器、场景编辑器和数据编辑器。数据编辑器没有涉及到，就不说了。剩下三者中主要讲下导入UI编辑器的资源。<br>UI编辑器导出的文件包括一个<code>.ExportJson</code>文件，一个<code>.plist</code>文件和一个<code>.png</code>文件。Cocostudio中文官网中说的是<code>TouchGroup</code>，英文官网中是<code>UILayer</code>，可是都已经不存在了。<code>UILayer</code>变成了<code>Layer</code>，现在也可以不创建<code>Layer</code>，直接加到场景上面。所以代码可以这样：</p>
+<pre><code>Node *pNode = <span class="attribute">GUIReader</span>::getInstance<span class="function"><span class="params">()</span>-&gt;</span>widgetFromJsonFile(<span class="string">"test.ExportJson"</span>);
+<span class="keyword">this</span>-&gt;addChild(pNode);
+</code></pre><p>下面就可以用<code>getChildByTag</code>来获取组件了。不过<code>getChildByTag</code>貌似只能按照树的结构一层层照下来，显得很麻烦，而且不能按照名字来取。所以，现在可以用<code>ui</code>中的<code>Helper</code>直接从树中获取组件，用name或者tag。但<code>seekWidgetByTag</code>和<code>seekWidgetByName</code>的第一个参数是Widget类型，需要将<code>pNode</code>转成<code>Widget</code>类型。（从<code>.ExportJson</code>文件可以看出来，<code>pNode</code>本来就是一个<code>Widget</code>类型的树）</p>
+<pre><code><span class="constant">Button</span> *button = (<span class="constant">Button</span>*)(<span class="symbol">ui:</span><span class="symbol">:Helper</span><span class="symbol">:</span><span class="symbol">:seekWidgetByName</span>(pNode, <span class="string">"button"</span>));
+</code></pre><p>顺便附上绑定事件监听的代码，使看到的人免去寻找之苦。</p>
+<pre><code><span class="tag">button</span>-&gt;<span class="function">addTouchEventListener</span>(<span class="function">CC_CALLBACK_2</span>(MainScene<span class="value">::touchEvent, this));</span>
+</code></pre><p><code>touchEvent</code>是自己写的方法。这个方法大致是如下用法，注意<code>pSender</code>和<code>type</code>的使用。</p>
+<pre><code>    <span class="literal">void</span> SingleMenuScene<span class="tag">::selectEvent</span>(Ref <span class="subst">*</span>pSender, Widget<span class="tag">::TouchEventType</span> <span class="keyword">type</span>)
+{
+    switch(<span class="keyword">type</span>)
+    {
+    <span class="keyword">case</span> Widget<span class="tag">::TouchEventType</span><span class="tag">::ENDED</span>:
+        GameSetting<span class="tag">::Map</span> <span class="built_in">map</span> <span class="subst">=</span> GameSetting<span class="tag">::Map</span><span class="tag">::DEFAULT</span>;
+        <span class="keyword">if</span>(pSender <span class="subst">==</span> defaultBtn)
+        {
+            <span class="built_in">map</span> <span class="subst">=</span> GameSetting<span class="tag">::Map</span><span class="tag">::DEFAULT</span>;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span>(pSender <span class="subst">==</span> snowBtn)
+        {
+            <span class="built_in">map</span> <span class="subst">=</span> GameSetting<span class="tag">::Map</span><span class="tag">::SNOW</span>;
+        }
+
+        Scene <span class="subst">*</span>game <span class="subst">=</span> BattleScene<span class="tag">::createScene</span>(<span class="built_in">map</span>);
+        TransitionScene <span class="subst">*</span>transition <span class="subst">=</span> TransitionFade<span class="tag">::create</span>(<span class="number">0.5</span>, game);
+        Director<span class="tag">::getInstance</span>()<span class="subst">-&gt;</span>replaceScene(transition);
+
+    }
+}
+</code></pre><p>导入动画编辑器的动画的代码如下：</p>
+<pre><code>CCArmatureDataManager::sharedArmatureDataManager()-&gt;addArmatureFileInfo(<span class="string">"Animation0.png"</span>,<span class="string">"Animation0.plist"</span>,<span class="string">"Animation.ExportJson"</span>);
+CCArmature *armature = CCArmature::create(<span class="string">"Animation"</span>);
+armature-&gt;getAnimation()-&gt;playByIndex(<span class="number">0</span>);
+armature-&gt;setScale(<span class="number">0.5f</span>);
+armature-&gt;setPosition(ccp(visibleSize.width * <span class="number">0.5</span>, visibleSize.height * <span class="number">0.5</span>));
+this-&gt;addChild(armature);
+</code></pre><p>导入场景编辑器的场景的代码如下：</p>
+<pre><code>Node* pNode = <span class="attribute">SceneReader</span>::getInstance<span class="function"><span class="params">()</span>-&gt;</span>createNodeWithSceneFile(<span class="string">"scene.ExportJson"</span>);
+<span class="keyword">this</span>-&gt;addChild(pNode);
+</code></pre><p>这个读出的<code>Node</code>貌似不能转成<code>Widget</code>，因为它不仅包括UI组件还有动画等资源。获取组件和绑定事件监听可以这样写：</p>
+<pre><code>ComRender *<span class="function"><span class="title">render</span> = <span class="params">(ComRender*)(pNode-&gt;getChildByTag(<span class="number">10010</span>)-&gt;getComponent(<span class="string">"GUIComponent"</span>))</span>;
+<span class="title">Widget</span> *<span class="title">widget</span> = <span class="params">(Widget*)(render-&gt;getNode())</span>;
+<span class="title">widget</span>-&gt;</span>addTouchEventListener(CC_CALLBACK_2(<span class="attribute">MainScene</span>::touchEvent, <span class="keyword">this</span>));
+</code></pre>]]></content>
+    <summary type="html"><![CDATA[<p>目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。</p>
+]]></summary>
+    
+      <category term="Cocos2d-x" scheme="http://an-dong.info/tags/Cocos2d-x/"/>
+    
+      <category term="Cocostudio" scheme="http://an-dong.info/tags/Cocostudio/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[问题驱动的Git学习]]></title>
+    <link href="http://an-dong.info/2014/07/05/%E9%97%AE%E9%A2%98%E9%A9%B1%E5%8A%A8%E7%9A%84Git%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://an-dong.info/2014/07/05/问题驱动的Git学习/</id>
+    <published>2014-07-05T07:05:24.000Z</published>
+    <updated>2014-08-11T14:07:11.000Z</updated>
+    <content type="html"><![CDATA[<p>本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。</p>
+<a id="more"></a>
+
+<p>第一个问题比较简单，其实是关于Github的问题。就是我平时用Git的机器是自己的电脑，密钥也是存在本机上并把上传到Github上。那么我在机房的机器上难道要复制一份私钥过来？既不优雅也不安全。（网上还真有人这么干。）其实Github这类网站是可以保存多份公钥的，不信自己到<code>Edit Profile-&gt;SSH Keys</code>去看看。这是也明白为什么Git的Windows GUI版为什么不用设置密钥了。顺便记一下生成密钥的过程备忘。</p>
+<pre><code><span class="title">cd</span> ~/.ssh
+ssh-keygen -t rsa -C <span class="string">"YOUR_EMAIL<span class="variable">@YOUREMAIL</span>.COM"</span>
+</code></pre><p>此时<code>~/.ssh/id_rsa.pub</code>就是你的公钥。</p>
+<p>第二个问题稍微复杂一点，是关于在多台机器提交代码导致的问题。因为我会在我自己的电脑和机房电脑修改代码，难免造成代码的不一致。这时如果push代码可能会出错，原因可能是本地代码在版本树中的位置更早，或者多处独立提交了代码导致冲突。通常此时应当先将代码拉取下来解决冲突。</p>
+<pre><code><span class="title">git</span> fetch origin
+</code></pre><p>执行完这一句后，我们会把执行<code>git branch -r</code>看到的远程分支都fetch下来。下面执行merge。</p>
+<pre><code>git <span class="built_in">merge</span> origin/<span class="operator">a</span>-branch
+</code></pre><p>这样会将远程repo中名叫<code>a-branch</code>的分支合并到本地的当前分支，默认就是<code>master</code>。关于分支的问题会在第三个问题再说。<br>如果merge之后自动解决了冲突最好，没有的话就略麻烦。Git会将所有有冲突的文件显示在终端里。如下图所示。<br><img src="http://segmentfault.com/img/bVcEFy" alt="merge"></p>
+<p>我们打开有冲突的文件，会看到类似下面这样的标识。<br><img src="http://segmentfault.com/img/bVcEFz" alt="conflict"></p>
+<p>其中横线前的部分表示本地分支的内容，横线后则表示<code>origin/master</code>中的内容。<br>根据Git的提示，我们需要手动消除冲突。而不管我们改成什么样，Git并不关心，哪怕我们什么也不改也可以。注意此时我们用<code>git status</code>查看发现，冲突的文件被标记为了<code>unmerged paths</code>.<br>手动消除冲突后，我们就可以将这些文件加到暂存区。之后就可以随意commit和push了。<br>不过也有时候，Git会自动进行<code>Fast Forward Merge</code>。<br><img src="http://segmentfault.com/img/bVcEFM" alt="fast forward merge"></p>
+<p>如果merge的结果不是我们想要的怎么办？</p>
+<pre><code>git <span class="operator"><span class="keyword">reset</span> <span class="comment">--hard</span></span>
+</code></pre><p>那么，如果我们本地的分支是领先于远程分支，那么merge会怎么样？请看图。<br><img src="http://segmentfault.com/img/bVcEFB" alt="already up-to-date"></p>
+<p>至于merge和rebase的区别，<a href="http://stackoverflow.com/questions/14894768/git-fetch-vs-pull-merge-vs-rebase" target="_blank" rel="external">stackoverflow</a>上已经说的很好了。假设这是目前的状态：</p>
+<pre><code>      <span class="comment">C</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span> <span class="comment">local</span>
+     <span class="comment">/</span>
+<span class="comment">A</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">remote</span>
+</code></pre><p>merge之后是这样：</p>
+<pre><code>      <span class="comment">C</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span> <span class="comment">local</span>
+     <span class="comment">/</span>         <span class="comment">\</span>
+<span class="comment">A</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">H</span> <span class="comment">remote</span>
+</code></pre><p>而rebase之后是这样：</p>
+<pre><code>              <span class="comment">C'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">D'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E'</span> <span class="comment">local</span>
+             <span class="comment">/</span>
+<span class="comment">A</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">remote</span>
+</code></pre><p>当然，他们的效果自然是一样的。</p>
+<p>下面就是第三个问题了，关于Git中的分支。对于Git中的这一功能，之前一直没有去仔细研究，直到今天我们组就项目的某一实现产生了分歧，组长让我创建一个分支进行试验。假定我在本地创建出一个名叫<code>test</code>的分支：</p>
+<pre><code>git branch <span class="keyword">test</span>
+</code></pre><p>切换到<code>test</code>分支：</p>
+<pre><code>git checkout <span class="keyword">test</span>
+</code></pre><p>删除<code>test</code>分支：</p>
+<pre><code>git branch <span class="operator">-d</span> test
+</code></pre><p>使用分支的一个好处自然就是代码可能在多个方向同时进行而不会相互干扰。当你切换到一个分支时，代码就会自动更换成对应分支的内容。而这一切都可以交给Git，而不需要自己手工备份代码。</p>
+]]></content>
+    <summary type="html"><![CDATA[<p>本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。</p>
+]]></summary>
+    
+      <category term="Git" scheme="http://an-dong.info/tags/Git/"/>
+    
+      <category term="Github" scheme="http://an-dong.info/tags/Github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Python科学计算利器——Anaconda]]></title>
+    <link href="http://an-dong.info/2014/07/05/Python%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%88%A9%E5%99%A8%E2%80%94%E2%80%94Anaconda/"/>
+    <id>http://an-dong.info/2014/07/05/Python科学计算利器——Anaconda/</id>
+    <published>2014-07-05T07:04:23.000Z</published>
+    <updated>2014-08-11T14:06:04.000Z</updated>
+    <content type="html"><![CDATA[<p>最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了<a href="https://store.continuum.io/cshop/anaconda/" target="_blank" rel="external">Anaconda</a>。</p>
+<a id="more"></a>
+
+<p>Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强大。<br>首先是下载安装。Anaconda提供了Python2.7和Python3.4两个版本，同时如果需要其他版本，还可以通过conda来创建。安装完成后可以看到，Anaconda提供了Spyder，IPython和一个命令行。下面来看一下conda。<br>输入<code>conda list</code>来看一下所有安装时自带的Python扩展。粗略看了一下，其中包括了常用的  <code>Numpy</code>,<code>Scipy</code>，<code>matplotlib</code>和<code>networkx</code>等，以及<code>beautiful-soup</code>，<code>requests</code>，<code>flask</code>，<code>tornado</code>等网络相关的扩展。<br>奇怪的是，里边竟然没有<code>sklearn</code>，所以首先装一下它。</p>
+<pre><code>conda <span class="operator"><span class="keyword">install</span> scikit-learn</span>
+</code></pre><p>如果需要指定版本，也可以直接用<code>[package-name]=x.x</code>来指定。<br>conda的repo中的扩展不算太新，如果想要更新的，可能要用PyPI或者自己下载源码。而conda和pip关联的很好。使用pip安装的东西可以使用conda来管理，这点要比Canopy好。下图是我用pip安装的<code>nltk</code>，<code>jieba</code>和<code>gensim</code>。<br><img src="http://segmentfault.com/img/bVcDZd" alt="请输入图片描述"></p>
+<p>我对这个科学计算环境的另一个要求就是能够多个Python版本并存，尤其是2.x和3.x的并存。这个通过<code>virtualenv</code>可以做到。Anaconda也正是通过其实现的。<br>下面用conda创建一个名叫python2的版本为python2.7的环境。</p>
+<pre><code><span class="attribute">conda create -n python2 python</span>=<span class="string">2.7</span>
+</code></pre><p>这样就会在Anaconda安装目录下的envs目录下创建python2这个目录。<br><img src="http://segmentfault.com/img/bVcDZj" alt="请输入图片描述"><br>向其中安装扩展可以：</p>
+<ul>
+<li>直接用<code>conda install</code>并用<code>-n</code>指明安装到的环境，这里自然就是<code>python2</code>。</li>
+<li>像<code>virtualenv</code>那样，先activate，然后在虚拟环境中安装。</li>
+</ul>
+<p>这里突然有一个问题，怎样在IDE中使用创建出来的环境？如果是PyCharm等IDE，直接设置Python安装目录就可以了。那spyder呢？其实spyder就是一个Python的扩展，你需要在虚拟环境中也装一个spyder。<br>最后就是spyder的主界面。变量查看窗口很好用。<br><img src="http://segmentfault.com/img/bVcDZq" alt="请输入图片描述"></p>
+]]></content>
+    <summary type="html"><![CDATA[<p>最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了<a href="https://store.continuum.io/cshop/anaconda/" target="_blank" rel="external">Anaconda</a>。</p>
+]]></summary>
+    
+      <category term="Python" scheme="http://an-dong.info/tags/Python/"/>
+    
+  </entry>
+  
+</feed>
