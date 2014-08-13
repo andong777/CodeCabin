@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>关于Cygwin——包管理、替换默认终端、同MSYS的比较 | Code Cabin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Cygwin——包管理、替换默认终端、同MSYS的比较">
+<meta property="og:url" content="http://an-dong.info/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/">
+<meta property="og:site_name" content="Code Cabin">
+<meta property="og:description" content="Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未">
+<meta property="og:image" content="http://segmentfault.com/img/bVcKCW">
+<meta property="og:image" content="http://segmentfault.com/img/bVcKCX">
+<meta property="og:image" content="http://segmentfault.com/img/bVcKCY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于Cygwin——包管理、替换默认终端、同MSYS的比较">
+<meta name="twitter:description" content="Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Code Cabin</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://an-dong.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-关于Cygwin——包管理、替换默认终端、同MSYS的比较" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/" class="article-date">
+  <time datetime="2014-07-24T13:02:42.000Z" itemprop="datePublished">7月 24 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于Cygwin——包管理、替换默认终端、同MSYS的比较
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未经修改的 UNIX 源代码编译的。它们合在一起提供大家熟悉的 UNIX 环境。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>与此同时，MinGW这个项目也在做类似的事情。MinGW是Minimalistic GNU for Windows的缩写。MinGW有一个叫MSYS（Minimal SYStem）的子项目，主要是提供了一个模拟Linux的Shell和一些基本的Linux工具。</p>
+<p><a href="http://www.cnblogs.com/fancybit/archive/2012/07/08/2581590.html" target="_blank" rel="external">这篇文章</a>指出了二者的区别，学习一下：</p>
+<blockquote>
+<p>首先MinGW和Cygwin都不能让Linux下的程序直接运行在Windows上，必需通过源代码重新编译。  </p>
+<p>现代操作系统包括Windows和Linux的基本设计概念像进程线程地址空间虚拟内存这些都是大同小异的，之所以二者上的程序不能兼容，主要是它们对这些功能具体实现上的差异，首先是可执行文件的格式，Window使用PE的格式，并且要求以.EXE为后缀名。Linux则使用Elf。其次操作系统的API也不一样，如Windows用CreateProcess()创建进程，而Linux使用fork()。  </p>
+<p>所以要移植程序必然要在这些地方进行改变，<strong>MinGW有专门的W32api头文件，来把代码中Linux方式的系统调用替换为对应的Windows方式。而Cygwin则通过cygwin1.dll这个文件来实现这种API的转换，并模拟一个Linux系统调用接口给程序，程序依然以Linux的方式调用系统API</strong>，只不过这个API在cygwin1.dll上，cygwin1.dll再调用Windows对应的实现，来把结果返回给程序。  </p>
+<p>可以用查看他们编译好的程序的导入表来验证这点。二者生成的程序都是能在Windows上运行的EXE文件，显然都是PE格式，用一个PE格式查看工具检查一下就能发现，Cygwin生成的程序依然有fork()这样的Linux系统调用，但目标库是cygwin1。而MingW生成的程序，则全部使用从KERNEL32导出的标准Windows系统API。  </p>
+</blockquote>
+<p>要在Cygwin环境中管理软件包，可以使用自带的setup.exe。此外，Cygwin中还有类似于apt-get的包管理器，叫做apt-cyg。<a href="http://zengrong.net/post/1792.htm" target="_blank" rel="external">这篇文章</a>介绍了apt-cyg的安装和使用。</p>
+<p>Cygwin默认的界面如下：<br><img src="http://segmentfault.com/img/bVcKCW" alt="请输入图片描述"></p>
+<p>很丑，默认不能复制粘贴，需要开启<code>快速编辑模式</code>或者点击左上角，选择<code>编辑</code>。Cygwin官网建议使用MinTTY作为终端工具。MinTTY已经自带，输入<code>mintty</code>进入。</p>
+<p><img src="http://segmentfault.com/img/bVcKCX" alt="请输入图片描述"></p>
+<p>可以看到，比<code>cmd</code>和<code>PowerShell</code>强多了。但怎样将其设置为Cygwin的默认终端？<br>参考了<a href="http://codespider.is-programmer.com/posts/26770.html" target="_blank" rel="external">这篇文章</a>。在Cygwin目录下打开<code>Cygwin.bat</code>，注释掉<code>bash --login -i</code>，加入下面这句：</p>
+<pre><code><span class="operator"><span class="keyword">start</span> mintty bash <span class="comment">--login -i</span></span>
+</code></pre><p>（如果你没有将Cygwin目录加到path中，这里要指明路径）如下图。<br><img src="http://segmentfault.com/img/bVcKCY" alt="请输入图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://an-dong.info/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/" data-id="vjfhev68lgbv5h0p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cygwin/">Cygwin</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/27/C学习笔记（与Java、C、C++和Python对比）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C#学习笔记（与Java、C、C++和Python对比）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/07/17/Cocos2d-x数据相关的类用法简介（附示例）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Cocos2d-x数据相关的类用法简介（附示例）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20.00px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 15.00px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/Git/" style="font-size: 15.00px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 15.00px;">Python</a><a href="/tags/Unity3D/" style="font-size: 15.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 andong777<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Code Cabin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="关于空行
+
+类与顶级函数(top-level function)的定义之间应当空两行。
+类中的方法之间应当空一行。
+方法中的逻辑部分之间可以空一行。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Code Cabin">
+<meta property="og:url" content="http://an-dong.info/markdown/从PEP-8学习Python编码风格.html">
+<meta property="og:site_name" content="Code Cabin">
+<meta property="og:description" content="关于空行
+
+类与顶级函数(top-level function)的定义之间应当空两行。
+类中的方法之间应当空一行。
+方法中的逻辑部分之间可以空一行。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Code Cabin">
+<meta name="twitter:description" content="关于空行
+
+类与顶级函数(top-level function)的定义之间应当空两行。
+类中的方法之间应当空一行。
+方法中的逻辑部分之间可以空一行。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Code Cabin</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://an-dong.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/markdown/从PEP-8学习Python编码风格.html" class="article-date">
+  <time datetime="2014-08-11T13:58:59.000Z" itemprop="datePublished">8月 11 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="关于空行">关于空行</h3>
+<ul>
+<li>类与顶级函数(top-level function)的定义之间应当空两行。</li>
+<li>类中的方法之间应当空一行。</li>
+<li>方法中的逻辑部分之间可以空一行。</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="关于原文件编码">关于原文件编码</h3>
+<p>Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。</p>
+<h3 id="关于命名风格">关于命名风格</h3>
+<ul>
+<li>模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。</li>
+<li>类名使用驼峰命名法。</li>
+<li>异常的命名以<code>Error</code>结尾。</li>
+<li>函数名和方法名使用小写，用下划线分割单词。<code>mixedCase</code>只有在考虑兼容性的时候才使用。</li>
+<li>类方法的第一个参数总是<code>cls</code>，实例方法的第一个参数总是<code>self</code>。</li>
+<li>变量命名同函数和方法。如果名字与保留字有冲突，在最后加<code>_</code>。</li>
+<li>私有变量和方法在最前加<code>_</code>，此时外部无法访问，但子类可以访问。</li>
+<li>如果也不希望子类访问，可以以<code>__</code>开头。此时无法用ClassName.__var访问 。(但仍然可以通过ClassName._ClassName_a访问到。)</li>
+</ul>
+<h3 id="关于公有和私有接口">关于公有和私有接口</h3>
+<ul>
+<li>默认情况下，以<code>_</code>开头的变量和方法被认为是私有的。</li>
+<li>可以使用<code>__all__</code>列表指定公开的接口。它会覆盖上一条规则。</li>
+</ul>
+<h3 id="关于Python中的下划线">关于Python中的下划线</h3>
+<p>Python中的下划线用法有这么几种：</p>
+<ul>
+<li><code>a_</code>：避免名字与保留字等的冲突。</li>
+<li><code>_a</code>：表示私有。只能在类内部和子类中访问。</li>
+<li><code>__a</code>：只能在类内部使用。</li>
+<li><code>__a__</code>：Python内<code>魔法</code>对象的命名。其他情况不要这样命名。</li>
+</ul>
+<h3 id="关于getter(accessor)和setter(mutator)">关于getter(accessor)和setter(mutator)</h3>
+<p>Python中不推荐使用类似于Java中的<code>getX</code>和<code>setX</code>。相反，应当直接对变量进行操作。<br>如果要操作的对象不能或不适合直接操作，可以使用内建的<code>property</code>方法自定义功能。<code>property</code>有两种用法：</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>
+        self._x = <span class="keyword">None</span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">getx</span><span class="params">(self)</span>:</span>
+        <span class="keyword">return</span> self._x
+    <span class="function"><span class="keyword">def</span> <span class="title">setx</span><span class="params">(self, value)</span>:</span>
+        self._x = value
+    <span class="function"><span class="keyword">def</span> <span class="title">delx</span><span class="params">(self)</span>:</span>
+        <span class="keyword">del</span> self._x
+    x = property(getx, setx, delx, <span class="string">"I'm the 'x' property."</span>)
+</code></pre><p>或者：</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>
+        self._x = <span class="keyword">None</span>
+
+    <span class="decorator">@property</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self)</span>:</span>
+        <span class="string">"""I'm the 'x' property."""</span>
+        <span class="keyword">return</span> self._x
+
+    <span class="decorator">@x.setter</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self, value)</span>:</span>
+        self._x = value
+
+    <span class="decorator">@x.deleter</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self)</span>:</span>
+        <span class="keyword">del</span> self._x
+</code></pre><p>这样，当执行<code>C.x</code>，<code>C.x = value</code>和<code>del C.x</code>时就会分别调用这三个方法。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://an-dong.info/markdown/从PEP-8学习Python编码风格.html" data-id="frkgpxi0vqehbkrc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20.00px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 15.00px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/Git/" style="font-size: 15.00px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 15.00px;">Python</a><a href="/tags/Unity3D/" style="font-size: 15.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 andong777<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

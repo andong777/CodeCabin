@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Code Cabin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在Cocos2d-x的学习和使用中，我遇到了很多关于数据的操作。在这个过程中，我学习了Cocos2d-x自带的很多功能。下面我把接触到的类罗列在下面，给出的都是基本的用法，多数没有深入了解。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Code Cabin">
+<meta property="og:url" content="http://an-dong.info/markdown/Cocos2d-x数据相关的类用法简介（附示例）.html">
+<meta property="og:site_name" content="Code Cabin">
+<meta property="og:description" content="在Cocos2d-x的学习和使用中，我遇到了很多关于数据的操作。在这个过程中，我学习了Cocos2d-x自带的很多功能。下面我把接触到的类罗列在下面，给出的都是基本的用法，多数没有深入了解。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Code Cabin">
+<meta name="twitter:description" content="在Cocos2d-x的学习和使用中，我遇到了很多关于数据的操作。在这个过程中，我学习了Cocos2d-x自带的很多功能。下面我把接触到的类罗列在下面，给出的都是基本的用法，多数没有深入了解。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Code Cabin</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://an-dong.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/markdown/Cocos2d-x数据相关的类用法简介（附示例）.html" class="article-date">
+  <time datetime="2014-08-11T13:58:59.000Z" itemprop="datePublished">8月 11 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Cocos2d-x的学习和使用中，我遇到了很多关于数据的操作。在这个过程中，我学习了Cocos2d-x自带的很多功能。下面我把接触到的类罗列在下面，给出的都是基本的用法，多数没有深入了解。</p>
+<a id="more"></a>
+
+<h3 id="UserDefault">UserDefault</h3>
+<p>UserDefault类就像一个小型的数据库，它可以被用来存储一些键值对。而且由于是单例模式，你可以在程序的任何地方使用这些数据。<br>头文件：</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span> "base/CCUserDefault.h"</span>
+</code></pre><p>数据的存储：</p>
+<pre><code>UserDefault *ud = UserDefault::getInstance();
+<span class="comment">// 从输入框中读取出字符串并加入到UserDefault中</span>
+ud-&gt;setStringForKey(<span class="string">"username"</span>, username-&gt;getStringValue());
+ud-&gt;setStringForKey(<span class="string">"password"</span>, password-&gt;getStringValue());
+ud-&gt;flush();    <span class="comment">// 将UserDefault中的内容写入到文件中</span>
+</code></pre><p>数据的读取：</p>
+<pre><code><span class="regexp">//</span> 将存储的数据读入到文本框，如果数据已经存储到本地，可以直接读
+username-&gt;setText<span class="function"><span class="params">(UserDefault::getInstance()-&gt;getStringForKey(<span class="string">"username"</span>))</span>;
+<span class="title">password</span>-&gt;</span>setText<span class="function"><span class="params">(UserDefault::getInstance()-&gt;getStringForKey(<span class="string">"password"</span>))</span>;</span>
+</code></pre><h3 id="FileUtils">FileUtils</h3>
+<p>FileUtils类包括了对文件常用的操作，如获取路径、判断是否存在等，有点类似于Java中的File类，但除此之外，它还可以从文件中读内容。用的比较多还是读取文件内容到字符串：</p>
+<pre><code><span class="comment">#include "platform/CCFileUtils.h"</span>
+
+<span class="keyword">if</span><span class="function"><span class="params">(FileUtils::getInstance()-&gt;isFileExist(filename))</span>  
+{  
+    <span class="title">std</span>::<span class="title">string</span> <span class="title">data</span>=<span class="title">FileUtils</span>::<span class="title">getInstance</span><span class="params">()</span>-&gt;</span>getStringFromFile(filename);  
+}  
+</code></pre><p>更多FileUtils的用法可以看<a href="http://blog.csdn.net/oowoodone/article/details/20730307" target="_blank" rel="external">这篇文章</a>。</p>
+<h3 id="rapidjson">rapidjson</h3>
+<p>从Cocos2d-x 3.0开始开始自带rapidjson这个类，解析json文件变得方便了。下面的示例从json中读取带有玩家名字和得分的排行榜信息。</p>
+<pre><code><span class="preprocessor">#<span class="keyword">include</span> "json/rapidjson.h"  </span>
+<span class="preprocessor">#<span class="keyword">include</span> "json/document.h"  </span>
+
+rapidjson::Document doc;  <span class="comment">// 创建一个解析JSON的Document对象</span>
+doc.Parse&lt;rapidjson::kParseDefaultFlags&gt;(data.c_str());  <span class="comment">// 假设数据存储在字符串data中</span>
+<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;doc.Size();i++)  
+{   
+    rapidjson::Value &amp;v=doc[i];       
+    std::<span class="built_in">string</span> username;
+    <span class="keyword">int</span> score; 
+    <span class="keyword">if</span>(v.HasMember(<span class="string">"username"</span>) &amp;&amp; v.HasMember(<span class="string">"score"</span>))  
+    {   
+        username = v[<span class="string">"username"</span>].GetString();  <span class="comment">// 获取一个String属性</span>
+        score = v[<span class="string">"score"</span>].GetInt();    <span class="comment">// 获取一个int属性</span>
+        texts[i]-&gt;setText(username + <span class="string">": "</span> + std::to_string(score);    <span class="comment">// 将int转成String，加到一个文本框中</span>
+    }  
+}  
+</code></pre><h3 id="NotificationCenter">NotificationCenter</h3>
+<p>同大多数学习者一样，我们一开始在层与层、场景与场景之间传递数据上面也很头疼，然后就在网上查到了这个类。他使用了观察者模式，只需要让一个类订阅另一个类的消息，就可以实现数据的传递。<br>在下面这个示例中，希望将CharacterLayer中的血量、生命数等传递到HUDLayer中显示。<br>CharacterLayer：</p>
+<pre><code>NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">postNotification</span>(<span class="string">"loseHeroLife"</span>,NULL);</span>    <span class="comment">// 传递生命数减少的消息，没有传递额外的对象</span>
+
+NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">postNotification</span>(<span class="string">"getHealth"</span>,heroHealth);</span>    <span class="comment">// 传递此时的血量，heroHealth对象中存储了血量的信息</span>
+</code></pre><p>HUDLayer：</p>
+<pre><code>NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">addObserver</span>(this,<span class="function">callfuncO_selector</span>(HUDLayer::loseHeroLife),<span class="string">"loseHeroLife"</span>,NULL);</span>    <span class="comment">// 在loseHeroLife中将显示的红心减一</span>
+
+NotificationCenter<span class="value">::<span class="function">getInstance</span>()-&gt;<span class="function">addObserver</span>(this,<span class="function">callfuncO_selector</span>(HUDLayer::getHealth),<span class="string">"getHealth"</span>,NULL);</span>    <span class="comment">// 从接收到的heroHealth更新血槽的显示</span>
+</code></pre><p>绑定的处理方法应该是这个样子的：</p>
+<pre><code><span class="keyword">void</span> HUDLayer::getHealth(<span class="built_in">Object</span>* pSender){
+    heroHealth = (Health*)pSender;
+}
+</code></pre><h3 id="HttpClient">HttpClient</h3>
+<p>下面就是数据通过网络传输的内容了。HttpClient及相关类可以实现发送Http请求及接收响应。以用户注册的代码为例：</p>
+<pre><code>HttpRequest<span class="subst">*</span> request <span class="subst">=</span> <span class="literal">new</span> HttpRequest();  
+std<span class="tag">::string</span> url <span class="subst">=</span> LOGIN_SERVER_URL <span class="subst">+</span> username_s <span class="subst">+</span> <span class="string">"/"</span> <span class="subst">+</span> password_s;
+request<span class="subst">-&gt;</span>setUrl(url<span class="built_in">.</span>c_str());  
+request<span class="subst">-&gt;</span>setRequestType(HttpRequest<span class="tag">::Type</span><span class="tag">::GET</span>);  
+<span class="comment">// 还可以使用request-&gt;setRequestData("a", 0)的方式设置参数，这里没有用到  </span>
+request<span class="subst">-&gt;</span>setResponseCallback(this, httpresponse_selector(LoginScene<span class="tag">::onHttpRequestCompleted</span>));    
+HttpClient<span class="tag">::getInstance</span>()<span class="subst">-&gt;</span>send(request);  
+request<span class="subst">-&gt;</span>release();
+</code></pre><p>onHttpRequestCompleted是一个回调方法，用于处理Http响应。它长这个样子：</p>
+<pre><code>void LoginScene::onHttpRequestCompleted(HttpClient *sender, HttpResponse *response) {  
+<span class="keyword">if</span>(!response || !response-&gt;isSucceed())
+    <span class="keyword">return</span>;
+<span class="comment">// 获取响应中的内容</span>
+std::vector&lt;<span class="keyword">char</span>&gt;* buffer = response-&gt;getResponseData();  
+std::stringstream ss;
+<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;buffer-&gt;size();i++){
+    ss &lt;&lt; (*buffer)[i];
+}
+<span class="comment">// 做相应处理</span>
+<span class="keyword">if</span>(ss.<span class="keyword">str</span>() == ”success“){
+    <span class="comment">// 登录成功</span>
+}<span class="keyword">else</span>{
+    <span class="comment">// 登录失败</span>
+}
+</code></pre><p>} </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://an-dong.info/markdown/Cocos2d-x数据相关的类用法简介（附示例）.html" data-id="q2am5lgq73i86lxe" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20.00px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 15.00px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/Git/" style="font-size: 15.00px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 15.00px;">Python</a><a href="/tags/Unity3D/" style="font-size: 15.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 andong777<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

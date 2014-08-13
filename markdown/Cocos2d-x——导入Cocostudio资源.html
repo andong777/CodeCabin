@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Code Cabin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Code Cabin">
+<meta property="og:url" content="http://an-dong.info/markdown/Cocos2d-x——导入Cocostudio资源.html">
+<meta property="og:site_name" content="Code Cabin">
+<meta property="og:description" content="目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Code Cabin">
+<meta name="twitter:description" content="目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Code Cabin</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://an-dong.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/markdown/Cocos2d-x——导入Cocostudio资源.html" class="article-date">
+  <time datetime="2014-08-11T13:58:59.000Z" itemprop="datePublished">8月 11 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。</p>
+<a id="more"></a>
+
+<p>本人Cocos2d-x的版本是3.1，Cocostudio的版本是1.5.<br>Cocostudio目前的功能包括UI编辑器、动画编辑器、场景编辑器和数据编辑器。数据编辑器没有涉及到，就不说了。剩下三者中主要讲下导入UI编辑器的资源。<br>UI编辑器导出的文件包括一个<code>.ExportJson</code>文件，一个<code>.plist</code>文件和一个<code>.png</code>文件。Cocostudio中文官网中说的是<code>TouchGroup</code>，英文官网中是<code>UILayer</code>，可是都已经不存在了。<code>UILayer</code>变成了<code>Layer</code>，现在也可以不创建<code>Layer</code>，直接加到场景上面。所以代码可以这样：</p>
+<pre><code>Node *pNode = <span class="attribute">GUIReader</span>::getInstance<span class="function"><span class="params">()</span>-&gt;</span>widgetFromJsonFile(<span class="string">"test.ExportJson"</span>);
+<span class="keyword">this</span>-&gt;addChild(pNode);
+</code></pre><p>下面就可以用<code>getChildByTag</code>来获取组件了。不过<code>getChildByTag</code>貌似只能按照树的结构一层层照下来，显得很麻烦，而且不能按照名字来取。所以，现在可以用<code>ui</code>中的<code>Helper</code>直接从树中获取组件，用name或者tag。但<code>seekWidgetByTag</code>和<code>seekWidgetByName</code>的第一个参数是Widget类型，需要将<code>pNode</code>转成<code>Widget</code>类型。（从<code>.ExportJson</code>文件可以看出来，<code>pNode</code>本来就是一个<code>Widget</code>类型的树）</p>
+<pre><code><span class="constant">Button</span> *button = (<span class="constant">Button</span>*)(<span class="symbol">ui:</span><span class="symbol">:Helper</span><span class="symbol">:</span><span class="symbol">:seekWidgetByName</span>(pNode, <span class="string">"button"</span>));
+</code></pre><p>顺便附上绑定事件监听的代码，使看到的人免去寻找之苦。</p>
+<pre><code><span class="tag">button</span>-&gt;<span class="function">addTouchEventListener</span>(<span class="function">CC_CALLBACK_2</span>(MainScene<span class="value">::touchEvent, this));</span>
+</code></pre><p><code>touchEvent</code>是自己写的方法。这个方法大致是如下用法，注意<code>pSender</code>和<code>type</code>的使用。</p>
+<pre><code>    <span class="literal">void</span> SingleMenuScene<span class="tag">::selectEvent</span>(Ref <span class="subst">*</span>pSender, Widget<span class="tag">::TouchEventType</span> <span class="keyword">type</span>)
+{
+    switch(<span class="keyword">type</span>)
+    {
+    <span class="keyword">case</span> Widget<span class="tag">::TouchEventType</span><span class="tag">::ENDED</span>:
+        GameSetting<span class="tag">::Map</span> <span class="built_in">map</span> <span class="subst">=</span> GameSetting<span class="tag">::Map</span><span class="tag">::DEFAULT</span>;
+        <span class="keyword">if</span>(pSender <span class="subst">==</span> defaultBtn)
+        {
+            <span class="built_in">map</span> <span class="subst">=</span> GameSetting<span class="tag">::Map</span><span class="tag">::DEFAULT</span>;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span>(pSender <span class="subst">==</span> snowBtn)
+        {
+            <span class="built_in">map</span> <span class="subst">=</span> GameSetting<span class="tag">::Map</span><span class="tag">::SNOW</span>;
+        }
+
+        Scene <span class="subst">*</span>game <span class="subst">=</span> BattleScene<span class="tag">::createScene</span>(<span class="built_in">map</span>);
+        TransitionScene <span class="subst">*</span>transition <span class="subst">=</span> TransitionFade<span class="tag">::create</span>(<span class="number">0.5</span>, game);
+        Director<span class="tag">::getInstance</span>()<span class="subst">-&gt;</span>replaceScene(transition);
+
+    }
+}
+</code></pre><p>导入动画编辑器的动画的代码如下：</p>
+<pre><code>CCArmatureDataManager::sharedArmatureDataManager()-&gt;addArmatureFileInfo(<span class="string">"Animation0.png"</span>,<span class="string">"Animation0.plist"</span>,<span class="string">"Animation.ExportJson"</span>);
+CCArmature *armature = CCArmature::create(<span class="string">"Animation"</span>);
+armature-&gt;getAnimation()-&gt;playByIndex(<span class="number">0</span>);
+armature-&gt;setScale(<span class="number">0.5f</span>);
+armature-&gt;setPosition(ccp(visibleSize.width * <span class="number">0.5</span>, visibleSize.height * <span class="number">0.5</span>));
+this-&gt;addChild(armature);
+</code></pre><p>导入场景编辑器的场景的代码如下：</p>
+<pre><code>Node* pNode = <span class="attribute">SceneReader</span>::getInstance<span class="function"><span class="params">()</span>-&gt;</span>createNodeWithSceneFile(<span class="string">"scene.ExportJson"</span>);
+<span class="keyword">this</span>-&gt;addChild(pNode);
+</code></pre><p>这个读出的<code>Node</code>貌似不能转成<code>Widget</code>，因为它不仅包括UI组件还有动画等资源。获取组件和绑定事件监听可以这样写：</p>
+<pre><code>ComRender *<span class="function"><span class="title">render</span> = <span class="params">(ComRender*)(pNode-&gt;getChildByTag(<span class="number">10010</span>)-&gt;getComponent(<span class="string">"GUIComponent"</span>))</span>;
+<span class="title">Widget</span> *<span class="title">widget</span> = <span class="params">(Widget*)(render-&gt;getNode())</span>;
+<span class="title">widget</span>-&gt;</span>addTouchEventListener(CC_CALLBACK_2(<span class="attribute">MainScene</span>::touchEvent, <span class="keyword">this</span>));
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://an-dong.info/markdown/Cocos2d-x——导入Cocostudio资源.html" data-id="bgl9oj49jl6d9wun" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20.00px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 15.00px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/Git/" style="font-size: 15.00px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 15.00px;">Python</a><a href="/tags/Unity3D/" style="font-size: 15.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 andong777<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
