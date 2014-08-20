@@ -64,6 +64,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-学习Unity 4.6新GUI系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/20/学习Unity 4.6新GUI系统/" class="article-date">
+  <time datetime="2014-08-20T08:53:30.000Z" itemprop="datePublished">8月 20 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/20/学习Unity 4.6新GUI系统/">学习Unity 4.6新GUI系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在学习Unity的过程中，自己做一款小游戏自娱自乐。自然需要用到GUI。但4.5中的GUI很难用，一个选择是传说中的NGUI插件。但对于4.6中的新GUI，我也有所耳闻。想了想还是选择官方的技术较好，于是就有了这篇。</p>
+<h2 id="Canvas">Canvas</h2>
+<p>在新GUI中，所有的UI组件都位于Canvas上。Canvas有三种渲染模式：</p>
+<ul>
+<li>Screen Space - Overlay：将UI放置在场景的上面，调节场景大小或调整分辨率，则Canvas也会随之调整。</li>
+<li>Screen Space - Camera：Canvas由一个特定的相机渲染，相机的设置会影响UI。</li>
+<li>World Space：使Canvas像场景中的其他对象一样渲染。</li>
+</ul>
+<h2 id="Rect_Tool">Rect Tool</h2>
+<p>所有的UI元素都使用矩形来表示。<br>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。</p>
+<h2 id="Rect_Transform">Rect Transform</h2>
+<p>Rect Transform是为UI设计的新transform组件。除了普通transform组件的position、rotation、scale之外， 还增加了width和height。<br>当使用Rect Tool调整对象的尺寸时，如果是2D或3D对象，他会调整其scale；而对于有Rect Transform的对象，则会调整其width和height。<br>当切换至Pivot模式，可以调整其pivot。再次点击切换回Center模式。</p>
+<h2 id="Anchors">Anchors</h2>
+<p>Rect Transform中增加了Anchors属性，其中包括Anchor Min和Anchor Max。Anchors用于指定在父UI元素调整时，子UI元素如何调整。具体行为由Anchor Min（左下）和Anchor Max（右上）两个锚点决定。坐标以矩形左下为(0, 0)，右上为(1, 1)。<br>但实际上，Unity已经提供了预定义的模式。在Rect Transform的左上角点击，出现如下的常用Anchor模式。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/uGUI_AnchorPreset.png" alt="Anchor Preset"></p>
+<p>以top-left模式为例，此时锚点位于父元素的左上角。如果拉动父元素矩形的左边框和上边框，则子元素的位置也随之变化。而拉动另外两条边则不发生变化。<br>在middle或center模式下，拉动轴两侧的边子元素均会随之移动。<br>此外还有stretch模式，在拉动时会拉伸或压缩子元素。</p>
+<h2 id="新的组件">新的组件</h2>
+<ul>
+<li>Text：也就是Label。</li>
+</ul>
+<p><img src="http://andong777-sfault.qiniudn.com/uGUI_TextInspector.png" alt="Text"></p>
+<ul>
+<li>Image</li>
+</ul>
+<p><img src="http://andong777-sfault.qiniudn.com/uGUI_ImageInspector.png" alt="Image"></p>
+<ul>
+<li>RawImage：与Image不同之处在于，Image的参数是Sprite，而RawImage的参数是Texture。</li>
+</ul>
+<h2 id="交互">交互</h2>
+<p>交互组件都有一个transition属性，用于实现组件在不同状态下产生不同的变化。有三个选项：</p>
+<ul>
+<li>Color Tint：改变颜色。有一个Fade Duration的参数控制变化的时长。</li>
+<li>SpriteSwap：不同状态下展示不同的Sprite。</li>
+<li>Animation：由一个动画控制器来决定显示。不同状态下触发不同的事件。</li>
+<li>None：没有变化。</li>
+</ul>
+<p>Button提供了OnClick属性，可以为按钮添加响应。点击加号，可以添加一个委托。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/uGUI_OnClick.png" alt="OnClick"></p>
+<p>其中有三个空，第一个表示目标对象，第二个表示要选用的函数，第三个是对应的参数列表，由前两项决定。<br>以点击按钮改变按钮的文字为例。第一个就是Button下的Text对象，第二个是Text.text，第三个则是你要改变为的内容。</p>
+<p>此外还有其他的控件，如Toggle、Slider、ScrollBar、Selection List。</p>
+<h3 id="自动布局">自动布局</h3>
+<p>一些更加复杂的布局技术，暂时没有这个需求，就不看了。</p>
+<h2 id="动画集成">动画集成</h2>
+<p>这部分文档没写，囧。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/Animation_Integration.jpg" alt="Animation Integration"></p>
+<h2 id="富文本">富文本</h2>
+<p>Rich Text在新的GUI系统中默认是禁用的，但是可以通过GUIStyle来使用：</p>
+<pre><code>GUIStyle style = new GUIStyle ();
+style.richText = true;
+GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</span>Some <span class="tag">&lt;<span class="title">color=yellow</span>&gt;</span>RICH<span class="tag">&lt;/<span class="title">color</span>&gt;</span> text<span class="tag">&lt;/<span class="title">size</span>&gt;</span>",style);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://an-dong.info/2014/08/20/学习Unity 4.6新GUI系统/" data-id="pfyjks4w5hmh9gwh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GUI/">GUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-在Unity项目中使用Git" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/08/10/在Unity项目中使用Git/" class="article-date">
@@ -303,7 +391,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GUI/">GUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -312,7 +400,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 20.00px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 15.00px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/Git/" style="font-size: 15.00px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 15.00px;">Python</a><a href="/tags/Unity3D/" style="font-size: 15.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a>
+      <a href="/tags/C/" style="font-size: 16.67px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 13.33px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/GUI/" style="font-size: 10.00px;">GUI</a><a href="/tags/Git/" style="font-size: 13.33px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 13.33px;">Python</a><a href="/tags/Unity3D/" style="font-size: 16.67px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a>
     </div>
   </div>
 
@@ -321,7 +409,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
