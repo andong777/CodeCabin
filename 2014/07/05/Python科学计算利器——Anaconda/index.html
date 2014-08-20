@@ -5,18 +5,21 @@
   
   <title>Python科学计算利器——Anaconda | Code Cabin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了Anaconda。">
+  <meta name="description" content="最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了Anaconda。
+Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python科学计算利器——Anaconda">
 <meta property="og:url" content="http://an-dong.info/2014/07/05/Python科学计算利器——Anaconda/">
 <meta property="og:site_name" content="Code Cabin">
-<meta property="og:description" content="最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了Anaconda。">
+<meta property="og:description" content="最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了Anaconda。
+Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强">
 <meta property="og:image" content="http://segmentfault.com/img/bVcDZd">
 <meta property="og:image" content="http://segmentfault.com/img/bVcDZj">
 <meta property="og:image" content="http://segmentfault.com/img/bVcDZq">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python科学计算利器——Anaconda">
-<meta name="twitter:description" content="最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了Anaconda。">
+<meta name="twitter:description" content="最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了Anaconda。
+Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强">
 
   
     <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
@@ -88,9 +91,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了<a href="https://store.continuum.io/cshop/anaconda/" target="_blank" rel="external">Anaconda</a>。</p>
+<p>Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强大。</p>
 <a id="more"></a>
 
-<p>Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强大。<br>首先是下载安装。Anaconda提供了Python2.7和Python3.4两个版本，同时如果需要其他版本，还可以通过conda来创建。安装完成后可以看到，Anaconda提供了Spyder，IPython和一个命令行。下面来看一下conda。<br>输入<code>conda list</code>来看一下所有安装时自带的Python扩展。粗略看了一下，其中包括了常用的  <code>Numpy</code>,<code>Scipy</code>，<code>matplotlib</code>和<code>networkx</code>等，以及<code>beautiful-soup</code>，<code>requests</code>，<code>flask</code>，<code>tornado</code>等网络相关的扩展。<br>奇怪的是，里边竟然没有<code>sklearn</code>，所以首先装一下它。</p>
+<p>首先是下载安装。Anaconda提供了Python2.7和Python3.4两个版本，同时如果需要其他版本，还可以通过conda来创建。安装完成后可以看到，Anaconda提供了Spyder，IPython和一个命令行。下面来看一下conda。</p>
+<p>输入<code>conda list</code>来看一下所有安装时自带的Python扩展。粗略看了一下，其中包括了常用的  <code>Numpy</code>,<code>Scipy</code>，<code>matplotlib</code>和<code>networkx</code>等，以及<code>beautiful-soup</code>，<code>requests</code>，<code>flask</code>，<code>tornado</code>等网络相关的扩展。</p>
+<p>奇怪的是，里边竟然没有<code>sklearn</code>，所以首先装一下它。</p>
 <pre><code>conda <span class="operator"><span class="keyword">install</span> scikit-learn</span>
 </code></pre><p>如果需要指定版本，也可以直接用<code>[package-name]=x.x</code>来指定。<br>conda的repo中的扩展不算太新，如果想要更新的，可能要用PyPI或者自己下载源码。而conda和pip关联的很好。使用pip安装的东西可以使用conda来管理，这点要比Canopy好。下图是我用pip安装的<code>nltk</code>，<code>jieba</code>和<code>gensim</code>。<br><img src="http://segmentfault.com/img/bVcDZd" alt="请输入图片描述"></p>
 <p>我对这个科学计算环境的另一个要求就是能够多个Python版本并存，尤其是2.x和3.x的并存。这个通过<code>virtualenv</code>可以做到。Anaconda也正是通过其实现的。<br>下面用conda创建一个名叫python2的版本为python2.7的环境。</p>

@@ -6,17 +6,41 @@
   <title>C#学习笔记（补充）——扩展方法、事件 | Code Cabin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、扩展方法
-扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。">
+扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 
+注意事项：
+
+扩展方法需要是静态方法。
+第一个参数指明作用的类型，并且用this关键字修饰。
+其他参数跟在第一个参数的后面。
+需要使用using指令将扩展方法所在的命名空间导入到源代码中。
+该类型以实例方法的形式调用该方法。
+编译器生成的中间语言 (IL) 会将代码转换为对静态方法的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C#学习笔记（补充）——扩展方法、事件">
 <meta property="og:url" content="http://an-dong.info/2014/08/06/C学习笔记（补充）——扩展方法、事件/">
 <meta property="og:site_name" content="Code Cabin">
 <meta property="og:description" content="一、扩展方法
-扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。">
+扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 
+注意事项：
+
+扩展方法需要是静态方法。
+第一个参数指明作用的类型，并且用this关键字修饰。
+其他参数跟在第一个参数的后面。
+需要使用using指令将扩展方法所在的命名空间导入到源代码中。
+该类型以实例方法的形式调用该方法。
+编译器生成的中间语言 (IL) 会将代码转换为对静态方法的">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C#学习笔记（补充）——扩展方法、事件">
 <meta name="twitter:description" content="一、扩展方法
-扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。">
+扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 
+注意事项：
+
+扩展方法需要是静态方法。
+第一个参数指明作用的类型，并且用this关键字修饰。
+其他参数跟在第一个参数的后面。
+需要使用using指令将扩展方法所在的命名空间导入到源代码中。
+该类型以实例方法的形式调用该方法。
+编译器生成的中间语言 (IL) 会将代码转换为对静态方法的">
 
   
     <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
@@ -89,8 +113,6 @@
       
         <h2 id="一、扩展方法">一、扩展方法</h2>
 <p>扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 </p>
-<a id="more"></a>
-
 <h3 id="注意事项：">注意事项：</h3>
 <ul>
 <li>扩展方法需要是静态方法。</li>
@@ -101,6 +123,8 @@
 <li>编译器生成的中间语言 (IL) 会将代码转换为对静态方法的调用。</li>
 <li>扩展方法无法访问它们所扩展的类型中的私有变量。</li>
 </ul>
+<a id="more"></a>
+
 <p>注意到C#中的<code>StringBuilder</code>类没有实现Java中的<code>Reverse()</code>方法，可以通过扩展方法实现：</p>
 <pre><code>namespace <span class="type">ExtensionMethod</span>
 {

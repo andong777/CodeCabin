@@ -96,47 +96,12 @@
 </ul>
 <h2 id="Rect_Tool">Rect Tool</h2>
 <p>所有的UI元素都使用矩形来表示。<br>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。</p>
-<h2 id="Rect_Transform">Rect Transform</h2>
-<p>Rect Transform是为UI设计的新transform组件。除了普通transform组件的position、rotation、scale之外， 还增加了width和height。<br>当使用Rect Tool调整对象的尺寸时，如果是2D或3D对象，他会调整其scale；而对于有Rect Transform的对象，则会调整其width和height。<br>当切换至Pivot模式，可以调整其pivot。再次点击切换回Center模式。</p>
-<h2 id="Anchors">Anchors</h2>
-<p>Rect Transform中增加了Anchors属性，其中包括Anchor Min和Anchor Max。Anchors用于指定在父UI元素调整时，子UI元素如何调整。具体行为由Anchor Min（左下）和Anchor Max（右上）两个锚点决定。坐标以矩形左下为(0, 0)，右上为(1, 1)。<br>但实际上，Unity已经提供了预定义的模式。在Rect Transform的左上角点击，出现如下的常用Anchor模式。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_AnchorPreset.png" alt="Anchor Preset"></p>
-<p>以top-left模式为例，此时锚点位于父元素的左上角。如果拉动父元素矩形的左边框和上边框，则子元素的位置也随之变化。而拉动另外两条边则不发生变化。<br>在middle或center模式下，拉动轴两侧的边子元素均会随之移动。<br>此外还有stretch模式，在拉动时会拉伸或压缩子元素。</p>
-<h2 id="新的组件">新的组件</h2>
-<ul>
-<li>Text：也就是Label。</li>
-</ul>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_TextInspector.png" alt="Text"></p>
-<ul>
-<li>Image</li>
-</ul>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_ImageInspector.png" alt="Image"></p>
-<ul>
-<li>RawImage：与Image不同之处在于，Image的参数是Sprite，而RawImage的参数是Texture。</li>
-</ul>
-<h2 id="交互">交互</h2>
-<p>交互组件都有一个transition属性，用于实现组件在不同状态下产生不同的变化。有三个选项：</p>
-<ul>
-<li>Color Tint：改变颜色。有一个Fade Duration的参数控制变化的时长。</li>
-<li>SpriteSwap：不同状态下展示不同的Sprite。</li>
-<li>Animation：由一个动画控制器来决定显示。不同状态下触发不同的事件。</li>
-<li>None：没有变化。</li>
-</ul>
-<p>Button提供了OnClick属性，可以为按钮添加响应。点击加号，可以添加一个委托。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_OnClick.png" alt="OnClick"></p>
-<p>其中有三个空，第一个表示目标对象，第二个表示要选用的函数，第三个是对应的参数列表，由前两项决定。<br>以点击按钮改变按钮的文字为例。第一个就是Button下的Text对象，第二个是Text.text，第三个则是你要改变为的内容。</p>
-<p>此外还有其他的控件，如Toggle、Slider、ScrollBar、Selection List。</p>
-<h3 id="自动布局">自动布局</h3>
-<p>一些更加复杂的布局技术，暂时没有这个需求，就不看了。</p>
-<h2 id="动画集成">动画集成</h2>
-<p>这部分文档没写，囧。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/Animation_Integration.jpg" alt="Animation Integration"></p>
-<h2 id="富文本">富文本</h2>
-<p>Rich Text在新的GUI系统中默认是禁用的，但是可以通过GUIStyle来使用：</p>
-<pre><code>GUIStyle style = new GUIStyle ();
-style.richText = true;
-GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</span>Some <span class="tag">&lt;<span class="title">color=yellow</span>&gt;</span>RICH<span class="tag">&lt;/<span class="title">color</span>&gt;</span> text<span class="tag">&lt;/<span class="title">size</span>&gt;</span>",style);
-</code></pre>
+
+        
+          <p class="article-more-link">
+            <a href="/2014/08/20/学习Unity 4.6新GUI系统/#more">阅读全文</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
@@ -175,6 +140,8 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
     <div class="article-entry" itemprop="articleBody">
       
         <p>本文参考了Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/architecture/folders-in-version-control" target="_blank" rel="external">Mastering Unity Project Folder Structure - Version Control Systems</a>和<a href="http://docs.unity3d.com/Manual/ExternalVersionControlSystemSupport.html" target="_blank" rel="external">Using External Version Control Systems with Unity</a>。</p>
+<p>首先需要了解一下Unity的目录结构。假设有一个叫做<code>testproject</code>的项目，那么它的结构应该如下图所示。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/folderstructure.png" alt=""></p>
 
         
           <p class="article-more-link">
@@ -264,6 +231,16 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
       
         <h2 id="一、扩展方法">一、扩展方法</h2>
 <p>扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 </p>
+<h3 id="注意事项：">注意事项：</h3>
+<ul>
+<li>扩展方法需要是静态方法。</li>
+<li>第一个参数指明作用的类型，并且用<code>this</code>关键字修饰。</li>
+<li>其他参数跟在第一个参数的后面。</li>
+<li>需要使用<code>using</code>指令将扩展方法所在的命名空间导入到源代码中。</li>
+<li>该类型以实例方法的形式调用该方法。</li>
+<li>编译器生成的中间语言 (IL) 会将代码转换为对静态方法的调用。</li>
+<li>扩展方法无法访问它们所扩展的类型中的私有变量。</li>
+</ul>
 
         
           <p class="article-more-link">
@@ -308,6 +285,9 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
     <div class="article-entry" itemprop="articleBody">
       
         <p>编程游戏（不是游戏编程，也不是编游戏……），也叫代码游戏，代表着市面上一类特别的游戏。它在游戏中加入了编程的特性（或许反过来说也对）。本文意在梳理市面上的一些编程游戏，并对其玩法进行介绍和评价。</p>
+<p>转载请注明：</p>
+<p>作者：andong777    </p>
+<p>原帖地址：<a href="http://blog.segmentfault.com/codecabin/1190000000626728" target="_blank" rel="external">Code Cabin</a></p>
 
         
           <p class="article-more-link">
@@ -447,6 +427,7 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
         <blockquote>
 <p>Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未经修改的 UNIX 源代码编译的。它们合在一起提供大家熟悉的 UNIX 环境。</p>
 </blockquote>
+<p>与此同时，MinGW这个项目也在做类似的事情。MinGW是Minimalistic GNU for Windows的缩写。MinGW有一个叫MSYS（Minimal SYStem）的子项目，主要是提供了一个模拟Linux的Shell和一些基本的Linux工具。</p>
 
         
           <p class="article-more-link">
@@ -539,6 +520,19 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
 <li>类与顶级函数(top-level function)的定义之间应当空两行。</li>
 <li>类中的方法之间应当空一行。</li>
 <li>方法中的逻辑部分之间可以空一行。</li>
+</ul>
+<h3 id="关于原文件编码">关于原文件编码</h3>
+<p>Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。</p>
+<h3 id="关于命名风格">关于命名风格</h3>
+<ul>
+<li>模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。</li>
+<li>类名使用驼峰命名法。</li>
+<li>异常的命名以<code>Error</code>结尾。</li>
+<li>函数名和方法名使用小写，用下划线分割单词。<code>mixedCase</code>只有在考虑兼容性的时候才使用。</li>
+<li>类方法的第一个参数总是<code>cls</code>，实例方法的第一个参数总是<code>self</code>。</li>
+<li>变量命名同函数和方法。如果名字与保留字有冲突，在最后加<code>_</code>。</li>
+<li>私有变量和方法在最前加<code>_</code>，此时外部无法访问，但子类可以访问。</li>
+<li>如果也不希望子类访问，可以以<code>__</code>开头。此时无法用ClassName.__var访问 。(但仍然可以通过ClassName._ClassName_a访问到。)</li>
 </ul>
 
         

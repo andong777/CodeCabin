@@ -92,6 +92,19 @@
 <li>类中的方法之间应当空一行。</li>
 <li>方法中的逻辑部分之间可以空一行。</li>
 </ul>
+<h3 id="关于原文件编码">关于原文件编码</h3>
+<p>Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。</p>
+<h3 id="关于命名风格">关于命名风格</h3>
+<ul>
+<li>模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。</li>
+<li>类名使用驼峰命名法。</li>
+<li>异常的命名以<code>Error</code>结尾。</li>
+<li>函数名和方法名使用小写，用下划线分割单词。<code>mixedCase</code>只有在考虑兼容性的时候才使用。</li>
+<li>类方法的第一个参数总是<code>cls</code>，实例方法的第一个参数总是<code>self</code>。</li>
+<li>变量命名同函数和方法。如果名字与保留字有冲突，在最后加<code>_</code>。</li>
+<li>私有变量和方法在最前加<code>_</code>，此时外部无法访问，但子类可以访问。</li>
+<li>如果也不希望子类访问，可以以<code>__</code>开头。此时无法用ClassName.__var访问 。(但仍然可以通过ClassName._ClassName_a访问到。)</li>
+</ul>
 
         
           <p class="article-more-link">
@@ -136,6 +149,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了<a href="https://store.continuum.io/cshop/anaconda/" target="_blank" rel="external">Anaconda</a>。</p>
+<p>Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强大。</p>
 
         
           <p class="article-more-link">

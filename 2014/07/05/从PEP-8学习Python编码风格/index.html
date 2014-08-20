@@ -9,7 +9,15 @@
 
 类与顶级函数(top-level function)的定义之间应当空两行。
 类中的方法之间应当空一行。
-方法中的逻辑部分之间可以空一行。">
+方法中的逻辑部分之间可以空一行。
+
+关于原文件编码
+Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。
+关于命名风格
+
+模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。
+类名使用驼峰命名法。
+异常的命名以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从PEP-8学习Python编码风格">
 <meta property="og:url" content="http://an-dong.info/2014/07/05/从PEP-8学习Python编码风格/">
@@ -18,14 +26,30 @@
 
 类与顶级函数(top-level function)的定义之间应当空两行。
 类中的方法之间应当空一行。
-方法中的逻辑部分之间可以空一行。">
+方法中的逻辑部分之间可以空一行。
+
+关于原文件编码
+Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。
+关于命名风格
+
+模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。
+类名使用驼峰命名法。
+异常的命名以">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从PEP-8学习Python编码风格">
 <meta name="twitter:description" content="关于空行
 
 类与顶级函数(top-level function)的定义之间应当空两行。
 类中的方法之间应当空一行。
-方法中的逻辑部分之间可以空一行。">
+方法中的逻辑部分之间可以空一行。
+
+关于原文件编码
+Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。
+关于命名风格
+
+模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。
+类名使用驼峰命名法。
+异常的命名以">
 
   
     <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
@@ -102,8 +126,6 @@
 <li>类中的方法之间应当空一行。</li>
 <li>方法中的逻辑部分之间可以空一行。</li>
 </ul>
-<a id="more"></a>
-
 <h3 id="关于原文件编码">关于原文件编码</h3>
 <p>Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。</p>
 <h3 id="关于命名风格">关于命名风格</h3>
@@ -117,6 +139,8 @@
 <li>私有变量和方法在最前加<code>_</code>，此时外部无法访问，但子类可以访问。</li>
 <li>如果也不希望子类访问，可以以<code>__</code>开头。此时无法用ClassName.__var访问 。(但仍然可以通过ClassName._ClassName_a访问到。)</li>
 </ul>
+<a id="more"></a>
+
 <h3 id="关于公有和私有接口">关于公有和私有接口</h3>
 <ul>
 <li>默认情况下，以<code>_</code>开头的变量和方法被认为是私有的。</li>

@@ -96,47 +96,12 @@
 </ul>
 <h2 id="Rect_Tool">Rect Tool</h2>
 <p>所有的UI元素都使用矩形来表示。<br>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。</p>
-<h2 id="Rect_Transform">Rect Transform</h2>
-<p>Rect Transform是为UI设计的新transform组件。除了普通transform组件的position、rotation、scale之外， 还增加了width和height。<br>当使用Rect Tool调整对象的尺寸时，如果是2D或3D对象，他会调整其scale；而对于有Rect Transform的对象，则会调整其width和height。<br>当切换至Pivot模式，可以调整其pivot。再次点击切换回Center模式。</p>
-<h2 id="Anchors">Anchors</h2>
-<p>Rect Transform中增加了Anchors属性，其中包括Anchor Min和Anchor Max。Anchors用于指定在父UI元素调整时，子UI元素如何调整。具体行为由Anchor Min（左下）和Anchor Max（右上）两个锚点决定。坐标以矩形左下为(0, 0)，右上为(1, 1)。<br>但实际上，Unity已经提供了预定义的模式。在Rect Transform的左上角点击，出现如下的常用Anchor模式。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_AnchorPreset.png" alt="Anchor Preset"></p>
-<p>以top-left模式为例，此时锚点位于父元素的左上角。如果拉动父元素矩形的左边框和上边框，则子元素的位置也随之变化。而拉动另外两条边则不发生变化。<br>在middle或center模式下，拉动轴两侧的边子元素均会随之移动。<br>此外还有stretch模式，在拉动时会拉伸或压缩子元素。</p>
-<h2 id="新的组件">新的组件</h2>
-<ul>
-<li>Text：也就是Label。</li>
-</ul>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_TextInspector.png" alt="Text"></p>
-<ul>
-<li>Image</li>
-</ul>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_ImageInspector.png" alt="Image"></p>
-<ul>
-<li>RawImage：与Image不同之处在于，Image的参数是Sprite，而RawImage的参数是Texture。</li>
-</ul>
-<h2 id="交互">交互</h2>
-<p>交互组件都有一个transition属性，用于实现组件在不同状态下产生不同的变化。有三个选项：</p>
-<ul>
-<li>Color Tint：改变颜色。有一个Fade Duration的参数控制变化的时长。</li>
-<li>SpriteSwap：不同状态下展示不同的Sprite。</li>
-<li>Animation：由一个动画控制器来决定显示。不同状态下触发不同的事件。</li>
-<li>None：没有变化。</li>
-</ul>
-<p>Button提供了OnClick属性，可以为按钮添加响应。点击加号，可以添加一个委托。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/uGUI_OnClick.png" alt="OnClick"></p>
-<p>其中有三个空，第一个表示目标对象，第二个表示要选用的函数，第三个是对应的参数列表，由前两项决定。<br>以点击按钮改变按钮的文字为例。第一个就是Button下的Text对象，第二个是Text.text，第三个则是你要改变为的内容。</p>
-<p>此外还有其他的控件，如Toggle、Slider、ScrollBar、Selection List。</p>
-<h3 id="自动布局">自动布局</h3>
-<p>一些更加复杂的布局技术，暂时没有这个需求，就不看了。</p>
-<h2 id="动画集成">动画集成</h2>
-<p>这部分文档没写，囧。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/Animation_Integration.jpg" alt="Animation Integration"></p>
-<h2 id="富文本">富文本</h2>
-<p>Rich Text在新的GUI系统中默认是禁用的，但是可以通过GUIStyle来使用：</p>
-<pre><code>GUIStyle style = new GUIStyle ();
-style.richText = true;
-GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</span>Some <span class="tag">&lt;<span class="title">color=yellow</span>&gt;</span>RICH<span class="tag">&lt;/<span class="title">color</span>&gt;</span> text<span class="tag">&lt;/<span class="title">size</span>&gt;</span>",style);
-</code></pre>
+
+        
+          <p class="article-more-link">
+            <a href="/2014/08/20/学习Unity 4.6新GUI系统/#more">阅读全文</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">

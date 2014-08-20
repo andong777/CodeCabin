@@ -5,19 +5,22 @@
   
   <title>问题驱动的Git学习 | Code Cabin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。">
+  <meta name="description" content="本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。
+第一个问题比较简单，其实是关于Github的问题。就是我平时用Git的机器是自己的电脑，密钥也是存在本机上并把上传到Github上。那么我在机房的机器上难道要复制一份私钥过来？既不优雅也不安全。（网上还真有人这么干。）其实Github">
 <meta property="og:type" content="article">
 <meta property="og:title" content="问题驱动的Git学习">
 <meta property="og:url" content="http://an-dong.info/2014/07/05/问题驱动的Git学习/">
 <meta property="og:site_name" content="Code Cabin">
-<meta property="og:description" content="本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。">
+<meta property="og:description" content="本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。
+第一个问题比较简单，其实是关于Github的问题。就是我平时用Git的机器是自己的电脑，密钥也是存在本机上并把上传到Github上。那么我在机房的机器上难道要复制一份私钥过来？既不优雅也不安全。（网上还真有人这么干。）其实Github">
 <meta property="og:image" content="http://segmentfault.com/img/bVcEFy">
 <meta property="og:image" content="http://segmentfault.com/img/bVcEFz">
 <meta property="og:image" content="http://segmentfault.com/img/bVcEFM">
 <meta property="og:image" content="http://segmentfault.com/img/bVcEFB">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="问题驱动的Git学习">
-<meta name="twitter:description" content="本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。">
+<meta name="twitter:description" content="本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。
+第一个问题比较简单，其实是关于Github的问题。就是我平时用Git的机器是自己的电脑，密钥也是存在本机上并把上传到Github上。那么我在机房的机器上难道要复制一份私钥过来？既不优雅也不安全。（网上还真有人这么干。）其实Github">
 
   
     <link rel="alternative" href="/atom.xml" title="Code Cabin" type="application/atom+xml">
@@ -89,12 +92,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。</p>
-<a id="more"></a>
-
 <p>第一个问题比较简单，其实是关于Github的问题。就是我平时用Git的机器是自己的电脑，密钥也是存在本机上并把上传到Github上。那么我在机房的机器上难道要复制一份私钥过来？既不优雅也不安全。（网上还真有人这么干。）其实Github这类网站是可以保存多份公钥的，不信自己到<code>Edit Profile-&gt;SSH Keys</code>去看看。这是也明白为什么Git的Windows GUI版为什么不用设置密钥了。顺便记一下生成密钥的过程备忘。</p>
 <pre><code><span class="title">cd</span> ~/.ssh
 ssh-keygen -t rsa -C <span class="string">"YOUR_EMAIL<span class="variable">@YOUREMAIL</span>.COM"</span>
 </code></pre><p>此时<code>~/.ssh/id_rsa.pub</code>就是你的公钥。</p>
+<a id="more"></a>
+
 <p>第二个问题稍微复杂一点，是关于在多台机器提交代码导致的问题。因为我会在我自己的电脑和机房电脑修改代码，难免造成代码的不一致。这时如果push代码可能会出错，原因可能是本地代码在版本树中的位置更早，或者多处独立提交了代码导致冲突。通常此时应当先将代码拉取下来解决冲突。</p>
 <pre><code><span class="title">git</span> fetch origin
 </code></pre><p>执行完这一句后，我们会把执行<code>git branch -r</code>看到的远程分支都fetch下来。下面执行merge。</p>

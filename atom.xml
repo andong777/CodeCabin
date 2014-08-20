@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://an-dong.info/"/>
-  <updated>2014-08-20T08:57:23.818Z</updated>
+  <updated>2014-08-20T09:08:40.448Z</updated>
   <id>http://an-dong.info/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://an-dong.info/2014/08/20/%E5%AD%A6%E4%B9%A0Unity%204.6%E6%96%B0GUI%E7%B3%BB%E7%BB%9F/"/>
     <id>http://an-dong.info/2014/08/20/学习Unity 4.6新GUI系统/</id>
     <published>2014-08-20T08:53:30.000Z</published>
-    <updated>2014-08-20T08:56:04.000Z</updated>
+    <updated>2014-08-20T09:03:44.000Z</updated>
     <content type="html"><![CDATA[<p>最近在学习Unity的过程中，自己做一款小游戏自娱自乐。自然需要用到GUI。但4.5中的GUI很难用，一个选择是传说中的NGUI插件。但对于4.6中的新GUI，我也有所耳闻。想了想还是选择官方的技术较好，于是就有了这篇。</p>
 <h2 id="Canvas">Canvas</h2>
 <p>在新GUI中，所有的UI组件都位于Canvas上。Canvas有三种渲染模式：</p>
@@ -30,6 +30,8 @@
 </ul>
 <h2 id="Rect_Tool">Rect Tool</h2>
 <p>所有的UI元素都使用矩形来表示。<br>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。</p>
+<a id="more"></a>
+
 <h2 id="Rect_Transform">Rect Transform</h2>
 <p>Rect Transform是为UI设计的新transform组件。除了普通transform组件的position、rotation、scale之外， 还增加了width和height。<br>当使用Rect Tool调整对象的尺寸时，如果是2D或3D对象，他会调整其scale；而对于有Rect Transform的对象，则会调整其width和height。<br>当切换至Pivot模式，可以调整其pivot。再次点击切换回Center模式。</p>
 <h2 id="Anchors">Anchors</h2>
@@ -71,7 +73,17 @@
 style.richText = true;
 GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</span>Some <span class="tag">&lt;<span class="title">color=yellow</span>&gt;</span>RICH<span class="tag">&lt;/<span class="title">color</span>&gt;</span> text<span class="tag">&lt;/<span class="title">size</span>&gt;</span>",style);
 </code></pre>]]></content>
-    
+    <summary type="html"><![CDATA[<p>最近在学习Unity的过程中，自己做一款小游戏自娱自乐。自然需要用到GUI。但4.5中的GUI很难用，一个选择是传说中的NGUI插件。但对于4.6中的新GUI，我也有所耳闻。想了想还是选择官方的技术较好，于是就有了这篇。</p>
+<h2 id="Canvas">Canvas</h2>
+<p>在新GUI中，所有的UI组件都位于Canvas上。Canvas有三种渲染模式：</p>
+<ul>
+<li>Screen Space - Overlay：将UI放置在场景的上面，调节场景大小或调整分辨率，则Canvas也会随之调整。</li>
+<li>Screen Space - Camera：Canvas由一个特定的相机渲染，相机的设置会影响UI。</li>
+<li>World Space：使Canvas像场景中的其他对象一样渲染。</li>
+</ul>
+<h2 id="Rect_Tool">Rect Tool</h2>
+<p>所有的UI元素都使用矩形来表示。<br>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。</p>
+]]></summary>
     
       <category term="Unity3D" scheme="http://an-dong.info/tags/Unity3D/"/>
     
@@ -86,12 +98,12 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
     <link href="http://an-dong.info/2014/08/10/%E5%9C%A8Unity%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8Git/"/>
     <id>http://an-dong.info/2014/08/10/在Unity项目中使用Git/</id>
     <published>2014-08-10T12:53:30.000Z</published>
-    <updated>2014-08-11T14:07:19.000Z</updated>
+    <updated>2014-08-20T09:03:22.000Z</updated>
     <content type="html"><![CDATA[<p>本文参考了Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/architecture/folders-in-version-control" target="_blank" rel="external">Mastering Unity Project Folder Structure - Version Control Systems</a>和<a href="http://docs.unity3d.com/Manual/ExternalVersionControlSystemSupport.html" target="_blank" rel="external">Using External Version Control Systems with Unity</a>。</p>
-<a id="more"></a>
-
 <p>首先需要了解一下Unity的目录结构。假设有一个叫做<code>testproject</code>的项目，那么它的结构应该如下图所示。</p>
 <p><img src="http://andong777-sfault.qiniudn.com/folderstructure.png" alt=""></p>
+<a id="more"></a>
+
 <blockquote>
 <p>Assembly-CSharp-vs.csproj and Assembly-CSharp.csproj – Visual Studio (with -vs suffix) and MonoDevelop project files generated for your C# scripts.</p>
 </blockquote>
@@ -135,6 +147,8 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
 
 ]]></content>
     <summary type="html"><![CDATA[<p>本文参考了Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/architecture/folders-in-version-control" target="_blank" rel="external">Mastering Unity Project Folder Structure - Version Control Systems</a>和<a href="http://docs.unity3d.com/Manual/ExternalVersionControlSystemSupport.html" target="_blank" rel="external">Using External Version Control Systems with Unity</a>。</p>
+<p>首先需要了解一下Unity的目录结构。假设有一个叫做<code>testproject</code>的项目，那么它的结构应该如下图所示。</p>
+<p><img src="http://andong777-sfault.qiniudn.com/folderstructure.png" alt=""></p>
 ]]></summary>
     
       <category term="Unity3D" scheme="http://an-dong.info/tags/Unity3D/"/>
@@ -270,11 +284,9 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
     <link href="http://an-dong.info/2014/08/06/C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E8%A1%A5%E5%85%85%EF%BC%89%E2%80%94%E2%80%94%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E3%80%81%E4%BA%8B%E4%BB%B6/"/>
     <id>http://an-dong.info/2014/08/06/C学习笔记（补充）——扩展方法、事件/</id>
     <published>2014-08-06T12:50:51.000Z</published>
-    <updated>2014-08-11T14:06:33.000Z</updated>
+    <updated>2014-08-20T09:05:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="一、扩展方法">一、扩展方法</h2>
 <p>扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 </p>
-<a id="more"></a>
-
 <h3 id="注意事项：">注意事项：</h3>
 <ul>
 <li>扩展方法需要是静态方法。</li>
@@ -285,6 +297,8 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
 <li>编译器生成的中间语言 (IL) 会将代码转换为对静态方法的调用。</li>
 <li>扩展方法无法访问它们所扩展的类型中的私有变量。</li>
 </ul>
+<a id="more"></a>
+
 <p>注意到C#中的<code>StringBuilder</code>类没有实现Java中的<code>Reverse()</code>方法，可以通过扩展方法实现：</p>
 <pre><code>namespace <span class="type">ExtensionMethod</span>
 {
@@ -366,6 +380,16 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
 ]]></content>
     <summary type="html"><![CDATA[<h2 id="一、扩展方法">一、扩展方法</h2>
 <p>扩展方法使你能够向现有类型“添加”方法，而无需创建新的派生类型、重新编译或以其他方式修改原始类型。 </p>
+<h3 id="注意事项：">注意事项：</h3>
+<ul>
+<li>扩展方法需要是静态方法。</li>
+<li>第一个参数指明作用的类型，并且用<code>this</code>关键字修饰。</li>
+<li>其他参数跟在第一个参数的后面。</li>
+<li>需要使用<code>using</code>指令将扩展方法所在的命名空间导入到源代码中。</li>
+<li>该类型以实例方法的形式调用该方法。</li>
+<li>编译器生成的中间语言 (IL) 会将代码转换为对静态方法的调用。</li>
+<li>扩展方法无法访问它们所扩展的类型中的私有变量。</li>
+</ul>
 ]]></summary>
     
       <category term="C#" scheme="http://an-dong.info/tags/C/"/>
@@ -379,11 +403,13 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
     <link href="http://an-dong.info/2014/08/03/%E8%B0%88%E8%B0%88%E2%80%9C%E7%BC%96%E7%A8%8B%E6%B8%B8%E6%88%8F%E2%80%9D/"/>
     <id>http://an-dong.info/2014/08/03/谈谈“编程游戏”/</id>
     <published>2014-08-03T12:49:41.000Z</published>
-    <updated>2014-08-11T14:05:55.000Z</updated>
+    <updated>2014-08-20T09:04:18.000Z</updated>
     <content type="html"><![CDATA[<p>编程游戏（不是游戏编程，也不是编游戏……），也叫代码游戏，代表着市面上一类特别的游戏。它在游戏中加入了编程的特性（或许反过来说也对）。本文意在梳理市面上的一些编程游戏，并对其玩法进行介绍和评价。</p>
+<p>转载请注明：</p>
+<p>作者：andong777    </p>
+<p>原帖地址：<a href="http://blog.segmentfault.com/codecabin/1190000000626728" target="_blank" rel="external">Code Cabin</a></p>
 <a id="more"></a>
 
-<p>转载请注明：<br>作者：andong777<br>原帖地址：<a href="http://blog.segmentfault.com/codecabin/1190000000626728" target="_blank" rel="external">Code Cabin</a></p>
 <h3 id="选择标准">选择标准</h3>
 <ul>
 <li>项目必须是在时间上是较新的，或者有一定的知名度。不包括年代久远且不活跃的、知名度过低的。</li>
@@ -462,6 +488,9 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
 <p>本人认为真正好的教育类编程游戏应体现编程思想，而不应局限于某种编程语言或技巧。我所设想的编程游戏应当体现一个开放式的世界，玩家可以对其中的对象编程，玩家可以编程创造或改造物品。这里的编程不一定要通过代码，如果能通过可视化的方式，玩家或许能更容易理解。或许以后有空我会尝试一下。</p>
 ]]></content>
     <summary type="html"><![CDATA[<p>编程游戏（不是游戏编程，也不是编游戏……），也叫代码游戏，代表着市面上一类特别的游戏。它在游戏中加入了编程的特性（或许反过来说也对）。本文意在梳理市面上的一些编程游戏，并对其玩法进行介绍和评价。</p>
+<p>转载请注明：</p>
+<p>作者：andong777    </p>
+<p>原帖地址：<a href="http://blog.segmentfault.com/codecabin/1190000000626728" target="_blank" rel="external">Code Cabin</a></p>
 ]]></summary>
     
       <category term="游戏" scheme="http://an-dong.info/tags/%E6%B8%B8%E6%88%8F/"/>
@@ -684,13 +713,13 @@ Console.WriteLine(); // 写并换行
     <link href="http://an-dong.info/2014/07/24/%E5%85%B3%E4%BA%8ECygwin%E2%80%94%E2%80%94%E5%8C%85%E7%AE%A1%E7%90%86%E3%80%81%E6%9B%BF%E6%8D%A2%E9%BB%98%E8%AE%A4%E7%BB%88%E7%AB%AF%E3%80%81%E5%90%8CMSYS%E7%9A%84%E6%AF%94%E8%BE%83/"/>
     <id>http://an-dong.info/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/</id>
     <published>2014-07-24T13:02:42.000Z</published>
-    <updated>2014-08-11T14:07:01.000Z</updated>
+    <updated>2014-08-20T09:02:58.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未经修改的 UNIX 源代码编译的。它们合在一起提供大家熟悉的 UNIX 环境。</p>
 </blockquote>
+<p>与此同时，MinGW这个项目也在做类似的事情。MinGW是Minimalistic GNU for Windows的缩写。MinGW有一个叫MSYS（Minimal SYStem）的子项目，主要是提供了一个模拟Linux的Shell和一些基本的Linux工具。</p>
 <a id="more"></a>
 
-<p>与此同时，MinGW这个项目也在做类似的事情。MinGW是Minimalistic GNU for Windows的缩写。MinGW有一个叫MSYS（Minimal SYStem）的子项目，主要是提供了一个模拟Linux的Shell和一些基本的Linux工具。</p>
 <p><a href="http://www.cnblogs.com/fancybit/archive/2012/07/08/2581590.html" target="_blank" rel="external">这篇文章</a>指出了二者的区别，学习一下：</p>
 <blockquote>
 <p>首先MinGW和Cygwin都不能让Linux下的程序直接运行在Windows上，必需通过源代码重新编译。  </p>
@@ -709,6 +738,7 @@ Console.WriteLine(); // 写并换行
     <summary type="html"><![CDATA[<blockquote>
 <p>Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未经修改的 UNIX 源代码编译的。它们合在一起提供大家熟悉的 UNIX 环境。</p>
 </blockquote>
+<p>与此同时，MinGW这个项目也在做类似的事情。MinGW是Minimalistic GNU for Windows的缩写。MinGW有一个叫MSYS（Minimal SYStem）的子项目，主要是提供了一个模拟Linux的Shell和一些基本的Linux工具。</p>
 ]]></summary>
     
       <category term="Cygwin" scheme="http://an-dong.info/tags/Cygwin/"/>
@@ -818,15 +848,13 @@ std::stringstream ss;
     <link href="http://an-dong.info/2014/07/05/%E4%BB%8EPEP-8%E5%AD%A6%E4%B9%A0Python%E7%BC%96%E7%A0%81%E9%A3%8E%E6%A0%BC/"/>
     <id>http://an-dong.info/2014/07/05/从PEP-8学习Python编码风格/</id>
     <published>2014-07-05T08:32:00.000Z</published>
-    <updated>2014-08-11T14:06:55.000Z</updated>
+    <updated>2014-08-20T09:02:34.000Z</updated>
     <content type="html"><![CDATA[<h3 id="关于空行">关于空行</h3>
 <ul>
 <li>类与顶级函数(top-level function)的定义之间应当空两行。</li>
 <li>类中的方法之间应当空一行。</li>
 <li>方法中的逻辑部分之间可以空一行。</li>
 </ul>
-<a id="more"></a>
-
 <h3 id="关于原文件编码">关于原文件编码</h3>
 <p>Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。</p>
 <h3 id="关于命名风格">关于命名风格</h3>
@@ -840,6 +868,8 @@ std::stringstream ss;
 <li>私有变量和方法在最前加<code>_</code>，此时外部无法访问，但子类可以访问。</li>
 <li>如果也不希望子类访问，可以以<code>__</code>开头。此时无法用ClassName.__var访问 。(但仍然可以通过ClassName._ClassName_a访问到。)</li>
 </ul>
+<a id="more"></a>
+
 <h3 id="关于公有和私有接口">关于公有和私有接口</h3>
 <ul>
 <li>默认情况下，以<code>_</code>开头的变量和方法被认为是私有的。</li>
@@ -891,6 +921,19 @@ std::stringstream ss;
 <li>类中的方法之间应当空一行。</li>
 <li>方法中的逻辑部分之间可以空一行。</li>
 </ul>
+<h3 id="关于原文件编码">关于原文件编码</h3>
+<p>Python3中应当总是使用UTF-8。（Python2使用ASCII。）在使用了规定编码后不需要再声明文件编码。</p>
+<h3 id="关于命名风格">关于命名风格</h3>
+<ul>
+<li>模块使用小写字母和下划线，包名同样使用小写字母但不要使用下划线。</li>
+<li>类名使用驼峰命名法。</li>
+<li>异常的命名以<code>Error</code>结尾。</li>
+<li>函数名和方法名使用小写，用下划线分割单词。<code>mixedCase</code>只有在考虑兼容性的时候才使用。</li>
+<li>类方法的第一个参数总是<code>cls</code>，实例方法的第一个参数总是<code>self</code>。</li>
+<li>变量命名同函数和方法。如果名字与保留字有冲突，在最后加<code>_</code>。</li>
+<li>私有变量和方法在最前加<code>_</code>，此时外部无法访问，但子类可以访问。</li>
+<li>如果也不希望子类访问，可以以<code>__</code>开头。此时无法用ClassName.__var访问 。(但仍然可以通过ClassName._ClassName_a访问到。)</li>
+</ul>
 ]]></summary>
     
       <category term="Python" scheme="http://an-dong.info/tags/Python/"/>
@@ -902,11 +945,13 @@ std::stringstream ss;
     <link href="http://an-dong.info/2014/07/05/Cocos2d-x%E2%80%94%E2%80%94%E5%AF%BC%E5%85%A5Cocostudio%E8%B5%84%E6%BA%90/"/>
     <id>http://an-dong.info/2014/07/05/Cocos2d-x——导入Cocostudio资源/</id>
     <published>2014-07-05T07:06:17.000Z</published>
-    <updated>2014-08-11T14:06:18.000Z</updated>
+    <updated>2014-08-20T09:06:08.000Z</updated>
     <content type="html"><![CDATA[<p>目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。</p>
+<p>本人Cocos2d-x的版本是3.1，Cocostudio的版本是1.5. </p>
+<p>Cocostudio目前的功能包括UI编辑器、动画编辑器、场景编辑器和数据编辑器。数据编辑器没有涉及到，就不说了。剩下三者中主要讲下导入UI编辑器的资源。</p>
 <a id="more"></a>
 
-<p>本人Cocos2d-x的版本是3.1，Cocostudio的版本是1.5.<br>Cocostudio目前的功能包括UI编辑器、动画编辑器、场景编辑器和数据编辑器。数据编辑器没有涉及到，就不说了。剩下三者中主要讲下导入UI编辑器的资源。<br>UI编辑器导出的文件包括一个<code>.ExportJson</code>文件，一个<code>.plist</code>文件和一个<code>.png</code>文件。Cocostudio中文官网中说的是<code>TouchGroup</code>，英文官网中是<code>UILayer</code>，可是都已经不存在了。<code>UILayer</code>变成了<code>Layer</code>，现在也可以不创建<code>Layer</code>，直接加到场景上面。所以代码可以这样：</p>
+<p>UI编辑器导出的文件包括一个<code>.ExportJson</code>文件，一个<code>.plist</code>文件和一个<code>.png</code>文件。Cocostudio中文官网中说的是<code>TouchGroup</code>，英文官网中是<code>UILayer</code>，可是都已经不存在了。<code>UILayer</code>变成了<code>Layer</code>，现在也可以不创建<code>Layer</code>，直接加到场景上面。所以代码可以这样：</p>
 <pre><code>Node *pNode = <span class="attribute">GUIReader</span>::getInstance<span class="function"><span class="params">()</span>-&gt;</span>widgetFromJsonFile(<span class="string">"test.ExportJson"</span>);
 <span class="keyword">this</span>-&gt;addChild(pNode);
 </code></pre><p>下面就可以用<code>getChildByTag</code>来获取组件了。不过<code>getChildByTag</code>貌似只能按照树的结构一层层照下来，显得很麻烦，而且不能按照名字来取。所以，现在可以用<code>ui</code>中的<code>Helper</code>直接从树中获取组件，用name或者tag。但<code>seekWidgetByTag</code>和<code>seekWidgetByName</code>的第一个参数是Widget类型，需要将<code>pNode</code>转成<code>Widget</code>类型。（从<code>.ExportJson</code>文件可以看出来，<code>pNode</code>本来就是一个<code>Widget</code>类型的树）</p>
@@ -951,6 +996,8 @@ this-&gt;addChild(armature);
 <span class="title">widget</span>-&gt;</span>addTouchEventListener(CC_CALLBACK_2(<span class="attribute">MainScene</span>::touchEvent, <span class="keyword">this</span>));
 </code></pre>]]></content>
     <summary type="html"><![CDATA[<p>目前正在和实训的小组成员一起做一款手机2D游戏，我们采用了Cocos2d-x进行开发。之前虽然早有耳闻，这次却是第一次认真地学习和使用Cocos2d-x。最开始的几天就是在不停的看文档和爬坑。其中一个坑就是Cocostudio这货。官网的文档滞后而且不够详细，为了弄清楚，借鉴了很多博客，也阅读了示例代码。</p>
+<p>本人Cocos2d-x的版本是3.1，Cocostudio的版本是1.5. </p>
+<p>Cocostudio目前的功能包括UI编辑器、动画编辑器、场景编辑器和数据编辑器。数据编辑器没有涉及到，就不说了。剩下三者中主要讲下导入UI编辑器的资源。</p>
 ]]></summary>
     
       <category term="Cocos2d-x" scheme="http://an-dong.info/tags/Cocos2d-x/"/>
@@ -964,14 +1011,14 @@ this-&gt;addChild(armature);
     <link href="http://an-dong.info/2014/07/05/%E9%97%AE%E9%A2%98%E9%A9%B1%E5%8A%A8%E7%9A%84Git%E5%AD%A6%E4%B9%A0/"/>
     <id>http://an-dong.info/2014/07/05/问题驱动的Git学习/</id>
     <published>2014-07-05T07:05:24.000Z</published>
-    <updated>2014-08-11T14:07:11.000Z</updated>
+    <updated>2014-08-20T09:04:56.000Z</updated>
     <content type="html"><![CDATA[<p>本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。</p>
-<a id="more"></a>
-
 <p>第一个问题比较简单，其实是关于Github的问题。就是我平时用Git的机器是自己的电脑，密钥也是存在本机上并把上传到Github上。那么我在机房的机器上难道要复制一份私钥过来？既不优雅也不安全。（网上还真有人这么干。）其实Github这类网站是可以保存多份公钥的，不信自己到<code>Edit Profile-&gt;SSH Keys</code>去看看。这是也明白为什么Git的Windows GUI版为什么不用设置密钥了。顺便记一下生成密钥的过程备忘。</p>
 <pre><code><span class="title">cd</span> ~/.ssh
 ssh-keygen -t rsa -C <span class="string">"YOUR_EMAIL<span class="variable">@YOUREMAIL</span>.COM"</span>
 </code></pre><p>此时<code>~/.ssh/id_rsa.pub</code>就是你的公钥。</p>
+<a id="more"></a>
+
 <p>第二个问题稍微复杂一点，是关于在多台机器提交代码导致的问题。因为我会在我自己的电脑和机房电脑修改代码，难免造成代码的不一致。这时如果push代码可能会出错，原因可能是本地代码在版本树中的位置更早，或者多处独立提交了代码导致冲突。通常此时应当先将代码拉取下来解决冲突。</p>
 <pre><code><span class="title">git</span> fetch origin
 </code></pre><p>执行完这一句后，我们会把执行<code>git branch -r</code>看到的远程分支都fetch下来。下面执行merge。</p>
@@ -1004,6 +1051,10 @@ ssh-keygen -t rsa -C <span class="string">"YOUR_EMAIL<span class="variable">@YOU
 </code></pre><p>使用分支的一个好处自然就是代码可能在多个方向同时进行而不会相互干扰。当你切换到一个分支时，代码就会自动更换成对应分支的内容。而这一切都可以交给Git，而不需要自己手工备份代码。</p>
 ]]></content>
     <summary type="html"><![CDATA[<p>本人是个Git新手，平时用Git最多的就是push，因为别的都不怎么会用。这几天因为在小组中负责代码的整合，顺便将代码提交到Github，接触到了Git更多的用法。</p>
+<p>第一个问题比较简单，其实是关于Github的问题。就是我平时用Git的机器是自己的电脑，密钥也是存在本机上并把上传到Github上。那么我在机房的机器上难道要复制一份私钥过来？既不优雅也不安全。（网上还真有人这么干。）其实Github这类网站是可以保存多份公钥的，不信自己到<code>Edit Profile-&gt;SSH Keys</code>去看看。这是也明白为什么Git的Windows GUI版为什么不用设置密钥了。顺便记一下生成密钥的过程备忘。</p>
+<pre><code><span class="title">cd</span> ~/.ssh
+ssh-keygen -t rsa -C <span class="string">"YOUR_EMAIL<span class="variable">@YOUREMAIL</span>.COM"</span>
+</code></pre><p>此时<code>~/.ssh/id_rsa.pub</code>就是你的公钥。</p>
 ]]></summary>
     
       <category term="Git" scheme="http://an-dong.info/tags/Git/"/>
@@ -1017,11 +1068,14 @@ ssh-keygen -t rsa -C <span class="string">"YOUR_EMAIL<span class="variable">@YOU
     <link href="http://an-dong.info/2014/07/05/Python%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%88%A9%E5%99%A8%E2%80%94%E2%80%94Anaconda/"/>
     <id>http://an-dong.info/2014/07/05/Python科学计算利器——Anaconda/</id>
     <published>2014-07-05T07:04:23.000Z</published>
-    <updated>2014-08-11T14:06:04.000Z</updated>
+    <updated>2014-08-20T09:08:10.000Z</updated>
     <content type="html"><![CDATA[<p>最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了<a href="https://store.continuum.io/cshop/anaconda/" target="_blank" rel="external">Anaconda</a>。</p>
+<p>Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强大。</p>
 <a id="more"></a>
 
-<p>Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强大。<br>首先是下载安装。Anaconda提供了Python2.7和Python3.4两个版本，同时如果需要其他版本，还可以通过conda来创建。安装完成后可以看到，Anaconda提供了Spyder，IPython和一个命令行。下面来看一下conda。<br>输入<code>conda list</code>来看一下所有安装时自带的Python扩展。粗略看了一下，其中包括了常用的  <code>Numpy</code>,<code>Scipy</code>，<code>matplotlib</code>和<code>networkx</code>等，以及<code>beautiful-soup</code>，<code>requests</code>，<code>flask</code>，<code>tornado</code>等网络相关的扩展。<br>奇怪的是，里边竟然没有<code>sklearn</code>，所以首先装一下它。</p>
+<p>首先是下载安装。Anaconda提供了Python2.7和Python3.4两个版本，同时如果需要其他版本，还可以通过conda来创建。安装完成后可以看到，Anaconda提供了Spyder，IPython和一个命令行。下面来看一下conda。</p>
+<p>输入<code>conda list</code>来看一下所有安装时自带的Python扩展。粗略看了一下，其中包括了常用的  <code>Numpy</code>,<code>Scipy</code>，<code>matplotlib</code>和<code>networkx</code>等，以及<code>beautiful-soup</code>，<code>requests</code>，<code>flask</code>，<code>tornado</code>等网络相关的扩展。</p>
+<p>奇怪的是，里边竟然没有<code>sklearn</code>，所以首先装一下它。</p>
 <pre><code>conda <span class="operator"><span class="keyword">install</span> scikit-learn</span>
 </code></pre><p>如果需要指定版本，也可以直接用<code>[package-name]=x.x</code>来指定。<br>conda的repo中的扩展不算太新，如果想要更新的，可能要用PyPI或者自己下载源码。而conda和pip关联的很好。使用pip安装的东西可以使用conda来管理，这点要比Canopy好。下图是我用pip安装的<code>nltk</code>，<code>jieba</code>和<code>gensim</code>。<br><img src="http://segmentfault.com/img/bVcDZd" alt="请输入图片描述"></p>
 <p>我对这个科学计算环境的另一个要求就是能够多个Python版本并存，尤其是2.x和3.x的并存。这个通过<code>virtualenv</code>可以做到。Anaconda也正是通过其实现的。<br>下面用conda创建一个名叫python2的版本为python2.7的环境。</p>
@@ -1034,6 +1088,7 @@ ssh-keygen -t rsa -C <span class="string">"YOUR_EMAIL<span class="variable">@YOU
 <p>这里突然有一个问题，怎样在IDE中使用创建出来的环境？如果是PyCharm等IDE，直接设置Python安装目录就可以了。那spyder呢？其实spyder就是一个Python的扩展，你需要在虚拟环境中也装一个spyder。<br>最后就是spyder的主界面。变量查看窗口很好用。<br><img src="http://segmentfault.com/img/bVcDZq" alt="请输入图片描述"></p>
 ]]></content>
     <summary type="html"><![CDATA[<p>最近在用Python做中文自然语言处理。使用的IDE是PyCharm。PyCharm确实是Python开发之首选，但用于科学计算方面，还略有欠缺。为此我尝试过Enthought Canopy，但Canopy感觉把问题搞得复杂化，管理Python扩展也不太方便。直到今天我发现了<a href="https://store.continuum.io/cshop/anaconda/" target="_blank" rel="external">Anaconda</a>。</p>
+<p>Anaconda是一个和Canopy类似的科学计算环境，但用起来更加方便。自带的包管理器conda也很强大。</p>
 ]]></summary>
     
       <category term="Python" scheme="http://an-dong.info/tags/Python/"/>
