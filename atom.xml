@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://an-dong.info/"/>
-  <updated>2014-08-22T08:18:31.029Z</updated>
+  <updated>2014-08-22T08:23:01.876Z</updated>
   <id>http://an-dong.info/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://an-dong.info/2014/08/22/Unity%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E7%AE%A1%E7%90%86%E7%B1%BB%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
     <id>http://an-dong.info/2014/08/22/Unity中实现全局管理类的几种方式/</id>
     <published>2014-08-22T08:17:30.000Z</published>
-    <updated>2014-08-22T08:17:39.000Z</updated>
+    <updated>2014-08-22T08:22:43.000Z</updated>
     <content type="html"><![CDATA[<p>如何在Unity中实现全局管理类？由于Unity脚本的运行机制和面向组件编程（COP）的思想，实现起来和普通的方式略有差别。</p>
 <p>第一种方式是使用静态类。适合存储一些全局的变量，如游戏当前关卡、玩家得分等。<br>实现方式和普通的C#静态类没有差别。注意使用静态类就没有必要继承MonoBehaviour了。</p>
 <p>如果要实现复杂一些的全局控制，如切换游戏关卡等操作，更常用的方式是使用单例类。<br>单例类的实现又分为两种：</p>
@@ -35,6 +35,8 @@
 <li>等等。</li>
 </ul>
 <p>缺点也很多，主流的观点是能不继承MonoBehaviour就不要继承。</p>
+<a id="more"></a>
+
 <h2 id="纯C#的单例类">纯C#的单例类</h2>
 <p>实现起来简洁，易于理解。</p>
 <h3 id="普通的写法，不考虑多线程">普通的写法，不考虑多线程</h3>
@@ -59,7 +61,22 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass : MonoBehaviour {</div><div class="line"> </div><div class="line">    <span class="keyword">static</span> MyClass _instance;</div><div class="line"> </div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> MyClass Instance</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span></div><div class="line">        {</div><div class="line">            <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">            	<span class="comment">// 尝试寻找该类的实例。此处不能用GameObject.Find，因为MonoBehaviour继承自Component。</span></div><div class="line">                _instance = Object.FindObjectOfType(<span class="keyword">typeof</span>(MyClass)) <span class="keyword">as</span> MyClass;</div><div class="line"> </div><div class="line">                <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)	<span class="comment">// 如果没有找到</span></div><div class="line">                {                	                	</div><div class="line">                    GameObject go = <span class="keyword">new</span> GameObject(<span class="string">"_MyClass"</span>);	<span class="comment">// 创建一个新的GameObject</span></div><div class="line">                    DontDestroyOnLoad(go);	<span class="comment">// 防止被销毁</span></div><div class="line">                    _instance = go.AddComponent&lt;MyClass&gt;();	<span class="comment">// 将实例挂载到GameObject上</span></div><div class="line">                }</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> _instance;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
 
 ]]></content>
-    
+    <summary type="html"><![CDATA[<p>如何在Unity中实现全局管理类？由于Unity脚本的运行机制和面向组件编程（COP）的思想，实现起来和普通的方式略有差别。</p>
+<p>第一种方式是使用静态类。适合存储一些全局的变量，如游戏当前关卡、玩家得分等。<br>实现方式和普通的C#静态类没有差别。注意使用静态类就没有必要继承MonoBehaviour了。</p>
+<p>如果要实现复杂一些的全局控制，如切换游戏关卡等操作，更常用的方式是使用单例类。<br>单例类的实现又分为两种：</p>
+<ul>
+<li>继承自MonoBehaviour的单例类</li>
+<li>纯C#的单例类</li>
+</ul>
+<p>前者的优点是：</p>
+<ul>
+<li>可以在Inspector中显示，便于赋值和查看变量等；</li>
+<li>可以利用MonoBehaviour的接口；</li>
+<li>可以使用Coroutine。</li>
+<li>等等。</li>
+</ul>
+<p>缺点也很多，主流的观点是能不继承MonoBehaviour就不要继承。</p>
+]]></summary>
     
       <category term="Unity3D" scheme="http://an-dong.info/tags/Unity3D/"/>
     
