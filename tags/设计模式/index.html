@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: Unity3D | Code Cabin</title>
+  <title>Tag: 设计模式 | Code Cabin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="关注计算机技术">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Code Cabin">
-<meta property="og:url" content="http://an-dong.info/tags/Unity3D/">
+<meta property="og:url" content="http://an-dong.info/tags/设计模式/">
 <meta property="og:site_name" content="Code Cabin">
 <meta property="og:description" content="关注计算机技术">
 <meta name="twitter:card" content="summary">
@@ -132,149 +132,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏开发/">游戏开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-学习Unity 4.6新GUI系统" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/08/20/学习Unity 4.6新GUI系统/" class="article-date">
-  <time datetime="2014-08-20T08:53:30.000Z" itemprop="datePublished">8月 20 2014</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/08/20/学习Unity 4.6新GUI系统/">学习Unity 4.6新GUI系统</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在学习Unity的过程中，自己做一款小游戏自娱自乐。自然需要用到GUI。但4.5中的GUI很难用，一个选择是传说中的NGUI插件。但对于4.6中的新GUI，我也有所耳闻。想了想还是选择官方的技术较好，于是就有了这篇。</p>
-<h2 id="Canvas">Canvas</h2>
-<p>在新GUI中，所有的UI组件都位于Canvas上。Canvas有三种渲染模式：</p>
-<ul>
-<li>Screen Space - Overlay：将UI放置在场景的上面，调节场景大小或调整分辨率，则Canvas也会随之调整。</li>
-<li>Screen Space - Camera：Canvas由一个特定的相机渲染，相机的设置会影响UI。</li>
-<li>World Space：使Canvas像场景中的其他对象一样渲染。</li>
-</ul>
-<h2 id="Rect_Tool">Rect Tool</h2>
-<p>所有的UI元素都使用矩形来表示。<br>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/2014/08/20/学习Unity 4.6新GUI系统/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://an-dong.info/2014/08/20/学习Unity 4.6新GUI系统/" data-id="pfyjks4w5hmh9gwh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GUI/">GUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-在Unity项目中使用Git" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/08/10/在Unity项目中使用Git/" class="article-date">
-  <time datetime="2014-08-10T12:53:30.000Z" itemprop="datePublished">8月 10 2014</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/08/10/在Unity项目中使用Git/">在Unity项目中使用Git</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文参考了Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/architecture/folders-in-version-control" target="_blank" rel="external">Mastering Unity Project Folder Structure - Version Control Systems</a>和<a href="http://docs.unity3d.com/Manual/ExternalVersionControlSystemSupport.html" target="_blank" rel="external">Using External Version Control Systems with Unity</a>。</p>
-<p>首先需要了解一下Unity的目录结构。假设有一个叫做<code>testproject</code>的项目，那么它的结构应该如下图所示。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/folderstructure.png" alt=""></p>
-
-        
-          <p class="article-more-link">
-            <a href="/2014/08/10/在Unity项目中使用Git/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://an-dong.info/2014/08/10/在Unity项目中使用Git/" data-id="8d47lb207yva4157" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Unity-Scripting-Tutorials-要点记录" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/08/07/Unity-Scripting-Tutorials-要点记录/" class="article-date">
-  <time datetime="2014-08-07T12:52:16.000Z" itemprop="datePublished">8月 7 2014</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/08/07/Unity-Scripting-Tutorials-要点记录/">Unity Scripting Tutorials 要点记录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这几天通过Unity官网的<a href="http://unity3d.com/learn/tutorials/modules/beginner/scripting" target="_blank" rel="external">Unity Scripting Tutorials</a>的视频学习Unity脚本，观看的过程中做了记录。现在，整理了一下笔记，供自己以后和其他初学者参考。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/2014/08/07/Unity-Scripting-Tutorials-要点记录/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://an-dong.info/2014/08/07/Unity-Scripting-Tutorials-要点记录/" data-id="n2xs3m1flarm5m9m" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
 
     </footer>
   </div>

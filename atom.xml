@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://an-dong.info/"/>
-  <updated>2014-08-20T09:08:40.448Z</updated>
+  <updated>2014-08-22T08:18:31.029Z</updated>
   <id>http://an-dong.info/</id>
   
   <author>
@@ -13,6 +13,61 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Unity中实现全局管理类的几种方式]]></title>
+    <link href="http://an-dong.info/2014/08/22/Unity%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E7%AE%A1%E7%90%86%E7%B1%BB%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
+    <id>http://an-dong.info/2014/08/22/Unity中实现全局管理类的几种方式/</id>
+    <published>2014-08-22T08:17:30.000Z</published>
+    <updated>2014-08-22T08:17:39.000Z</updated>
+    <content type="html"><![CDATA[<p>如何在Unity中实现全局管理类？由于Unity脚本的运行机制和面向组件编程（COP）的思想，实现起来和普通的方式略有差别。</p>
+<p>第一种方式是使用静态类。适合存储一些全局的变量，如游戏当前关卡、玩家得分等。<br>实现方式和普通的C#静态类没有差别。注意使用静态类就没有必要继承MonoBehaviour了。</p>
+<p>如果要实现复杂一些的全局控制，如切换游戏关卡等操作，更常用的方式是使用单例类。<br>单例类的实现又分为两种：</p>
+<ul>
+<li>继承自MonoBehaviour的单例类</li>
+<li>纯C#的单例类</li>
+</ul>
+<p>前者的优点是：</p>
+<ul>
+<li>可以在Inspector中显示，便于赋值和查看变量等；</li>
+<li>可以利用MonoBehaviour的接口；</li>
+<li>可以使用Coroutine。</li>
+<li>等等。</li>
+</ul>
+<p>缺点也很多，主流的观点是能不继承MonoBehaviour就不要继承。</p>
+<h2 id="纯C#的单例类">纯C#的单例类</h2>
+<p>实现起来简洁，易于理解。</p>
+<h3 id="普通的写法，不考虑多线程">普通的写法，不考虑多线程</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass</div><div class="line">{</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> MyClass _instance = <span class="keyword">new</span> MyClass();</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Class Instance { </div><div class="line">    	<span class="keyword">get</span> { </div><div class="line">    		<span class="keyword">return</span> _instance; </div><div class="line">    	} </div><div class="line">    }    </div><div class="line"> </div><div class="line">    <span class="keyword">private</span> <span class="title">MyClass</span>() {}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="线程安全的写法">线程安全的写法</h3>
+<p>检查两次。C#中使用<code>lock</code>关键字。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass</div><div class="line">{</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> MyClass _instance;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">object</span> _lock = <span class="keyword">new</span> <span class="keyword">object</span>();</div><div class="line"> </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> MyClass Instance</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span></div><div class="line">        {</div><div class="line">            <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">                <span class="keyword">lock</span>(_lock)</div><div class="line">                {</div><div class="line">                    <span class="keyword">if</span> (_instance == <span class="keyword">null</span>) </div><div class="line">                    	_instance = <span class="keyword">new</span> MyClass();</div><div class="line">                }</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> _instance;</div><div class="line">        }</div><div class="line">    }</div><div class="line"> </div><div class="line">    <span class="keyword">private</span> <span class="title">MyClass</span>() {}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="基于MonoBehaviour的单例类">基于MonoBehaviour的单例类</h2>
+<h3 id="普通的写法">普通的写法</h3>
+<p>利用了Unity的运行机制，从Awake处获取Unity创建的对象作为单例。<br>注意在Unity中不要使用<code>new</code>来创建MonoBehaviour实例。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass : MonoBehaviour</div><div class="line">{</div><div class="line">	<span class="keyword">static</span> MyClass _instance;</div><div class="line"></div><div class="line">	<span class="keyword">void</span> Awake () {</div><div class="line">		_instance = <span class="keyword">this</span>;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> MyClass Instance {</div><div class="line">		<span class="keyword">get</span> {</div><div class="line">			<span class="comment">// 不需要再检查变量是否为null</span></div><div class="line">			<span class="keyword">return</span> _instance;</div><div class="line">		}</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="持久化的写法">持久化的写法</h3>
+<p>在多个场景中保存单例。又有两种方法。</p>
+<p>第一种是使用<code>DontDestroyOnLoad</code>方法，告诉Unity不要销毁实例所在的对象，然后将脚本挂到某个GameObject上：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass : MonoBehaviour</div><div class="line">{</div><div class="line">	<span class="keyword">static</span> MyClass _instance;</div><div class="line"></div><div class="line">	<span class="keyword">void</span> Awake () {</div><div class="line">		_instance = <span class="keyword">this</span>;</div><div class="line">		<span class="comment">// 防止载入新场景时被销毁</span></div><div class="line">		DontDestroyOnLoad(_instance.gameObject);	</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> MyClass Instance {</div><div class="line">		<span class="keyword">get</span> {</div><div class="line">			<span class="keyword">return</span> _instance;</div><div class="line">		}</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>上面这个方法有个弊端，必须要从挂载了这个单例的GameObject所在的场景启动，否则会找不到GameObject对象。但是开发和测试时我们经常会单独启动一个场景。</p>
+<p>另一种方法会创建一个GameObject，然后将单例挂载到其上：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass : MonoBehaviour {</div><div class="line"> </div><div class="line">    <span class="keyword">static</span> MyClass _instance;</div><div class="line"> </div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> MyClass Instance</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span></div><div class="line">        {</div><div class="line">            <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">            	<span class="comment">// 尝试寻找该类的实例。此处不能用GameObject.Find，因为MonoBehaviour继承自Component。</span></div><div class="line">                _instance = Object.FindObjectOfType(<span class="keyword">typeof</span>(MyClass)) <span class="keyword">as</span> MyClass;</div><div class="line"> </div><div class="line">                <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)	<span class="comment">// 如果没有找到</span></div><div class="line">                {                	                	</div><div class="line">                    GameObject go = <span class="keyword">new</span> GameObject(<span class="string">"_MyClass"</span>);	<span class="comment">// 创建一个新的GameObject</span></div><div class="line">                    DontDestroyOnLoad(go);	<span class="comment">// 防止被销毁</span></div><div class="line">                    _instance = go.AddComponent&lt;MyClass&gt;();	<span class="comment">// 将实例挂载到GameObject上</span></div><div class="line">                }</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> _instance;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+]]></content>
+    
+    
+      <category term="Unity3D" scheme="http://an-dong.info/tags/Unity3D/"/>
+    
+      <category term="设计模式" scheme="http://an-dong.info/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="游戏开发" scheme="http://an-dong.info/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[学习Unity 4.6新GUI系统]]></title>

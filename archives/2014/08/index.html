@@ -64,6 +64,82 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Unity中实现全局管理类的几种方式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/22/Unity中实现全局管理类的几种方式/" class="article-date">
+  <time datetime="2014-08-22T08:17:30.000Z" itemprop="datePublished">8月 22 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/22/Unity中实现全局管理类的几种方式/">Unity中实现全局管理类的几种方式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如何在Unity中实现全局管理类？由于Unity脚本的运行机制和面向组件编程（COP）的思想，实现起来和普通的方式略有差别。</p>
+<p>第一种方式是使用静态类。适合存储一些全局的变量，如游戏当前关卡、玩家得分等。<br>实现方式和普通的C#静态类没有差别。注意使用静态类就没有必要继承MonoBehaviour了。</p>
+<p>如果要实现复杂一些的全局控制，如切换游戏关卡等操作，更常用的方式是使用单例类。<br>单例类的实现又分为两种：</p>
+<ul>
+<li>继承自MonoBehaviour的单例类</li>
+<li>纯C#的单例类</li>
+</ul>
+<p>前者的优点是：</p>
+<ul>
+<li>可以在Inspector中显示，便于赋值和查看变量等；</li>
+<li>可以利用MonoBehaviour的接口；</li>
+<li>可以使用Coroutine。</li>
+<li>等等。</li>
+</ul>
+<p>缺点也很多，主流的观点是能不继承MonoBehaviour就不要继承。</p>
+<h2 id="纯C#的单例类">纯C#的单例类</h2>
+<p>实现起来简洁，易于理解。</p>
+<h3 id="普通的写法，不考虑多线程">普通的写法，不考虑多线程</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass</div><div class="line">{</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> MyClass _instance = <span class="keyword">new</span> MyClass();</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Class Instance { </div><div class="line">    	<span class="keyword">get</span> { </div><div class="line">    		<span class="keyword">return</span> _instance; </div><div class="line">    	} </div><div class="line">    }    </div><div class="line"> </div><div class="line">    <span class="keyword">private</span> <span class="title">MyClass</span>() {}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="线程安全的写法">线程安全的写法</h3>
+<p>检查两次。C#中使用<code>lock</code>关键字。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass</div><div class="line">{</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> MyClass _instance;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">object</span> _lock = <span class="keyword">new</span> <span class="keyword">object</span>();</div><div class="line"> </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> MyClass Instance</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span></div><div class="line">        {</div><div class="line">            <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">                <span class="keyword">lock</span>(_lock)</div><div class="line">                {</div><div class="line">                    <span class="keyword">if</span> (_instance == <span class="keyword">null</span>) </div><div class="line">                    	_instance = <span class="keyword">new</span> MyClass();</div><div class="line">                }</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> _instance;</div><div class="line">        }</div><div class="line">    }</div><div class="line"> </div><div class="line">    <span class="keyword">private</span> <span class="title">MyClass</span>() {}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="基于MonoBehaviour的单例类">基于MonoBehaviour的单例类</h2>
+<h3 id="普通的写法">普通的写法</h3>
+<p>利用了Unity的运行机制，从Awake处获取Unity创建的对象作为单例。<br>注意在Unity中不要使用<code>new</code>来创建MonoBehaviour实例。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass : MonoBehaviour</div><div class="line">{</div><div class="line">	<span class="keyword">static</span> MyClass _instance;</div><div class="line"></div><div class="line">	<span class="keyword">void</span> Awake () {</div><div class="line">		_instance = <span class="keyword">this</span>;</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> MyClass Instance {</div><div class="line">		<span class="keyword">get</span> {</div><div class="line">			<span class="comment">// 不需要再检查变量是否为null</span></div><div class="line">			<span class="keyword">return</span> _instance;</div><div class="line">		}</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="持久化的写法">持久化的写法</h3>
+<p>在多个场景中保存单例。又有两种方法。</p>
+<p>第一种是使用<code>DontDestroyOnLoad</code>方法，告诉Unity不要销毁实例所在的对象，然后将脚本挂到某个GameObject上：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass : MonoBehaviour</div><div class="line">{</div><div class="line">	<span class="keyword">static</span> MyClass _instance;</div><div class="line"></div><div class="line">	<span class="keyword">void</span> Awake () {</div><div class="line">		_instance = <span class="keyword">this</span>;</div><div class="line">		<span class="comment">// 防止载入新场景时被销毁</span></div><div class="line">		DontDestroyOnLoad(_instance.gameObject);	</div><div class="line">	}</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> MyClass Instance {</div><div class="line">		<span class="keyword">get</span> {</div><div class="line">			<span class="keyword">return</span> _instance;</div><div class="line">		}</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>上面这个方法有个弊端，必须要从挂载了这个单例的GameObject所在的场景启动，否则会找不到GameObject对象。但是开发和测试时我们经常会单独启动一个场景。</p>
+<p>另一种方法会创建一个GameObject，然后将单例挂载到其上：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyClass : MonoBehaviour {</div><div class="line"> </div><div class="line">    <span class="keyword">static</span> MyClass _instance;</div><div class="line"> </div><div class="line">    <span class="keyword">static</span> <span class="keyword">public</span> MyClass Instance</div><div class="line">    {</div><div class="line">        <span class="keyword">get</span></div><div class="line">        {</div><div class="line">            <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)</div><div class="line">            {</div><div class="line">            	<span class="comment">// 尝试寻找该类的实例。此处不能用GameObject.Find，因为MonoBehaviour继承自Component。</span></div><div class="line">                _instance = Object.FindObjectOfType(<span class="keyword">typeof</span>(MyClass)) <span class="keyword">as</span> MyClass;</div><div class="line"> </div><div class="line">                <span class="keyword">if</span> (_instance == <span class="keyword">null</span>)	<span class="comment">// 如果没有找到</span></div><div class="line">                {                	                	</div><div class="line">                    GameObject go = <span class="keyword">new</span> GameObject(<span class="string">"_MyClass"</span>);	<span class="comment">// 创建一个新的GameObject</span></div><div class="line">                    DontDestroyOnLoad(go);	<span class="comment">// 防止被销毁</span></div><div class="line">                    _instance = go.AddComponent&lt;MyClass&gt;();	<span class="comment">// 将实例挂载到GameObject上</span></div><div class="line">                }</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> _instance;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://an-dong.info/2014/08/22/Unity中实现全局管理类的几种方式/" data-id="xeg38l6wq3cy4jcm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏开发/">游戏开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-学习Unity 4.6新GUI系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/08/20/学习Unity 4.6新GUI系统/" class="article-date">
@@ -371,7 +447,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GUI/">GUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GUI/">GUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏开发/">游戏开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -380,7 +456,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 16.67px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 13.33px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/GUI/" style="font-size: 10.00px;">GUI</a><a href="/tags/Git/" style="font-size: 13.33px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 13.33px;">Python</a><a href="/tags/Unity3D/" style="font-size: 16.67px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a>
+      <a href="/tags/C/" style="font-size: 16.67px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 13.33px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/GUI/" style="font-size: 10.00px;">GUI</a><a href="/tags/Git/" style="font-size: 13.33px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 13.33px;">Python</a><a href="/tags/Unity3D/" style="font-size: 20.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 20.00px;">学习笔记</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/游戏开发/" style="font-size: 10.00px;">游戏开发</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a><a href="/tags/设计模式/" style="font-size: 10.00px;">设计模式</a>
     </div>
   </div>
 
@@ -389,7 +465,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
