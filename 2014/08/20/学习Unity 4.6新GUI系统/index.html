@@ -109,12 +109,19 @@ Screen Space - Overlay：将UI放置在场景的上面，调节场景大小">
 <li>Screen Space - Camera：Canvas由一个特定的相机渲染，相机的设置会影响UI。</li>
 <li>World Space：使Canvas像场景中的其他对象一样渲染。</li>
 </ul>
-<h2 id="Rect_Tool">Rect Tool</h2>
-<p>所有的UI元素都使用矩形来表示。<br>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。</p>
+<h2 id="Rect_Transform">Rect Transform</h2>
+<p>所有的UI元素都使用矩形来表示。<br>Rect Transform是为UI设计的新transform组件。除了普通transform组件的position、rotation、scale之外， 还增加了width和height。</p>
+<p>Update：两种编辑模式：</p>
+<ul>
+<li>Blueprint：在此模式下，物体不会旋转和缩放。</li>
+<li>Raw Edit：在此模式下，调整物体的Pivot和Anchor不会改变物体的位置和尺寸。</li>
+</ul>
 <a id="more"></a>
 
-<h2 id="Rect_Transform">Rect Transform</h2>
-<p>Rect Transform是为UI设计的新transform组件。除了普通transform组件的position、rotation、scale之外， 还增加了width和height。<br>当使用Rect Tool调整对象的尺寸时，如果是2D或3D对象，他会调整其scale；而对于有Rect Transform的对象，则会调整其width和height。<br>当切换至Pivot模式，可以调整其pivot。再次点击切换回Center模式。</p>
+<h2 id="Rect_Tool">Rect Tool</h2>
+<p>4.6的工具栏中加入了新的小工具Rect Tool，用于调整UI和2D对象。使用这个小工具，就可以完成移动、调整大小、旋转等工作。<br>当使用Rect Tool调整对象的尺寸时，如果是2D或3D对象，他会调整其scale；而对于有Rect Transform的对象，则会调整其width和height。</p>
+<p>Update：Resize和Scale的区别：前者不影响字体大小；后者可以设置负值，相当于将物体反过来，前者不允许负值。</p>
+<p>当切换至Pivot模式，可以调整其pivot。再次点击切换回Center模式。</p>
 <h2 id="Anchors">Anchors</h2>
 <p>Rect Transform中增加了Anchors属性，其中包括Anchor Min和Anchor Max。Anchors用于指定在父UI元素调整时，子UI元素如何调整。具体行为由Anchor Min（左下）和Anchor Max（右上）两个锚点决定。坐标以矩形左下为(0, 0)，右上为(1, 1)。<br>但实际上，Unity已经提供了预定义的模式。在Rect Transform的左上角点击，出现如下的常用Anchor模式。</p>
 <p><img src="http://andong777-sfault.qiniudn.com/uGUI_AnchorPreset.png" alt="Anchor Preset"></p>
@@ -157,7 +164,7 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://an-dong.info/2014/08/20/学习Unity 4.6新GUI系统/" data-id="pfyjks4w5hmh9gwh" class="article-share-link">Share</a>
+      <a data-url="http://an-dong.info/2014/08/20/学习Unity 4.6新GUI系统/" data-id="6vg4qhyhe7hughfv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GUI/">GUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
