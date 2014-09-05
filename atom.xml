@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://an-dong.info/"/>
-  <updated>2014-08-23T07:39:19.659Z</updated>
+  <updated>2014-09-05T00:39:32.262Z</updated>
   <id>http://an-dong.info/</id>
   
   <author>
@@ -13,6 +13,63 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Unity加入Android广告小结]]></title>
+    <link href="http://an-dong.info/2014/09/05/Unity%E5%8A%A0%E5%85%A5Android%E5%B9%BF%E5%91%8A%E5%B0%8F%E7%BB%93/"/>
+    <id>http://an-dong.info/2014/09/05/Unity加入Android广告小结/</id>
+    <published>2014-09-05T00:35:30.000Z</published>
+    <updated>2014-09-05T00:36:29.000Z</updated>
+    <content type="html"><![CDATA[<p>在Unity游戏加入广告大致有以下几种方式：</p>
+<ul>
+<li>导入Android Jar包</li>
+<li>导出游戏为Android项目（在Build时选中Google Android Project，这种方法可以参考<a href="http://www.cnblogs.com/shihui142857/p/3407194.html" target="_blank" rel="external">将Unity3D游戏移植到Android平台上</a>）</li>
+<li>使用Unity的广告插件（详见Asset Store，如<a href="https://www.assetstore.unity3d.com/en/#!/content/14835" target="_blank" rel="external">Google Mobile Ads SDK</a>）</li>
+</ul>
+<p>其中以第一种最常见，我用的也是这一种。</p>
+<a id="more"></a>
+
+<p>第一种方式的整个流程大致是这样：</p>
+<ol>
+<li>新建一个Android项目，加入调用某种广告SDK的Java代码。</li>
+<li>导出项目到Jar包，放到Unity项目中。</li>
+<li>在Unity中调用Java写好的方法。</li>
+</ol>
+<p>这个过程可以参考这两篇文章：<a href="http://blog.csdn.net/nateyang/article/details/7926603" target="_blank" rel="external">unity3d插入android有米广告</a>和<a href="http://hunterwang.diandian.com/post/2012-11-23/40042217286" target="_blank" rel="external">Unity 3D 关于给APK包加广告的流程</a>。<br>如果你按照步骤成功加入了广告，可以跳过下面的部分。我在这个过程中遇到了几个问题。</p>
+<p>第一个是 CommandInvokationFailure: Failed to re-package resources。<br>出现这个问题的原因是Android的资源没有整合好。首先检查下文件层次结构：</p>
+<p>Assetes/<br>        Plugins/<br>                Android/<br>                        AndroidManifest.xml<br>                        SDK文件<br>                        导出的Jar包</p>
+<p>如果仍然有问题，看看是不是我遇到的 AppCompat 相关的问题。我对Android了解的不多，解决的方法也不见得高明：</p>
+<ul>
+<li>在建立Android项目时，不要创建主题。</li>
+<li>最低版本选择4.0以上。</li>
+</ul>
+<p>好了，问题解决了。</p>
+<p>在Java项目里面，根据SDK文档，一般都是写好了一些方法，可以让你方便地创建广告条、插屏广告之类的。<br>在Unity中选择一个GameObject，使用下面代码得到Java类的对象：</p>
+<pre><code><span class="keyword">jc</span> = new AndroidJavaClass(<span class="string">"com.unity3d.player.UnityPlayer"</span>)<span class="comment">;  </span>
+<span class="keyword">jo</span> = <span class="keyword">jc</span>.GetStatic&lt;AndroidJavaObject&gt;(<span class="string">"currentActivity"</span>)<span class="comment">;  </span>
+</code></pre><p>然后用 AndroidJavaObject 的 Call 方法即可，如：</p>
+<pre><code>jo.<span class="keyword">Call</span>(<span class="string">"showSpot"</span>)<span class="comment">;</span>
+</code></pre><p>最后是关于游戏的图标和名字。<br>如此加入广告代码之后，Unity项目的图标会被Android项目中的覆盖。所以，最方便的是在创建Android项目时就确定Icon。<br>而游戏的名字还是Unity项目中的。</p>
+<p>以上都是我在尝试向Unity中加入广告时，参考他人博客和自己摸索得出的，如有错误请指出。请以广告SDK文档为准。</p>
+]]></content>
+    <summary type="html"><![CDATA[<p>在Unity游戏加入广告大致有以下几种方式：</p>
+<ul>
+<li>导入Android Jar包</li>
+<li>导出游戏为Android项目（在Build时选中Google Android Project，这种方法可以参考<a href="http://www.cnblogs.com/shihui142857/p/3407194.html" target="_blank" rel="external">将Unity3D游戏移植到Android平台上</a>）</li>
+<li>使用Unity的广告插件（详见Asset Store，如<a href="https://www.assetstore.unity3d.com/en/#!/content/14835" target="_blank" rel="external">Google Mobile Ads SDK</a>）</li>
+</ul>
+<p>其中以第一种最常见，我用的也是这一种。</p>
+]]></summary>
+    
+      <category term="Unity3D" scheme="http://an-dong.info/tags/Unity3D/"/>
+    
+      <category term="广告" scheme="http://an-dong.info/tags/%E5%B9%BF%E5%91%8A/"/>
+    
+      <category term="Android" scheme="http://an-dong.info/tags/Android/"/>
+    
+      <category term="游戏开发" scheme="http://an-dong.info/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Unity中实现全局管理类的几种方式]]></title>
