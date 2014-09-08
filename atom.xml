@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://an-dong.info/"/>
-  <updated>2014-09-05T00:39:32.262Z</updated>
+  <updated>2014-09-08T13:34:31.392Z</updated>
   <id>http://an-dong.info/</id>
   
   <author>
@@ -544,7 +544,7 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
     <link href="http://an-dong.info/2014/08/03/%E8%B0%88%E8%B0%88%E2%80%9C%E7%BC%96%E7%A8%8B%E6%B8%B8%E6%88%8F%E2%80%9D/"/>
     <id>http://an-dong.info/2014/08/03/谈谈“编程游戏”/</id>
     <published>2014-08-03T12:49:41.000Z</published>
-    <updated>2014-08-20T09:04:18.000Z</updated>
+    <updated>2014-09-08T13:32:41.000Z</updated>
     <content type="html"><![CDATA[<p>编程游戏（不是游戏编程，也不是编游戏……），也叫代码游戏，代表着市面上一类特别的游戏。它在游戏中加入了编程的特性（或许反过来说也对）。本文意在梳理市面上的一些编程游戏，并对其玩法进行介绍和评价。</p>
 <p>转载请注明：</p>
 <p>作者：andong777    </p>
@@ -604,9 +604,9 @@ GUILayout.Label("<span class="tag">&lt;<span class="title">size=30</span>&gt;</s
 <blockquote>
 <p>CodeTank是一个非常有趣的竞赛性编程游戏平台，通过几行简单的Javascript代码和CodeTank API，每个人都可以方便的构建属于自己富有智能和个性的坦克（Tank）机器人，并通过互联网进行在线互动和竞赛！CodeTank是 Code Game（代码游戏，也叫编程游戏）的一种，可以让你在娱乐的同时学习和提高Javascript编程水平以及进行人工智能的研究。它使用HTML5、CSS3等Web新技术构建的在线平台，天然的基于互联网，Tank机器人的代码不需要人工上传下载，可以直接在线运行与其他选手进行战斗。</p>
 </blockquote>
-<p><img src="http://andong777-sfault.qiniudn.com/ct1.jpg" alt="请输入图片描述"></p>
+<p><img src="http://andong777-sfault.qiniudn.com/ct1.png" alt="请输入图片描述"></p>
 <p>这个游戏和上一个不同，并不是给初学者学习用的。我没有太多JavaScript编程经验，进入到游戏中不知道该干什么。进入游戏后首先要创建自己的坦克，之后就是编写自己的代码，实现AI控制坦克运动。最终目的是打败其他玩家的坦克，和那些机器人比赛差不多。</p>
-<p><img src="http://andong777-sfault.qiniudn.com/ct2.jpg" alt="请输入图片描述"></p>
+<p><img src="http://andong777-sfault.qiniudn.com/ct2.png" alt="请输入图片描述"></p>
 <h3 id="CodeSpells">CodeSpells</h3>
 <p>这是我本人比较喜欢的一款编程游戏，尽管它本身并不火，而且需要下载Java客户端。下面这段话是它唯一的一段中文介绍：</p>
 <blockquote>
