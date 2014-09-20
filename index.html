@@ -64,6 +64,65 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-C、C++、C#中struct的简单比较" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/09/20/C、C++、C#中struct的简单比较/" class="article-date">
+  <time datetime="2014-09-20T13:09:38.000Z" itemprop="datePublished">9月 20 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/09/20/C、C++、C#中struct的简单比较/">C、C++、C#中struct的简单比较</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>比较这三者是因为C、C++、C#这三者存在着一定的血缘关系，而他们三者都有的struct却有很大的不同。</p>
+<h3 id="功能">功能</h3>
+<ul>
+<li>C中的struct是最简单的。只能有成员变量而不能有成员函数。</li>
+<li>C++和C#中都支持，而且支持很多其他的特性。C++中的struct和class没有太大功能上的差别。</li>
+<li>C#中struct可以有构造函数、常量、字段、方法、属性、索引器、运算符、事件和嵌套类型等特性。</li>
+</ul>
+<h3 id="可见性">可见性</h3>
+<ul>
+<li>C中没有可见性的概念，到处都可见。</li>
+<li>C++中struct默认是公有继承，所以成员可见性是public。</li>
+<li>C#中struct的成员默认为private。</li>
+</ul>
+<h3 id="和class的区别">和class的区别</h3>
+<ul>
+<li>C当然无从谈起。</li>
+<li>C++中的struct除了默认可见性和class不同，其他的差别很小。比如可以有继承甚至多重继承。</li>
+<li>C#中struct限制较多，不可以继承，但可以实现接口。不可以声明无参构造函数和析构函数。C#中所有结构都直接继承自 System.ValueType，后者继承自 System.Object。C#中的struct是值类型，而class是引用类型。</li>
+</ul>
+<h4 id="参考链接">参考链接</h4>
+<p>[1] <a href="http://blog.csdn.net/yangzhiloveyou/article/details/8536793" target="_blank" rel="external">http://blog.csdn.net/yangzhiloveyou/article/details/8536793</a><br>[2] <a href="http://hi.baidu.com/hj11yc/item/902b8b2abfa226caee10f188" target="_blank" rel="external">http://hi.baidu.com/hj11yc/item/902b8b2abfa226caee10f188</a><br>[3] <a href="http://msdn.microsoft.com/zh-cn/library/ah19swz4.aspx" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/ah19swz4.aspx</a><br>[4] <a href="http://msdn.microsoft.com/zh-cn/library/saxz13w4.aspx" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/saxz13w4.aspx</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://an-dong.info/2014/09/20/C、C++、C#中struct的简单比较/" data-id="vnk7kr1hogoh5atn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C++/">C++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Unity加入Android广告小结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/09/05/Unity加入Android广告小结/" class="article-date">
@@ -515,53 +574,6 @@
 
 
   
-    <article id="post-关于Cygwin——包管理、替换默认终端、同MSYS的比较" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/" class="article-date">
-  <time datetime="2014-07-24T13:02:42.000Z" itemprop="datePublished">7月 24 2014</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/">关于Cygwin——包管理、替换默认终端、同MSYS的比较</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Cygwin 是一个用于 Windows 的类 UNIX shell 环境。 它由两个组件组成：一个 UNIX API 库，它模拟 UNIX 操作系统提供的许多特性；以及 Bash shell 的改写版本和许多 UNIX 实用程序，它们提供大家熟悉的 UNIX 命令行界面。前一个组件是一个 Windows 动态链接库 (DLL)。后一个组件是一组基于 Cygwin DLL 的程序，其中许多是用未经修改的 UNIX 源代码编译的。它们合在一起提供大家熟悉的 UNIX 环境。</p>
-</blockquote>
-<p>与此同时，MinGW这个项目也在做类似的事情。MinGW是Minimalistic GNU for Windows的缩写。MinGW有一个叫MSYS（Minimal SYStem）的子项目，主要是提供了一个模拟Linux的Shell和一些基本的Linux工具。</p>
-
-        
-          <p class="article-more-link">
-            <a href="/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://an-dong.info/2014/07/24/关于Cygwin——包管理、替换默认终端、同MSYS的比较/" data-id="gp123nghu0o9ogi8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cygwin/">Cygwin</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -579,7 +591,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GUI/">GUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/广告/">广告</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏开发/">游戏开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C++/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocostudio/">Cocostudio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cygwin/">Cygwin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GUI/">GUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPN/">VPN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/广告/">广告</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推荐/">推荐</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏开发/">游戏开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程游戏/">编程游戏</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -588,7 +600,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 10.00px;">Android</a><a href="/tags/C/" style="font-size: 15.00px;">C#</a><a href="/tags/Cocos2d-x/" style="font-size: 12.50px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/GUI/" style="font-size: 10.00px;">GUI</a><a href="/tags/Git/" style="font-size: 12.50px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 12.50px;">Python</a><a href="/tags/Unity3D/" style="font-size: 20.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 17.50px;">学习笔记</a><a href="/tags/广告/" style="font-size: 10.00px;">广告</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/游戏开发/" style="font-size: 12.50px;">游戏开发</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a><a href="/tags/设计模式/" style="font-size: 10.00px;">设计模式</a>
+      <a href="/tags/Android/" style="font-size: 10.00px;">Android</a><a href="/tags/C/" style="font-size: 10.00px;">C</a><a href="/tags/C/" style="font-size: 16.67px;">C#</a><a href="/tags/C++/" style="font-size: 10.00px;">C++</a><a href="/tags/Cocos2d-x/" style="font-size: 13.33px;">Cocos2d-x</a><a href="/tags/Cocostudio/" style="font-size: 10.00px;">Cocostudio</a><a href="/tags/Cygwin/" style="font-size: 10.00px;">Cygwin</a><a href="/tags/GUI/" style="font-size: 10.00px;">GUI</a><a href="/tags/Git/" style="font-size: 13.33px;">Git</a><a href="/tags/Github/" style="font-size: 10.00px;">Github</a><a href="/tags/Python/" style="font-size: 13.33px;">Python</a><a href="/tags/Unity3D/" style="font-size: 20.00px;">Unity3D</a><a href="/tags/VPN/" style="font-size: 10.00px;">VPN</a><a href="/tags/学习笔记/" style="font-size: 16.67px;">学习笔记</a><a href="/tags/广告/" style="font-size: 10.00px;">广告</a><a href="/tags/推荐/" style="font-size: 10.00px;">推荐</a><a href="/tags/游戏/" style="font-size: 10.00px;">游戏</a><a href="/tags/游戏开发/" style="font-size: 13.33px;">游戏开发</a><a href="/tags/编程游戏/" style="font-size: 10.00px;">编程游戏</a><a href="/tags/设计模式/" style="font-size: 10.00px;">设计模式</a>
     </div>
   </div>
 
@@ -597,7 +609,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09">September 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09">September 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08">August 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07">July 2014</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 

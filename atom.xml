@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://an-dong.info/"/>
-  <updated>2014-09-08T13:34:31.392Z</updated>
+  <updated>2014-09-20T13:11:18.854Z</updated>
   <id>http://an-dong.info/</id>
   
   <author>
@@ -13,6 +13,44 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[C、C++、C#中struct的简单比较]]></title>
+    <link href="http://an-dong.info/2014/09/20/C%E3%80%81C++%E3%80%81C#%E4%B8%ADstruct%E7%9A%84%E7%AE%80%E5%8D%95%E6%AF%94%E8%BE%83/"/>
+    <id>http://an-dong.info/2014/09/20/C、C++、C#中struct的简单比较/</id>
+    <published>2014-09-20T13:09:38.000Z</published>
+    <updated>2014-09-20T13:10:53.000Z</updated>
+    <content type="html"><![CDATA[<p>比较这三者是因为C、C++、C#这三者存在着一定的血缘关系，而他们三者都有的struct却有很大的不同。</p>
+<h3 id="功能">功能</h3>
+<ul>
+<li>C中的struct是最简单的。只能有成员变量而不能有成员函数。</li>
+<li>C++和C#中都支持，而且支持很多其他的特性。C++中的struct和class没有太大功能上的差别。</li>
+<li>C#中struct可以有构造函数、常量、字段、方法、属性、索引器、运算符、事件和嵌套类型等特性。</li>
+</ul>
+<h3 id="可见性">可见性</h3>
+<ul>
+<li>C中没有可见性的概念，到处都可见。</li>
+<li>C++中struct默认是公有继承，所以成员可见性是public。</li>
+<li>C#中struct的成员默认为private。</li>
+</ul>
+<h3 id="和class的区别">和class的区别</h3>
+<ul>
+<li>C当然无从谈起。</li>
+<li>C++中的struct除了默认可见性和class不同，其他的差别很小。比如可以有继承甚至多重继承。</li>
+<li>C#中struct限制较多，不可以继承，但可以实现接口。不可以声明无参构造函数和析构函数。C#中所有结构都直接继承自 System.ValueType，后者继承自 System.Object。C#中的struct是值类型，而class是引用类型。</li>
+</ul>
+<h4 id="参考链接">参考链接</h4>
+<p>[1] <a href="http://blog.csdn.net/yangzhiloveyou/article/details/8536793" target="_blank" rel="external">http://blog.csdn.net/yangzhiloveyou/article/details/8536793</a><br>[2] <a href="http://hi.baidu.com/hj11yc/item/902b8b2abfa226caee10f188" target="_blank" rel="external">http://hi.baidu.com/hj11yc/item/902b8b2abfa226caee10f188</a><br>[3] <a href="http://msdn.microsoft.com/zh-cn/library/ah19swz4.aspx" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/ah19swz4.aspx</a><br>[4] <a href="http://msdn.microsoft.com/zh-cn/library/saxz13w4.aspx" target="_blank" rel="external">http://msdn.microsoft.com/zh-cn/library/saxz13w4.aspx</a></p>
+]]></content>
+    
+    
+      <category term="C" scheme="http://an-dong.info/tags/C/"/>
+    
+      <category term="C++" scheme="http://an-dong.info/tags/C++/"/>
+    
+      <category term="C#" scheme="http://an-dong.info/tags/C/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Unity加入Android广告小结]]></title>
